@@ -23,33 +23,35 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
+<header>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+        <div class="d-block">
+            <a class="float-right" href="">Cerrar session</a>
+        </div>
+    </nav>
+</header>
 <body class="bg-secondary">
-    <main class="container bg-white p-2 mt-4">
-        <?php
-            if(isset($_GET['event'])){
-                $evento = $_GET['event'];
-                if($evento == "success"){
-                    echo "<div class='alert alert-success alert-dismissible'>
-                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                            <strong>Exito!</strong> Se ha creado el usuario correctamente.
-                        </div>";
-                }else{
-                    if($evento == "danger"){
-                        echo "<div class='alert alert-danger alert-dismissible'>
-                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                            <strong>Problema!</strong> No se ha podido crear al usuario.
-                        </div>";
-                    }
-                }
-            }
-        ?>
+    <main class="container bg-white p-2">
+        <div id="exito" class="d-none">
+            <div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <strong>Exito!</strong> Se ha creado el usuario correctamente.
+            </div>
+        </div>
+        <div id="error" class="d-none">
+            <div class='alert alert-danger alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <strong>Problema!</strong> No se ha podido crear al usuario.
+            </div>
+        </div>
         <!-- <a href="Crear_director_carrera.php">Crear director de carrera/unidad</a> -->
         <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Crear director de carrera
-            </button>
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
                 Crear facultad
+            </button>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                Crear director academico
             </button>
         </div>
         <h2 class="text-primary text-center">Facultades de UMSS</h2>
@@ -89,6 +91,20 @@
                 </tr>
             </tbody>
         </table>
+        <!-- director academico -->
+        <br>
+        <h2 class="text-primary text-center">Directores academicos</h2>
+        <table id="tablaDirAcademico" class="hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nombre del director</th>
+                    <th>Asignacion </th>
+                    <th>Correo electronico</th>
+                    <th>Telefono</th>
+                </tr>
+            </thead>
+        </table>
+
         <div class="modal fade" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -97,9 +113,9 @@
                         <h2 class="modal-title text-center">Crear director academico</h2>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                <!--modal body-->
+                <!--modal body ../controlador/formRegistrarDirectorAcademico.php-->
                     <div class="modal-body">
-                    <form action="../controlador/formRegistrarDirectorAcademico.php" method="post" class="was-validated">
+                    <form action="" method="post" class="was-validated" id="formAgregarDirectorAcademico">
                         <div class="form-group">
                                 <label for="nomDirAcad">Nombre director Academico</label>
                                 <input type="text" name="nomDirAcad" id="nomDirAcad" class="form-control" required>
@@ -125,13 +141,10 @@
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="facDirAcad">Escoja Facultadad: </label>
-                                <select class="form-control" id="facDirAcad" name="facDirAcad">
-                                    <option>Facultad de ciencias y tecnologia</option>
-                                    <option>Facultad de ciencias socials</option>
-                                    <option>Facultad de economia</option>
-                                    <option>Facultad de medicina</option>
-                                </select required>
-                                <div class="invalid-feedback">Silecione facultad</div>
+                                <select class="form-control" id="facDirAcad" name="facDirAcad" >
+                                    <option value="">Ninguno</option>
+                                </select>
+                                <div class="invalid-feedback">Selecione facultad</div>
                             </div>
                         </div>
                         <div class="row">
@@ -148,7 +161,7 @@
                         </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Crear Director Academico">
-                            <button class="btn btn-danger">Cancelar</button>
+                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCerrarAutoridad">Cancelar</button>
                         </div>
                     </form>
                     </div>
@@ -186,7 +199,8 @@
                         </div>
                         <div class="form-group">
                                 <label for="dirFac">Escoja Director Academico: </label>
-                                <select class="form-control" id="dirFac">
+                                <select class="form-control" id="dirFac" required>
+                                    <option value="">None</option>
                                     <option>Sujeto Uno</option>
                                     <option>Sujeto Dos</option>
                                     <option>Sujeto Tres</option>
@@ -196,7 +210,7 @@
                             </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Crear Director Academico">
-                            <button class="btn btn-danger">Cancelar</button>
+                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCerrarAutoridad">Cancelar</button>
                         </div>
                     </form>
                     </div>
@@ -204,9 +218,6 @@
             </div>
         </div>
     </main>
-    <!--<script src="src/home_rector.js"></script>-->
-    <script >$(document).ready(function() {
-        $('#example').DataTable();
-        } );</script>
+    <script src="src/home_rector.js"></script>
 </body>
 </html>

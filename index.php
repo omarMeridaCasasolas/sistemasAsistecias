@@ -50,11 +50,11 @@
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h5><a href="">Olvidate tu contraseña</a></h5>
+                <h5><a href="">Olvidaste tu contraseña</a></h5>
                 <br>
             </div>
             <div id="docente" class="container tab-pane fade">
-                <form action="" method="post" class="was-validated">
+                <form action="controlador/formSessionDocente.php" method="post" class="was-validated">
                     <h2 class="text-center">Ingreso Docente</h2>
                     <div class="form-group mx-3">
                         <label for="correoDocente">Ingrese su correo electronico: </label>
@@ -79,7 +79,7 @@
                 <br>
             </div>
             <div id="auxiliarLaboratorio" class="container tab-pane fade">
-                <form action="" method="post" class="was-validated">
+                <form action="controlador/formSessionAuxiliarLaboratorio.php" method="post" class="was-validated">
                     <h2 class="text-center">Ingreso Auxiliares laboratorios</h2>
                     <div class="form-group mx-3">
                         <label for="correoAuxLab">Ingrese su correo electronico: </label>
@@ -104,7 +104,7 @@
                 <br>
             </div>
             <div id="auxiliarDocencia" class="container tab-pane fade">
-                <form action="" method="post" class="was-validated">
+                <form action="controlador/formSessionAuxiliarDocente.php" method="post" class="was-validated">
                     <h2 class="text-center">Auxiliar de docencia</h2>
                     <div class="form-group mx-3">
                         <label for="correoAuxDoc">Ingrese su correo electronico: </label>

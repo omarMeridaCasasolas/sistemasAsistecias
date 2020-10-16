@@ -16,6 +16,17 @@
             $res = json_encode($respuesta);
             return $res;
         }
+
+        public function facultadesDisponibles(){
+            $sql = "SELECT * FROM facultades WHERE director_academico IS NULL";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
+        }
+
         //metodos porst y get
         /*
         public function createReporte($usuario,$lugar,$pieza,$tiempo,$precio,$descripcionServicio,$calificacion,$nombre,$contacto,$piel,$origen,$edad,$contextura,$rasgosEspecificos,$vista,$fecha){

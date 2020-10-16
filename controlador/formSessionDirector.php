@@ -11,7 +11,18 @@
         if($res){
             $_SESSION["codigo_autoridad"] = $res["id_ditector"];
             $_SESSION["cargo"] = $res["cargo_director"];
-            var_dump($res['cargo_director']);
+            $_SESSION['nombre_autoridad'] = $res['nombre_director'];
+            if(!empty($res['id_facultad'])){
+                $_SESSION['categoria_social'] = $res['id_facultad'];
+            }else{
+                if(!empty($res['id_departamento'])){
+                    $_SESSION['categoria_social'] = $res['id_departamento'];
+                }else{
+                    if(!empty($res['id_carrera'])){
+                        $_SESSION['categoria_social'] = $res['id_carrera'];
+                    }
+                }
+            }
             switch ($res['cargo_director']) {
                 case 'Rector':
                     header("Location:../vista/home_rector.php");
@@ -19,8 +30,11 @@
                 case 'Director academico':
                     header("Location:../vista/home_director_academico.php");
                     break;
-                case 'Jefe departamental':
-                    header("Location:../vista/home_jefe_departamental.php");
+                case 'Director departamental':
+                    header("Location:../vista/home_director_departamento.php");
+                    break;
+                case 'Director de carrera':
+                    header("Location:../vista/home_director_carrera.php");
                     break;
                 default:
                     # code...

@@ -1,6 +1,6 @@
 <?php
-    require_once("../../modelo/model_facultad.php");
-    $facultad = new Facultad();
-    $res = $facultad->LeerFacultades();
-    var_dump($res);
-    return $res;
+    require_once("../../modelo/model_director.php");
+    $director = new Director();
+    $res = $director->listarDirectoresAcademicos();
+    //var_dump($res);
+    echo $res;

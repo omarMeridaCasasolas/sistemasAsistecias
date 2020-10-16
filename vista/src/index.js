@@ -27,6 +27,36 @@ $(document).ready(function () {
 
         if(propiedadDos == "tipo"){
             switch (valorDos) {
+                case "auxiliar_docente":
+                    $("#idItemUno").removeClass("active");
+                    $("#idLinkUno").removeClass("active");
+                    $("#idItemCinco").addClass("active");
+                    $("#idLinkCinco").addClass("active");
+                    $("#indice").removeClass("active");
+                    $("#indice").addClass("fade");
+                    $("#auxiliarDocencia").removeClass("fade");
+                    $("#auxiliarDocencia").addClass("active");
+                    break;
+                case "auxiliar_laboratorio":
+                    $("#idItemUno").removeClass("active");
+                    $("#idLinkUno").removeClass("active");
+                    $("#idItemCuatro").addClass("active");
+                    $("#idLinkCuatro").addClass("active");
+                    $("#indice").removeClass("active");
+                    $("#indice").addClass("fade");
+                    $("#auxiliarLaboratorio").removeClass("fade");
+                    $("#auxiliarLaboratorio").addClass("active");
+                    break;
+                case "docente":
+                    $("#idItemUno").removeClass("active");
+                    $("#idLinkUno").removeClass("active");
+                    $("#idItemTres").addClass("active");
+                    $("#idLinkTres").addClass("active");
+                    $("#indice").removeClass("active");
+                    $("#indice").addClass("fade");
+                    $("#docente").removeClass("fade");
+                    $("#docente").addClass("active");
+                    break;
                 case "autoridad":
                     $("#idItemUno").removeClass("active");
                     $("#idLinkUno").removeClass("active");
