@@ -15,5 +15,6 @@
 </head>
 <body>
     <h1>Bienvenido auxiliar de docente<?php echo $_SESSION['nombreAuxDoc']; ?></h1>
+    <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
 </body>
 </html>

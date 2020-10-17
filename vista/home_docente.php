@@ -15,5 +15,6 @@
 </head>
 <body>
     <h1>Bienvenido <?php echo $_SESSION['nombreDocente']; ?></h1>
+    <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
 </body>
 </html>

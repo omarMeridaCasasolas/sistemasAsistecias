@@ -27,7 +27,7 @@
         }
 
         public function verificarDocente($correoDocente,$passDocente,$codigoDocente){
-            $sql = "SELECT * FROM docente WHERE correo_docente = :correo AND password_docente = :pass AND sis_docente = :sis";
+            $sql = "SELECT * FROM docente WHERE UPPER(correo_docente) = UPPER(:correo) AND password_docente = :pass AND sis_docente = :sis";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL ->execute(array(":correo"=>$correoDocente,":pass"=>$passDocente,":sis"=>$codigoDocente));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

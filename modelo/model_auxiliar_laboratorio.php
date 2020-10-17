@@ -3,28 +3,28 @@
 //listarTableDocente()
     require_once("conexion.php");
     class AuxiliarLaboratorio extends Conexion{
-        public function AuxiliarLaboratorio(){
+        public function AuxiliarLaboratorio(){  
             parent::__construct();
         }
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
 
-        // public function listarTableDocente(){
-        //     $sql = "SELECT * FROM docente";
-        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
-        //     $sentenceSQL->execute();
-        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-        //     $sentenceSQL->closeCursor();
-        //     echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
-        // }
+        public function listarTableAuxiliarLaboratorio(){
+            $sql = "SELECT * FROM auxiliar_laboratorio";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
 
-        // public function insertarDocente($nombreDocente,$ciDocente,$correoDocente,$telDocente,$sisDocente,$passDocente){
-        //     $sql = "INSERT INTO docente(nombre_docente,carnet_docente,correo_docente,telefono_docente,sis_docente,password_docente,activo_docente) VALUES(:nombre,:carnet,:correo,:tel,:sis,:pass,false)";
-        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
-        //     $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombreDocente,":carnet"=>$ciDocente,":correo"=>$correoDocente,":tel"=>$telDocente,":sis"=>$sisDocente,":pass"=>$passDocente));
-        //     return $respuesta;
-        // }
+        public function insertarAuxiliarLaboratorio($nomPersLab,$ciPersLab,$correoPersLab,$telPersLab,$sisPersLab,$passPersLab){
+            $sql = "INSERT INTO auxiliar_laboratorio(nombre_auxiliar_lab,ci_auxiliar_lab,correo_auxiliar_lab,telefono_auxiliar_lab,sis_auxiliar_lab,password_auxiliar_lab,activo_auxiliar_lab) VALUES(:nombre,:carnet,:correo,:tel,:sis,:pass,false)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nomPersLab,":carnet"=>$ciPersLab,":correo"=>$correoPersLab,":tel"=>$telPersLab,":sis"=>$sisPersLab,":pass"=>$passPersLab));
+            return $respuesta;
+        }
 
         public function verificarAuxiliarLaboratorio($correoAuxLab,$passAuxLab,$codigoAuxLab){
             $sql = "SELECT * FROM auxiliar_laboratorio WHERE UPPER(correo_auxiliar_lab) = UPPER(:correo) AND password_auxiliar_lab = :pass AND sis_auxiliar_lab = :sis";

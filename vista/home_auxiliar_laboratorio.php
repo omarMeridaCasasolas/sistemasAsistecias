@@ -16,5 +16,6 @@
 </head>
 <body>
     <h1>Bienvenido Axiliar de laboratorio <?php echo $_SESSION['nombreAuxLab']; ?></h1>
+    <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>       
 </body>
 </html>

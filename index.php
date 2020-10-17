@@ -23,10 +23,23 @@
         <br>
         <div class="tab-content">
             <div id="indice" class="container tab-pane active">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum illo exercitationem repellendus quam eius. Pariatur molestiae recusandae labore modi sequi
-                 laborum laboriosam dolor repellendus dolorum? Et amet perferendis laudantium laboriosam.</p>
-                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum illo exercitationem repellendus quam eius. Pariatur molestiae recusandae labore modi sequi
-                 laborum laboriosam dolor repellendus dolorum? Et amet perferendis laudantium laboriosam.</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="vista/img/logo_UMSS.jpg" alt="logo_umss" class="w-100">
+                    </div>
+                    <div class="col-md-8">
+                        <h2>Acerca de UMSS</h2>
+                        <p>La Universidad Mayor de San Simón o por sus siglas (UMSS) es una universidad pública de Bolivia cuya sede está ubicada en la ciudad de Cochabamba teniendo otras unidades académicas en distintos puntos del departamento de Cochabamba. </p>
+                        <p>Ofrece carreras profesionales y estudios de postgrado y de segunda especialización, además cursos de extensión comunal. Según el ranking webometrics, es considerada una de las mejores universidad de Bolivia, pero tiene retos para mejorar y tener reconocimiento a nivel latinoamericano.</p>
+                        <h4>Contactos</h4>
+                        <h6><span><i class="fas fa-globe"></i> <a href="www.umss.edu.bo">www.umss.edu.bo</a> </span>       <span><i class="fas fa-at"></i> informaciones@umss.edu.bo </span>        <span><i class="fas fa-phone"></i> +591 4 4251515</span></h6>
+                        <h4>Redes Sociales</h4>
+                        <div class="d-inline-block"> <h1><a href="https://www.facebook.com/UmssBolOficial/" target="_blank"><i class="fab fa-facebook-square"></i></a></h1></div>
+                        <div class="d-inline-block"> <h1><a href="https://twitter.com/UmssBolOficial" target="_blank"><i class="fab fa-twitter-square"></i></a></h1></div>
+                        <div class="d-inline-block"> <h1><a href="https://www.linkedin.com/school/universidad-mayor-de-san-simon/" target="_blank"><i class="fab fa-linkedin"></i></a></h1></div>
+                        <div class="d-inline-block"> <h1><a href="https://www.youtube.com/channel/UCe91rHUSEpxXgkz0Cojt3MA" target="_blank"><i class="fab fa-youtube"></i></a></h1></div>
+                    </div>
+                </div>
             </div>
             <div id="autoridadesAcademicas" class="container tab-pane fade">
                 <form action="controlador/formSessionDirector.php" method="post" class="was-validated">

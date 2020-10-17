@@ -8,7 +8,7 @@
             $this->connexion_bd=null;
         }
         public function loginAutoridad($correo,$codigo,$password){
-            $sql = "SELECT * FROM director_unidad WHERE correo_electronico_director = :correo AND codigo_sis_director = :codigo AND password_director = :pass ";
+            $sql = "SELECT * FROM director_unidad WHERE UPPER(correo_electronico_director) = UPPER(:correo) AND codigo_sis_director = :codigo AND password_director = :pass ";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute(array(":correo"=>$correo,":codigo"=>$codigo,":pass"=>$password));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

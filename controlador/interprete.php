@@ -5,6 +5,7 @@
     require_once("../modelo/model_carrera.php");
     require_once("../modelo/model_docente.php");
     require_once("../modelo/model_auxiliar_docente.php");
+    require_once("../modelo/model_auxiliar_laboratorio.php");
     $clase ="";
     $metodo = "";
     $tmp = "";
@@ -12,6 +13,9 @@
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
         switch($clase){
+            case 'AuxiliarLaboratorio':
+                $tmp = ejecutarConsultasAuxiliarLaboratorio();
+                break;
             case 'AuxiliarDocente':
                 $tmp = ejecutarConsultasAuxiliarDocente();
                 break;
@@ -179,6 +183,30 @@
                 break;
             case 'listarTableAuxiliarDocente':
                 $res = $auxiliarDocente->listarTableAuxiliarDocente();
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $res;
+    }
+
+    function ejecutarConsultasAuxiliarLaboratorio(){
+        $auxiliarLaboratorio = new AuxiliarLaboratorio();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'insertarAuxiliarLaboratorio':
+                $nomPersLab = $_REQUEST['nomPersLab'];
+                $ciPersLab = $_REQUEST['ciPersLab'];
+                $correoPersLab = $_REQUEST['correoPersLab'];
+                $telPersLab = $_REQUEST['telPersLab'];
+                $sisPersLab = $_REQUEST['sisPersLab'];
+                $passPersLab = $_REQUEST['passPersLab'];
+                $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomPersLab,$ciPersLab,$correoPersLab,$telPersLab,$sisPersLab,$passPersLab);
+                break;
+            case 'listarTableAuxiliarLaboratorio':
+                $res = $auxiliarLaboratorio->listarTableAuxiliarLaboratorio();
                 break;
             default:
                 # code...

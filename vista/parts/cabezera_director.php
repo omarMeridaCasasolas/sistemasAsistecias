@@ -26,7 +26,7 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
         <div class="d-block">
-            <a class="float-right" href="">Cerrar session</a>
+            <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
         </div>
 
     </nav>
