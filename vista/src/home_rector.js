@@ -34,7 +34,8 @@ function listarTableDirectorAcademico(){
     $("#tablaDirAcademico").DataTable({
         "ajax":{
             "method":"POST",
-            "url":"src/prueba.php"
+            "data" : {'clase': 'Director' , 'metodo':'listarDirectoresAcademicos'},
+            "url":"../controlador/interprete.php"
         },
         "columns":[
             {"data":"nombre_director"},

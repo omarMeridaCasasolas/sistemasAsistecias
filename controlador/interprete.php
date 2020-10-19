@@ -44,6 +44,9 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listarDirectoresAcademicos':
+                $res = $director->listarDirectoresAcademicos();
+                break;
             case 'listarTableDirectorCarrera':
                 $res = $director->listarTableDirectorCarrera();
                 break;

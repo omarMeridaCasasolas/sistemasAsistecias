@@ -25,7 +25,7 @@
             <div id="indice" class="container tab-pane active">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="vista/img/logo_UMSS.jpg" alt="logo_umss" class="w-100">
+                        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/Logo_UMSS.jpg" alt="logo_umss" class="w-100">
                     </div>
                     <div class="col-md-8">
                         <h2>Acerca de UMSS</h2>
