@@ -54,7 +54,7 @@
                 if(is_array($respuesta)){
                     $destino = $respuesta['correo_electronico_director'];
                     $password = $respuesta['password_director'];
-                    $res = include_once('../formEnviarPassword.php');
+                    $res = include_once('../controlador/formEnviarPassword.php');
                     //$res = true;
                 }else{
                     $res = 2;
