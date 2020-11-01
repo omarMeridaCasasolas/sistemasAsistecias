@@ -19,8 +19,12 @@
 
     $response = $sg->client->mail()->send()->post($mail);
     echo $response->statusCode();
-    echo $response->headers();
-    echo $response->body();
+    //echo $response->headers();
+    //echo $response->body();
         
+
+
+
+
     //header("Location:index.php");
 ?>
