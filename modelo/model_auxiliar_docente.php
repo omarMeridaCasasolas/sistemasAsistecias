@@ -20,10 +20,10 @@
         }
 
 
-        public function verificarAuxliarDocente($correoAuxDoc,$passAuxDoc,$codigoAuxDoc){
-            $sql = "SELECT * FROM auxiliar_docente WHERE UPPER(correo_aux_docente) = UPPER(:correo) AND password_aux_docente = :pass AND sis_auxiliar = :sis";
+        public function verificarAuxliarDocente($correoAuxDoc,$passAuxDoc){
+            $sql = "SELECT * FROM auxiliar_docente WHERE UPPER(correo_aux_docente) = UPPER(:correo) AND password_aux_docente = :pass";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL ->execute(array(":correo"=>$correoAuxDoc,":pass"=>$passAuxDoc,":sis"=>$codigoAuxDoc));
+            $sentenceSQL ->execute(array(":correo"=>$correoAuxDoc,":pass"=>$passAuxDoc));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             return $respuesta[0]; 

@@ -6,6 +6,7 @@
     require_once("../modelo/model_docente.php");
     require_once("../modelo/model_auxiliar_docente.php");
     require_once("../modelo/model_auxiliar_laboratorio.php");
+    require_once("../modelo/model_laboratorio.php");
     $clase ="";
     $metodo = "";
     $tmp = "";
@@ -34,6 +35,9 @@
             case 'Facultad':
                 $tmp = ejecutarConsultasFacultad();
                 break;
+            case 'Laboratorio':
+                $tmp = ejecutarConsultasLaboratorio();
+                break;
             default:
                 break;
         }
@@ -44,6 +48,47 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'recuperarPassword':
+                $correo = $_REQUEST['correo'];
+                $respuesta = $director->recuperarPassword($correo);
+                if(is_array($respuesta)){
+                    $destino = $respuesta['correo_electronico_director'];
+                    $password = $respuesta['password_director'];
+                    $res = include_once('../formEnviarPassword.php');
+                    //$res = true;
+                }else{
+                    $res = 2;
+                }
+                break;
+            case 'actualizarAsignacionDirector':
+                $idDirector = $_REQUEST['idDirector'];
+                $carDirector = $_REQUEST['carDirector'];
+                $res = $director->actualizarAsignacionDirector($idDirector,$carDirector);
+                break;
+            case 'actualizarCarreraDeDirector':
+                $idDirector = $_REQUEST['idDirector'];
+                $nomActualizarDirectorCargo = $_REQUEST['nomActualizarDirectorCargo'];
+                $idCarrera = $_REQUEST['idCarrera'];
+                $res = $director->actualizarCarreraDeDirector($idDirector,$nomActualizarDirectorCargo,$idCarrera);
+                break;
+            case 'directoresCarreraDisponibles':
+                $res = $director->directoresCarreraDisponibles();
+                break;
+            case 'directoresAcademicosDisponibles':
+                $res = $director->directoresAcademicosDisponibles();
+                break;
+            case 'eliminarDirector':
+                $clavePrimaria = $_REQUEST['clavePrimaria'];
+                $res = $director->eliminarDirector($clavePrimaria);
+                break;
+            case 'actualizarDirector':
+                $clavePrimaria = $_REQUEST['clavePrimaria'];
+                $nomDirector = $_REQUEST['nomDirector'];
+                $ciDirector = $_REQUEST['ciDirector'];
+                $correoDirector = $_REQUEST['correoDirector'];
+                $telDirector = $_REQUEST['telDirector'];
+                $res = $director->actualizarDirector($clavePrimaria,$nomDirector,$ciDirector,$correoDirector,$telDirector);
+                break;
             case 'listarDirectoresAcademicos':
                 $res = $director->listarDirectoresAcademicos();
                 break;
@@ -108,6 +153,28 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'EditarFacultad':
+                $idFacultad = $_REQUEST['idFacultad'];
+                $nomEditFacultad = $_REQUEST['nomEditFacultad'];
+                $facEditCodigo = $_REQUEST['facEditCodigo'];
+                $facEditFechaCrea = $_REQUEST['facEditFechaCrea'];
+                $dirEditFac = $_REQUEST['dirEditFac'];
+                $res = $facultad->EditarFacultad($idFacultad,$nomEditFacultad,$facEditCodigo,$facEditFechaCrea,$dirEditFac);
+                break;
+            case 'EliminarFacultad':
+                $idFacultad = $_REQUEST['idFacultad'];
+                $res = $facultad->EliminarFacultad($idFacultad);
+                break;
+            case 'listarFacultades':
+                $res = $facultad->LeerFacultades();
+                break;
+            case 'insertarFacultad':
+                $nomFacultad = $_REQUEST['nomFacultad'];
+                $facCodigo = $_REQUEST['facCodigo'];
+                $facFechaCrea = $_REQUEST['fechaCreacion']; //129
+                $dirFac = $_POST['dirFac'];
+                $res = $facultad->insertarFacultad($nomFacultad,$facCodigo,$facFechaCrea,$dirFac);
+                break;
             case 'facultadesDisponibles':
                 $res = $facultad->facultadesDisponibles();
                 break;
@@ -137,6 +204,38 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'actualizarNombreDirectorCarrera':
+                $nomDirectorAnterior = $_REQUEST['nomDirectorAnterior'];
+                $nomDirectorNuevo = $_REQUEST['nomDirectorNuevo'];
+                $res = $carrera->actualizarNombreDirectorCarrera($nomDirectorAnterior,$nomDirectorNuevo);
+                break;
+            case 'actualizarDirectorCarrera':
+                $nomDirector = $_REQUEST['nomDirector'];
+                $res = $carrera->actualizarDirectorCarrera($nomDirector);
+                break;
+            case 'editarCarrera':
+                $idCarrera = $_REQUEST['idCarrera'];
+                $nomCarrera = $_REQUEST['nomCarrera']; 
+                $codCarrera = $_REQUEST['codCarrera']; 
+                $fecCarrera = $_REQUEST['fecCarrera']; 
+                $dirCarrera = $_REQUEST['dirCarrera']; 
+                $res = $carrera->editarCarrera($idCarrera,$nomCarrera,$codCarrera,$fecCarrera,$dirCarrera);
+                break;
+            case 'agregarCarrera':
+                $depAgregarCarrera = $_REQUEST['depAgregarCarrera'];
+                $nomAgregarCarrera = $_REQUEST['nomAgregarCarrera']; 
+                $codAgregarCarrera = $_REQUEST['codAgregarCarrera']; 
+                $fecAgregarCarrera = $_REQUEST['fecAgregarCarrera']; 
+                $dirAgregarCarrera = $_REQUEST['dirAgregarCarrera']; 
+                $res = $carrera->agregarCarrera($depAgregarCarrera,$nomAgregarCarrera,$codAgregarCarrera,$fecAgregarCarrera,$dirAgregarCarrera);
+                break;
+            case 'eliminarCarrera':
+                $idCarrera = $_REQUEST['idCarrera']; 
+                $res = $carrera->eliminarCarrera($idCarrera);
+                break;
+            case 'listarCarrera':
+                $res = $carrera->listarCarrera();
+                break;
             case 'carreraDisponibles':
                 $ambiente = $_REQUEST['categoria'];
                 $res = $carrera->carrerasDisponibles($ambiente);
@@ -199,22 +298,96 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'eliminarAuxiliarLaboratorio':
+                $clavePrimaria = $_REQUEST['idAuxLaboratorio'];
+                $res = $auxiliarLaboratorio->eliminarAuxiliarLaboratorio($clavePrimaria);
+                break;
+            case 'actualizarAuxiliarLaboratorio':
+                $nomAuxLaboratorio = $_REQUEST['nomAuxLaboratorio'];
+                $codAuxLaboratorio = $_REQUEST['codAuxLaboratorio'];
+                $corAuxLaboratorio = $_REQUEST['corAuxLaboratorio'];
+                $telAuxLaboratorio = $_REQUEST['telAuxLaboratorio'];
+                $dirAuxLaboratorio = $_REQUEST['dirAuxLaboratorio'];
+                $clavePrimaria = $_REQUEST['idAuxLaboratorio'];
+                $res = $auxiliarLaboratorio->actualizarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$dirAuxLaboratorio,$clavePrimaria);
+                break;
+            // case 'insertarAuxiliarLaboratorioFechaInicio':
+            //     $nomAuxLaboratorio = $_REQUEST['nomAuxLaboratorio'];
+            //     $codAuxLaboratorio = $_REQUEST['codAuxLaboratorio'];
+            //     $corAuxLaboratorio = $_REQUEST['corAuxLaboratorio'];
+            //     $telAuxLaboratorio = $_REQUEST['telAuxLaboratorio'];
+            //     $pasAuxLaboratorio = $_REQUEST['pasAuxLaboratorio'];
+            //     $dirAuxLaboratorio = $_REQUEST['dirAuxLaboratorio'];
+            //     $idDepartamento = $_REQUEST['idDepartamento'];
+            //     $aux = getdate();
+            //     $fecha = $aux['year']."-".$aux['mon']."-".$aux['mday'];
+            //     $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$pasAuxLaboratorio,$dirAuxLaboratorio,$idDepartamento);
+            //     break;
             case 'insertarAuxiliarLaboratorio':
-                $nomPersLab = $_REQUEST['nomPersLab'];
-                $ciPersLab = $_REQUEST['ciPersLab'];
-                $correoPersLab = $_REQUEST['correoPersLab'];
-                $telPersLab = $_REQUEST['telPersLab'];
-                $sisPersLab = $_REQUEST['sisPersLab'];
-                $passPersLab = $_REQUEST['passPersLab'];
-                $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomPersLab,$ciPersLab,$correoPersLab,$telPersLab,$sisPersLab,$passPersLab);
+                $nomAuxLaboratorio = $_REQUEST['nomAuxLaboratorio'];
+                $codAuxLaboratorio = $_REQUEST['codAuxLaboratorio'];
+                $corAuxLaboratorio = $_REQUEST['corAuxLaboratorio'];
+                $telAuxLaboratorio = $_REQUEST['telAuxLaboratorio'];
+                $pasAuxLaboratorio = $_REQUEST['pasAuxLaboratorio'];
+                $dirAuxLaboratorio = $_REQUEST['dirAuxLaboratorio'];
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$pasAuxLaboratorio,$dirAuxLaboratorio,$idDepartamento);
+                
                 break;
             case 'listarTableAuxiliarLaboratorio':
-                $res = $auxiliarLaboratorio->listarTableAuxiliarLaboratorio();
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarLaboratorio->listarTableAuxiliarLaboratorio($idDepartamento);
                 break;
             default:
                 # code...
                 break;
         }
+        return $res;
+    }
+
+    function ejecutarConsultasLaboratorio(){
+        $laboratorio = new Laboratorio();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'laboratoriosDisponibles':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $laboratorio->laboratoriosDisponibles($idDepartamento);
+                break;
+            case 'elimarLaboratorio':
+                $idLaboratorio = $_REQUEST['idLaboratorio'];
+                $res = $laboratorio->elimarLaboratorio($idLaboratorio);
+                break;
+            case 'editarLaboratorio':
+                $nomLaboratorio = $_REQUEST['nomLaboratorio'];
+                $codLaboratorio = $_REQUEST['codLaboratorio'];
+                $fecLaboratorio = $_REQUEST['fecLaboratorio'];
+                $desLaboratorio = $_REQUEST['desLaboratorio'];
+                $mesLaboratorio = $_REQUEST['mesLaboratorio'];
+                $horLaboratorio = $_REQUEST['horLaboratorio'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];
+                $res = $laboratorio->editarLaboratorio($nomLaboratorio,$codLaboratorio,$fecLaboratorio,$desLaboratorio,$mesLaboratorio,$horLaboratorio,$idLaboratorio);
+                break;
+            case 'agregarLaboratorio':
+                $nomLaboratorio = $_REQUEST['nomLaboratorio'];
+                $codLaboratorio = $_REQUEST['codLaboratorio'];
+                $fecLaboratorio = $_REQUEST['fecLaboratorio'];
+                $desLaboratorio = $_REQUEST['desLaboratorio'];
+                $mesLaboratorio = $_REQUEST['mesLaboratorio'];
+                $horLaboratorio = $_REQUEST['horLaboratorio'];
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $laboratorio->agregarLaboratorio($nomLaboratorio,$codLaboratorio,$fecLaboratorio,$desLaboratorio,$mesLaboratorio,$horLaboratorio,$idDepartamento);
+                break;
+            case 'listarLaboratorios':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $laboratorio->listarLaboratorios($idDepartamento);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
         return $res;
     }
 ?>

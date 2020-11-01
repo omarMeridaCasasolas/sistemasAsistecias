@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(isset($_SESSION['idAuxDoc'])){
+    if(isset($_SESSION['nombreAuxLab'])){
 
     }else{
         header("Location:../index.php?error=auntentificacion&tipo=auxiliar_laboratorio");

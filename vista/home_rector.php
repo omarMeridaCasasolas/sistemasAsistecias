@@ -3,8 +3,8 @@
     if(isset($_SESSION["codigo_autoridad"])){
 
     }else{
-        header("Location:../index.php");
-    }
+         header("Location:../index.php");
+     }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,58 +47,34 @@
         </div>
         <!-- <a href="Crear_director_carrera.php">Crear director de carrera/unidad</a> -->
         <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+            <button type="button" class="btn btn-primary justify-content-end" data-toggle="modal" data-target="#myModal2">
                 Crear facultad
-            </button>
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
-                Crear director academico
             </button>
         </div>
         <h2 class="text-primary text-center">Facultades de UMSS</h2>
-        <table id="example" class="hover" style="width:100%">
+        <table id="tableFacultad" class="hover" style="width:100%">
             <thead>
                 <tr>
                     <th>Codigo Facultad</th>
                     <th>Nombre de la facultad</th>
                     <th>Fecha de creacion</th>
                     <th>Director Academico</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>FCYT</td>
-                    <td>Facultad de ciencias y tecnologia</td>
-                    <td>1905-10-10</td>
-                    <td>Maguel fulanito Mendes</td>
-                </tr>
-                <tr>
-                    <td>FCE</td>
-                    <td>Facultad de ciencias economicas</td>
-                    <td>1895-05-10</td>
-                    <td>Carlos choque Perez</td>
-                </tr>
-                <tr>
-                    <td>FM</td>
-                    <td>Facultad de medicina</td>
-                    <td>1855-05-10</td>
-                    <td>Karen Gutierrez</td>
-                </tr>
-                <tr>
-                    <td>FCS</td>
-                    <td>Facultad ciencias sociales</td>
-                    <td>1925-05-10</td>
-                    <td>Juan Terreazas Prada</td>
-                </tr>
             </tbody>
         </table>
         <!-- director academico -->
+        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+                Crear director academico
+            </button>
         <br>
         <h2 class="text-primary text-center">Directores academicos</h2>
         <table id="tablaDirAcademico" class="hover" style="width:100%">
             <thead>
                 <tr>
-                    <th>Nombre del director</th>
-                    <th>Asignacion </th>
+                    <th>Director Academico</th>
+                    <th>Facultad </th>
                     <th>Correo electronico</th>
                     <th>Telefono</th>
                 </tr>
@@ -179,7 +155,7 @@
                     </div>
                 <!--modal body-->
                     <div class="modal-body">
-                    <form action="" method="post" class="was-validated">
+                    <form action="" id="formCrearFacultad" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="nomFacultad">Nombre de la facultad: </label>
                                 <input type="text" name="nomFacultad" id="nomFacultad" class="form-control" required>
@@ -210,7 +186,84 @@
                             </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Crear Director Academico">
-                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCerrarAutoridad">Cancelar</button>
+                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCerrarFacultad">Cancelar</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Editar Facultad ventana -->
+
+        <div class="modal fade" id="myModal4">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <!-- Modal Header -->
+                    <div class="modal-header bg-warning">
+                        <h2 class="modal-title text-center">Editar Facultad</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                <!--modal body-->
+                    <div class="modal-body">
+                    <form action="" id="formEditarFacultad" method="post" class="was-validated">
+                    <input type="text" class="d-none" name="idFacultadEditar" id="idFacultadEditar">
+                        <div class="form-group">
+                                <label for="nomEditFacultad">Editar nombre de la facultad: </label>
+                                <input type="text" name="nomEditFacultad" id="nomEditFacultad" class="form-control" required>
+                                <div class="invalid-feedback">llene el campo</div>
+                            </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="facEditCodigo">Editar codigo facultad: </label>
+                                <input type="text" name="facEditCodigo" id="facEditCodigo" class="form-control" required>
+                                <div class="invalid-feedback">llene el campo</div>
+                            </div>
+                            <div class="form-group col-md-7">
+                                <label for="facEditFechaCrea">Editar fecha: </label>
+                                <input type="date" name="facEditFechaCrea" id="facEditFechaCrea" class="form-control" required>
+                                <div class="invalid-feedback">Escoje fecha</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label for="dirEditFac">Editar Director Academico: </label>
+                                <select class="form-control" id="dirEditFac" required>
+                                    <option value="">None</option>
+                                    <option>Sujeto Uno</option>
+                                    <option>Sujeto Dos</option>
+                                    <option>Sujeto Tres</option>
+                                    <option>Sujeto Cinco</option>
+                                </select required>
+                                <div class="invalid-feedback">Silecione facultad</div>
+                            </div>
+                        <div class="text-center my-2">
+                            <input type="submit" class="btn  btn-primary" value="Actualizar facultad">
+                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCloseEditarFacultad">Cancelar</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal eliminar ventana -->
+
+        <div class="modal fade" id="myModal5">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <!-- Modal Header -->
+                    <div class="modal-header bg-danger">
+                        <h2 class="modal-title text-center">Eliminar Facultad</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                <!--modal body-->
+                    <div class="modal-body">
+                    <form action="" id="formEliminarFacultad" method="post" class="was-validated">
+                        <input type="text" class="d-none" name="" id="idFacultadEliminar">
+                        <p> Usted esta seguro que quiere eliminar la facultadad <strong id="nomFacultadEliminar"></strong> con el codigo: <strong id="codFacultadEliminar"></strong><p>
+                        <div class="text-center my-2">
+                            <input type="submit" class="btn  btn-primary" value="Eliminar Facultad">
+                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCloseEliminarFacultad">Cancelar</button>
                         </div>
                     </form>
                     </div>
@@ -218,6 +271,7 @@
             </div>
         </div>
     </main>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="src/home_rector.js"></script>
 </body>
 </html>

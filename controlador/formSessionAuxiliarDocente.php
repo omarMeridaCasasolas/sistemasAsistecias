@@ -1,12 +1,11 @@
 <?php 
     session_start();
-    if(isset($_POST['correoAuxDoc']) && isset($_POST['passAuxDoc']) && isset($_POST['codigoAuxDoc'])){
+    if(isset($_POST['correoAuxDoc']) && isset($_POST['passAuxDoc'])){
         require_once("../modelo/model_auxiliar_docente.php");
         $correoAuxDoc = $_POST['correoAuxDoc'];
         $passAuxDoc  = $_POST['passAuxDoc'];
-        $codigoAuxDoc = $_POST['codigoAuxDoc'];
         $auxliarDocente = new AuxliarDocente();
-        $respuesta = $auxliarDocente->verificarAuxliarDocente($correoAuxDoc,$passAuxDoc,$codigoAuxDoc);
+        $respuesta = $auxliarDocente->verificarAuxliarDocente($correoAuxDoc,$passAuxDoc);
         if(isset($respuesta['nombre_aux_docente'])){
             $_SESSION['nombreAuxDoc'] = $respuesta['nombre_aux_docente'];
             $_SESSION['idAuxDoc'] = $respuesta['id_aux_docente'];

@@ -4,9 +4,8 @@
         require_once("../modelo/model_docente.php");
         $correoDocente = $_POST['correoDocente'];
         $passDocente  = $_POST['passDocente'];
-        $codigoDocente = $_POST['codigoDocente'];
         $docente = new Docente();
-        $respuesta = $docente->verificarDocente($correoDocente,$passDocente,$codigoDocente);
+        $respuesta = $docente->verificarDocente($correoDocente,$passDocente);
         if(isset($respuesta['nombre_docente'])){
             $_SESSION['nombreDocente'] = $respuesta['nombre_docente'];
             $_SESSION['idDocente'] = $respuesta['id_docente'];

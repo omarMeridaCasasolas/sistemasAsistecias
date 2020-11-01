@@ -2,11 +2,10 @@
     if(isset($_POST['correoAutoridad'])){
         session_start();
         $correoAutoridad = $_POST['correoAutoridad'];
-        $codigoAutoridad = $_POST['codigoAutoridad'];
         $passAutoridad = $_POST['passAutoridad'];
         require_once("../modelo/model_director.php");
         $director = new Director();
-        $res = $director->loginAutoridad($correoAutoridad,$codigoAutoridad,$passAutoridad);
+        $res = $director->loginAutoridad($correoAutoridad,$passAutoridad);
         //var_dump($res);
         if($res){
             $_SESSION["codigo_autoridad"] = $res["id_ditector"];

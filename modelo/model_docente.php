@@ -26,10 +26,10 @@
             return $respuesta;
         }
 
-        public function verificarDocente($correoDocente,$passDocente,$codigoDocente){
-            $sql = "SELECT * FROM docente WHERE UPPER(correo_docente) = UPPER(:correo) AND password_docente = :pass AND sis_docente = :sis";
+        public function verificarDocente($correoDocente,$passDocente){
+            $sql = "SELECT * FROM docente WHERE UPPER(correo_docente) = UPPER(:correo) AND password_docente = :pass ";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL ->execute(array(":correo"=>$correoDocente,":pass"=>$passDocente,":sis"=>$codigoDocente));
+            $sentenceSQL ->execute(array(":correo"=>$correoDocente,":pass"=>$passDocente));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             return $respuesta[0]; 
@@ -44,7 +44,6 @@
             $res = json_encode($respuesta);
             return $res;
         }
-        
         public function AsignarDirectorCarrera($nomDirector,$textDirector){
             $sql = "UPDATE carrera SET director_carrera = :nombreDirector WHERE nombre_carrera = :departamento";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

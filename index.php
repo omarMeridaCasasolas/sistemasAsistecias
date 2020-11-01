@@ -11,14 +11,40 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body class="bg-secondary">
-    <main class="container bg-white mt-5 rounded">
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h2 class="modal-title" class="text-center">Te olvidaste tu contraseña</h2>
+                                <button type="button" id="btnCerrarVtnPass" class="close" data-dismiss="modal" >&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formRecuperarPassword" class="was-validated">
+                                <div class="form-group">
+                                    <h5><label for="correoParaRecuparar">Escribe tu correo para recibir un mensaje: </label></h5>
+                                    <input type="email" name="correoParaRecuparar" id="correoParaRecuparar" class="form-control" required>
+                                    <div class="valid-feedback">Formato aceptado</div>
+                                </div>
+                                <h5 id="msmRespuesta" class="text-danger"></h5>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" value="Enviar">    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <main class="bg-white mt-4 mx-auto rounded col-lg-6 col-md-10">
         <h1 class="text-center text-danger py-2">Sistema de Asistencia Virtual UMSS</h1>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item active" id="idItemUno"><a href="#indice" class="nav-link active" id="idLinkUno" data-toggle="tab">Indice</a></li>
             <li class="nav-item" id="idItemDos"><a href="#autoridadesAcademicas" class="nav-link" id="idLinkDos" data-toggle="tab">Autoridades Academicas</a></li>
             <li class="nav-item" id="idItemTres"><a href="#docente" class="nav-link" id="idLinkTres" data-toggle="tab">Docentes</a></li>
-            <li class="nav-item" id="idItemCuatro"><a href="#auxiliarLaboratorio" class="nav-link" id="idLinkCuatro" data-toggle="tab">Personal de laboratorio</a></li>
             <li class="nav-item" id="idItemCinco"><a href="#auxiliarDocencia" class="nav-link " id="idLinkCinco" data-toggle="tab">Auxiliares de docencia</a></li>
+            <li class="nav-item" id="idItemCuatro"><a href="#auxiliarLaboratorio" class="nav-link" id="idLinkCuatro" data-toggle="tab">Auxiliar de laboratorio</a></li>
+            
         </ul>
         <br>
         <div class="tab-content">
@@ -43,102 +69,99 @@
             </div>
             <div id="autoridadesAcademicas" class="container tab-pane fade">
                 <form action="controlador/formSessionDirector.php" method="post" class="was-validated">
-                    <h2 class="text-center">Ingreso a autoridades academicas <i class="fas fa-user"></i></h2>
-                    <div class="form-group mx-3">
-                        <label for="correoAutoridad">Ingrese su correo electronico: </label>
-                        <input type="email" name="correoAutoridad" id="correoAutoridad" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <h2 class="text-center">Autoridades academicas <i class="fas fa-user"></i></h2>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="correoAutoridad">Ingrese su correo electronico: </label>
+                            <input type="email" name="correoAutoridad" id="correoAutoridad" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
-                    <div class="form-group mx-3">
-                        <label for="codigoAutoridad">Ingrese codigo asignado: </label>
-                        <input type="password" name="codigoAutoridad" id="codigoAutoridad" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
-                    </div>
-                    <div class="form-group mx-3">
+                    <div class="row">
+                    <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                         <label for="passAutoridad">Ingrese password: </label>
                         <input type="password" name="passAutoridad" id="passAutoridad" class="form-control" required>
                         <div class="valid-feedback">Formato aceptado</div>
+                    </div>
                     </div>
                     <div class="text-center pb-2">
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h5><a href="">Olvidaste tu contraseña</a></h5>
+                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
                 <br>
             </div>
             <div id="docente" class="container tab-pane fade">
                 <form action="controlador/formSessionDocente.php" method="post" class="was-validated">
                     <h2 class="text-center">Ingreso Docente</h2>
-                    <div class="form-group mx-3">
-                        <label for="correoDocente">Ingrese su correo electronico: </label>
-                        <input type="email" name="correoDocente" id="correoDocente" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="correoDocente">Ingrese su correo electronico: </label>
+                            <input type="email" name="correoDocente" id="correoDocente" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
-                    <div class="form-group mx-3">
-                        <label for="codigoDocente">Ingrese codigo asignado: </label>
-                        <input type="password" name="codigoDocente" id="codigoDocente" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
-                    </div>
-                    <div class="form-group mx-3">
-                        <label for="passDocente">Ingrese password: </label>
-                        <input type="password" name="passDocente" id="passDocente" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="passDocente">Ingrese password: </label>
+                            <input type="password" name="passDocente" id="passDocente" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
                     <div class="text-center pb-2">
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h5><a href="">Olvidate tu contraseña</a></h5>
+                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
                 <br>
             </div>
             <div id="auxiliarLaboratorio" class="container tab-pane fade">
                 <form action="controlador/formSessionAuxiliarLaboratorio.php" method="post" class="was-validated">
-                    <h2 class="text-center">Ingreso Auxiliares laboratorios</h2>
-                    <div class="form-group mx-3">
-                        <label for="correoAuxLab">Ingrese su correo electronico: </label>
-                        <input type="email" name="correoAuxLab" id="correoAuxLab" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <h2 class="text-center">Ingreso Auxiliares laboratorios </i></h2>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="correoAuxLab">Ingrese su correo electronico: </label>
+                            <input type="email" name="correoAuxLab" id="correoAuxLab" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
-                    <div class="form-group mx-3">
-                        <label for="codigoAuxLab">Ingrese codigo asignado: </label>
-                        <input type="password" name="codigoAuxLab" id="codigoAuxLab" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
-                    </div>
-                    <div class="form-group mx-3">
-                        <label for="passAuxLab">Ingrese password: </label>
-                        <input type="password" name="passAuxLab" id="passAuxLab" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="passAuxLab">Ingrese password: </label>
+                            <input type="password" name="passAuxLab" id="passAuxLab" class="form-control"  required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
                     <div class="text-center pb-2">
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h5><a href="">Olvidate tu contraseña</a></h5>
+                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
                 <br>
             </div>
             <div id="auxiliarDocencia" class="container tab-pane fade">
                 <form action="controlador/formSessionAuxiliarDocente.php" method="post" class="was-validated">
                     <h2 class="text-center">Auxiliar de docencia</h2>
-                    <div class="form-group mx-3">
-                        <label for="correoAuxDoc">Ingrese su correo electronico: </label>
-                        <input type="email" name="correoAuxDoc" id="correoAuxDoc" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="correoAuxDoc">Ingrese su correo electronico: </label>
+                            <input type="email" name="correoAuxDoc" id="correoAuxDoc" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
                     </div>
-                    <div class="form-group mx-3">
-                        <label for="codigoAuxDoc">Ingrese codigo asignado: </label>
-                        <input type="password" name="codigoAuxDoc" id="codigoAuxDoc" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
-                    </div>
-                    <div class="form-group mx-3">
-                        <label for="passAuxDoc">Ingrese password: </label>
-                        <input type="password" name="passAuxDoc" id="passAuxDoc" class="form-control" required>
-                        <div class="valid-feedback">Formato aceptado</div>
-                    </div>
+                    <dov class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="passAuxDoc">Ingrese password: </label>
+                            <input type="password" name="passAuxDoc" id="passAuxDoc" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
+                    </dov>
                     <div class="text-center pb-2">
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h5><a href="">Olvidate tu contraseña</a></h5>
+                
+                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
                 <br>
             </div>
         </div>
