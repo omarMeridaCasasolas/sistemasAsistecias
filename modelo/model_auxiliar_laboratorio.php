@@ -51,4 +51,13 @@
             return $respuesta;
         }
 
+        public function recuperarPasswordAuxLab($correo){
+            $sql = "SELECT * FROM auxiliar_laboratorio WHERE UPPER(correo_auxiliar_lab) = UPPER(:correo)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":correo"=>$correo));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta[0];
+        }
+
     }

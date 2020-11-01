@@ -9,14 +9,13 @@
         $respuesta = $auxLaboratorio->verificarAuxiliarLaboratorio($correoAuxLab,$passAuxLab);
         var_dump($respuesta);
         if($respuesta['nombre_auxiliar_lab']){
-            echo "SI";
             $_SESSION['nombreAuxLab'] = $respuesta['nombre_auxiliar_lab'];
             $_SESSION['idAuxLab'] = $respuesta['id_aux_laboratorio'];
             $_SESSION['passwordAuxLab'] =  $passAuxLab;
             header("Location:../vista/home_auxiliar_laboratorio.php");
         }else{
-            echo "NO";
-            //header("Location:../index.php?error=auntentificacion&tipo=auxiliar_laboratorio");
+            //echo "NO";
+            header("Location:../index.php?error=auntentificacion&tipo=auxiliar_laboratorio");
         }
     }else{
         echo "error 404";

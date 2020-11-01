@@ -251,6 +251,18 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'recuperarPasswordDocente':
+                $correo = $_REQUEST['correo'];
+                $respuesta = $docente->recuperarPasswordDocente($correo);
+                if(is_array($respuesta)){
+                    $destino = $respuesta['correo_docente'];
+                    $password = $respuesta['password_docente'];
+                    $res = include_once('../controlador/formEnviarPassword.php');
+                    //$res = true;
+                }else{
+                    $res = 2;
+                }
+                break;
             case 'insertarDocente':
                 $nomDocente = $_REQUEST['nomDocente'];
                 $ciDocente = $_REQUEST['ciDocente'];
@@ -274,6 +286,18 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'recuperarPasswordAuxDoc':
+                $correo = $_REQUEST['correo'];
+                $respuesta = $auxiliarDocente->recuperarPasswordAuxDoc($correo);
+                if(is_array($respuesta)){
+                    $destino = $respuesta['correo_aux_docente'];
+                    $password = $respuesta['password_aux_docente'];
+                    $res = include_once('../controlador/formEnviarPassword.php');
+                    //$res = true;
+                }else{
+                    $res = 2;
+                }
+                break;
             case 'insertarAuxiliarDocente':
                 $nomAuxiliarDocente = $_REQUEST['nomAuxiliarDocente'];
                 $ciAuxiliarDocente = $_REQUEST['ciAuxiliarDocente'];
@@ -298,6 +322,18 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'recuperarPasswordAuxLab':
+                $correo = $_REQUEST['correo'];
+                $respuesta = $auxiliarLaboratorio->recuperarPasswordAuxLab($correo);
+                if(is_array($respuesta)){
+                    $destino = $respuesta['correo_auxiliar_lab'];
+                    $password = $respuesta['password_auxiliar_lab'];
+                    $res = include_once('../controlador/formEnviarPassword.php');
+                    //$res = true;
+                }else{
+                    $res = 2;
+                }
+                break;
             case 'eliminarAuxiliarLaboratorio':
                 $clavePrimaria = $_REQUEST['idAuxLaboratorio'];
                 $res = $auxiliarLaboratorio->eliminarAuxiliarLaboratorio($clavePrimaria);

@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if(isset($_POST['correoDocente']) && isset($_POST['passDocente']) && isset($_POST['codigoDocente'])){
+    if(isset($_POST['correoDocente']) && isset($_POST['passDocente'])){
         require_once("../modelo/model_docente.php");
         $correoDocente = $_POST['correoDocente'];
         $passDocente  = $_POST['passDocente'];

@@ -112,8 +112,34 @@
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
+                <h6><a href="" data-toggle="modal" data-target="#myModalPassDocente">Olvidaste tu contraseña</a></h6>
                 <br>
+                <!-- ventana modal password docente  -->
+                <div id="myModalPassDocente" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h2 class="modal-title" class="text-center">Contraseña-Docente</h2>
+                                <button type="button" id="btnCerrarVtnPassDocente" class="close" data-dismiss="modal" >&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formRecuperarPasswordDocente" class="was-validated">
+                                <div class="form-group">
+                                    <h5><label for="correoParaRecupararDocente">Escribe tu correo para recibir un mensaje: </label></h5>
+                                    <input type="email" name="correoParaRecupararDocente" id="correoParaRecupararDocente" class="form-control" required>
+                                    <div class="valid-feedback">Formato aceptado</div>
+                                </div>
+                                <h5 id="msmRespuestaDocente" class="text-danger"></h5>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" value="Enviar">    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="auxiliarLaboratorio" class="container tab-pane fade">
                 <form action="controlador/formSessionAuxiliarLaboratorio.php" method="post" class="was-validated">
@@ -136,9 +162,36 @@
                         <input type="submit" class="btn btn-primary" value="Ingresar">
                     </div>
                 </form>
-                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
+                <h6><a href="" data-toggle="modal" data-target="#myModalPassAuxLab">Olvidaste tu contraseña</a></h6>
                 <br>
+                <!-- ventana modal password Auxiliar Laboratorio  -->
+                <div id="myModalPassAuxLab" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h2 class="modal-title" class="text-center">Contraseña-Auxiliares laboratorio</h2>
+                                <button type="button" id="btnCerrarVtnPassAuxLab" class="close" data-dismiss="modal" >&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formRecuperarPasswordAuxLab" class="was-validated">
+                                <div class="form-group">
+                                    <h5><label for="correoParaRecupararAuxLab">Escribe tu correo para recibir un mensaje: </label></h5>
+                                    <input type="email" name="correoParaRecupararAuxLab" id="correoParaRecupararAuxLab" class="form-control" required>
+                                    <div class="valid-feedback">Formato aceptado</div>
+                                </div>
+                                <h5 id="msmRespuestaAuxLab" class="text-danger"></h5>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" value="Enviar">    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div id="auxiliarDocencia" class="container tab-pane fade">
                 <form action="controlador/formSessionAuxiliarDocente.php" method="post" class="was-validated">
                     <h2 class="text-center">Auxiliar de docencia</h2>
@@ -161,9 +214,36 @@
                     </div>
                 </form>
                 
-                <h6><a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña</a></h6>
+                <h6><a href="" data-toggle="modal" data-target="#myModalPassAuxDoc">Olvidaste tu contraseña</a></h6>
                 <br>
             </div>
+
+            <!-- ventana modal password Auxiliar Docencia  -->
+            <div id="myModalPassAuxDoc" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h2 class="modal-title" class="text-center">Contraseña-Auxiliares Docencia</h2>
+                                <button type="button" id="btnCerrarVtnPassAuxDoc" class="close" data-dismiss="modal" >&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formRecuperarPasswordAuxDoc" class="was-validated">
+                                <div class="form-group">
+                                    <h5><label for="correoParaRecupararAuxDoc">Escribe tu correo para recibir un mensaje: </label></h5>
+                                    <input type="email" name="correoParaRecupararAuxDoc" id="correoParaRecupararAuxDoc" class="form-control" required>
+                                    <div class="valid-feedback">Formato aceptado</div>
+                                </div>
+                                <h5 id="msmRespuestaAuxDoc" class="text-danger"></h5>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" value="Enviar">    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </main>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

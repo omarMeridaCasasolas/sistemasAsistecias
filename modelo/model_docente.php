@@ -52,4 +52,12 @@
             return $respuesta;
         }
 
+        public function recuperarPasswordDocente($correo){
+            $sql = "SELECT * FROM docente WHERE UPPER(correo_docente) = UPPER(:correo)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":correo"=>$correo));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta[0];
+        }
     }
