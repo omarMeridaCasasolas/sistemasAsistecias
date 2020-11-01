@@ -13,7 +13,7 @@ $(document).ready(function () {
             url: "controlador/interprete.php",
             data: datosUser,
             success: function (response) {
-                console.log(response);ç
+                console.log(response);
                 
                 if(response == 2021){
                     //console.log("Se ha enviado su correo");
