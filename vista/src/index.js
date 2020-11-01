@@ -13,8 +13,9 @@ $(document).ready(function () {
             url: "controlador/interprete.php",
             data: datosUser,
             success: function (response) {
-                console.log(response);
-                if(response == 1){
+                console.log(response);ç
+                
+                if(response == 2021){
                     //console.log("Se ha enviado su correo");
                     $("#btnCerrarVtnPass").click();
                     swal("Exito","Se ha enviado su contraseña a su correo","success");
