@@ -1,4 +1,5 @@
 <?php include_once("parts/cabezera_director.php");?>
+
 <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
 <body class="bg-secondary">
     <main class="container bg-white p-2">
@@ -56,7 +57,7 @@
                                     <!-- <div class="invalid-feedback">llene el campo</div> -->
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="horAgregarLaboratorio">Trabajo Hora/mes: </label>
+                                    <label for="horAgregarLaboratorio">Cant.de dias Trabajo: </label>
                                     <input type="text" name="horAgregarLaboratorio" id="horAgregarLaboratorio" class="form-control" required>
                                     <!-- <div class="invalid-feedback">Llene campo:</div> -->
                                 </div>
@@ -119,7 +120,7 @@
                                     <!-- <div class="invalid-feedback">llene el campo</div> -->
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="horEditarLaboratorio">Trabajo Hora/mes: </label>
+                                    <label for="horEditarLaboratorio">Cant. de dias Trabajo: </label>
                                     <input type="text" name="horEditarLaboratorio" id="horEditarLaboratorio" class="form-control" required>
                                     <!-- <div class="invalid-feedback">Llene campo:</div> -->
                                 </div>
@@ -161,7 +162,7 @@
             <th>Siglas</th>
             <th>Nombre de Laboratorio</th>
             <th>Fecha de creacion</th>
-            <th>Hora de trabajos(mes)</th>
+            <th>Cant. de dias trabajo</th>
             <th>Opciones</th>
         </thead>
     </table>
@@ -274,7 +275,7 @@
                                     <!-- <div class="invalid-feedback">llene el campo</div> -->
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="horEditarLaboratorio">Trabajo Hora/mes: </label>
+                                    <label for="horEditarLaboratorio">Cant. de dias Trabajo: </label>
                                     <input type="text" name="horEditarLaboratorio" id="horEditarLaboratorio" class="form-control" required>
                                     <!-- <div class="invalid-feedback">Llene campo:</div> -->
                                 </div>

@@ -7,6 +7,12 @@
 
     // $destino=$_POST['correo'];
     // $password=$_POST['password'];
+    // putenv("SENDGRID_API_KEY=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");
+    // putenv("SENDGRID_PASSWORD=omarCasasolas17-");  
+    // putenv("SENDGRID_USERNAME=omarCasasolasMerida@gmail.com");  
+    // $c = getenv("UNIQID"); 
+    //                     echo $c;
+                    
     $from = new SendGrid\Email(null, "Asistencia_Virtual_UMSS@mail.com");
     $subject = "Recuperacion de password ";
     $to = new SendGrid\Email(null, $destino);

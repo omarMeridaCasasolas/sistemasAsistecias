@@ -23,6 +23,13 @@
             $sql = "INSERT INTO auxiliar_laboratorio(nombre_auxiliar_lab,ci_auxiliar_lab,correo_auxiliar_lab,telefono_auxiliar_lab,password_auxiliar_lab,responsable_lab, id_departamento) VALUES(:nombre,:carnet,:correo,:tel,:pass,:responsable,:id)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $respuesta = $sentenceSQL->execute(array(":nombre"=>$nomAuxLaboratorio,":carnet"=>$codAuxLaboratorio,":correo"=>$corAuxLaboratorio,":tel"=>$telAuxLaboratorio,":pass"=>$pasAuxLaboratorio,":responsable"=>$dirAuxLaboratorio,":id"=>$idDepartamento));
+            if($respuesta == 1 || $respuesta == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }
+            $sentenceSQL->closeCursor();
             return $respuesta;
         }
 

@@ -73,7 +73,7 @@ $(document).ready(function () {
         $("#fecEditarLaboratorio").val(dataEditarLaboratorio.fecha_creacion_lab);
         $("#desEditarLaboratorio").val(dataEditarLaboratorio.descripcion_laboratorio);
         $("#mesEditarLaboratorio").val(dataEditarLaboratorio.duracion_laboratorio);
-        $("#horEditarLaboratorio").val(dataEditarLaboratorio.horas_trab_mes);
+        $("#horEditarLaboratorio").val(dataEditarLaboratorio.dias_trab_sem);
     });
 
     //eliminar Laboratorio
@@ -121,30 +121,37 @@ $(document).ready(function () {
                 idDepartamento: $("#idDepartamento").val()
             };
             $.post("../controlador/interprete.php", datosAuxLaboratorio,function (resp, textStatus, jqXHR) {
-                    // console.log(resp);
-                    $("#btnCerrarVtnAgregarAuxLab").click();
-                    if(resp == 1){
-                        // if(datosAuxLaboratorio.dirAuxLaboratorio != "Ninguno"){
-                        //     let datosHorarioAuxLaboratorio = {
-                        //         clase: "HorarioAuxiliarLaboratorio",
-                        //         metodo: "insertarHorarioAuxiliarLaboratorio",
-                        //         nomAuxLaboratorio: $("#nomAgregarAuxLaboratorio").val(),
-                        //         codAuxLaboratorio: $("#codAgregarAuxLaboratorio").val(),
-                        //         corAuxLaboratorio: $("#corAgregarAuxLaboratorio").val(),
-                        //         telAuxLaboratorio: $("#telAgregarAuxLaboratorio").val(), 
-                        //         pasAuxLaboratorio: $("#pasAgregarAuxLaboratorio").val(),
-                        //         dirAuxLaboratorio: $("#dirAgregarAuxLaboratorio").val(), 
-                        //         idDepartamento: $("#idDepartamento").val()
-                        //     };
-                        //     $.post("../controlador/interprete.php", datosHorarioAuxLaboratorio,function (data, textStatus, jqXHR) {
-                                    
-                        //         }
-                        //     );
-                        // }
-                        swal("Exito!!","Se ha creado  el auxiliar de laboratorio :"+datosAuxLaboratorio.nomAuxLaboratorio,"success");
-                        $("#formAgregarAuxLaboratorio")[0].reset();
-                        $('#tablaAuxiliarLaboratorio').dataTable().fnDestroy();
-                        listasAuxLaboratorios();
+                    //console.log(resp);
+                    $("#btnCerrarVtnAgregarAuxLab").click(); 
+                    let numero = parseInt(resp);
+                    if(Number.isInteger(numero) && numero >= 1){
+                        if(datosAuxLaboratorio.dirAuxLaboratorio != "Ninguno"){
+                            let datosHorarioAuxLaboratorio = {
+                                clase: "horarioAuxiliarLaboratorio",
+                                metodo: "insertarHorarioLaboratorio",
+                                idDepartamento: $("#idDepartamento").val(),
+                                idAuxiliarLaboratorio: numero,
+                                nombreLaboratorio: datosAuxLaboratorio.dirAuxLaboratorio
+                            };
+                            $.post("../controlador/interprete.php", datosHorarioAuxLaboratorio,function (data, textStatus, jqXHR) {
+                                    console.log(data);
+                                    let respuestaNumero = parseInt(data);
+                                    if(Number.isInteger(respuestaNumero) && respuestaNumero >= 1){
+                                        swal("Exito!!","Se ha creado  el auxiliar de laboratorio :"+datosAuxLaboratorio.nomAuxLaboratorio,"success");
+                                    }else{
+                                        swal("Problema!!",data,"warning");
+                                    }                        
+                                    $("#formAgregarAuxLaboratorio")[0].reset();
+                                    $('#tablaAuxiliarLaboratorio').dataTable().fnDestroy();
+                                    listasAuxLaboratorios();
+                                }
+                            );
+                        }else{
+                            swal("Exito!!","Se ha creado  el auxiliar de laboratorio :"+datosAuxLaboratorio.nomAuxLaboratorio,"success");
+                            $("#formAgregarAuxLaboratorio")[0].reset();
+                            $('#tablaAuxiliarLaboratorio').dataTable().fnDestroy();
+                            listasAuxLaboratorios();
+                        }
                     }else{
                         swal("Problema!!",resp,"warning");
                     }   
@@ -236,7 +243,7 @@ function listasLaboratorios(){
             {"data":"siglas_laboratorio"},
             {"data":"nombre_laboratorio"},
             {"data":"fecha_creacion_lab"},
-            {"data":"horas_trab_mes"},
+            {"data":"dias_trab_sem"},
             {"data": null, "defaultContent":"<button type='button' class='editarLaboratorio btn btn-warning' data-toggle='modal' data-target='#myModalEditarLaboratorio'>"
             +"<i class='far fa-edit'></i></button>  <button type='button' class='eliminarLaboratorio btn btn-danger' data-toggle='modal' data-target='#myModalEliminarLaboratorio' ><i class='fas fa-trash-alt'></i></button>"}
         ]

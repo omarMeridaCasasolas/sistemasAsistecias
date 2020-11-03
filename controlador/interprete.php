@@ -7,6 +7,8 @@
     require_once("../modelo/model_auxiliar_docente.php");
     require_once("../modelo/model_auxiliar_laboratorio.php");
     require_once("../modelo/model_laboratorio.php");
+    require_once("../modelo/model_horario_laboratorio.php");
+    
     $clase ="";
     $metodo = "";
     $tmp = "";
@@ -14,6 +16,9 @@
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
         switch($clase){
+            case 'horarioAuxiliarLaboratorio':
+                $tmp = ejecutarConsultasHorarioLab();
+                break;
             case 'AuxiliarLaboratorio':
                 $tmp = ejecutarConsultasAuxiliarLaboratorio();
                 break;
@@ -316,7 +321,7 @@
         }
         return $res;
     }
-
+    
     function ejecutarConsultasAuxiliarLaboratorio(){
         $auxiliarLaboratorio = new AuxiliarLaboratorio();
         $metodo = $_REQUEST['metodo'];
@@ -425,5 +430,29 @@
         }
 
         return $res;
+    }
+
+    function ejecutarConsultasHorarioLab(){
+        $horarioLaboratorio = new HorarioLaboratorio();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'insertarHorarioLaboratorio':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idAuxiliar = $_REQUEST['idAuxiliarLaboratorio'];                
+                $nombreLaboratorio = $_REQUEST['nombreLaboratorio'];
+                $laboratorio = new Laboratorio();
+                $idLaboratorio = $laboratorio->mostarIdPorNombreLab($nombreLaboratorio);
+                //echo $idLaboratorio['id_laboratorio'];	
+                $idLabConvertido = (string)$idLaboratorio['id_laboratorio'];
+                date_default_timezone_set('America/La_Paz');
+                $fechaInicio = date("Y-m-d");
+                // Resultado de ejemplo: 6:33 PM
+                $res = $horarioLaboratorio->insertarHorarioLaboratorio($idDepartamento, $idAuxiliar,$idLabConvertido,$fechaInicio); 
+                break;
+            default:
+                # code...
+                break;
+        }
     }
 ?>

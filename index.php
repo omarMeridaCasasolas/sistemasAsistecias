@@ -246,6 +246,9 @@
                 </div>
         </div>
     </main>
+    <footer>
+
+    </footer>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="vista/src/index.js"></script>
 </body>
