@@ -26,7 +26,7 @@
         }
 
         public function agregarLaboratorio($nomLaboratorio,$codLaboratorio,$fecLaboratorio,$desLaboratorio,$mesLaboratorio,$horLaboratorio,$idDepartamento){
-            $sql = "INSERT INTO laboratorio(id_departamento,nombre_laboratorio,fecha_creacion_lab,siglas_laboratorio,duracion_laboratorio,descripcion_laboratorio,horas_trab_mes) VALUES(:id, :nombre, :fecha, :codigo, :mes, :descripcion, :hora)";
+            $sql = "INSERT INTO laboratorio(id_departamento,nombre_laboratorio,fecha_creacion_lab,siglas_laboratorio,duracion_laboratorio,descripcion_laboratorio,dias_trab_sem) VALUES(:id, :nombre, :fecha, :codigo, :mes, :descripcion, :hora)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $respuesta = $sentenceSQL->execute(array(":id"=>$idDepartamento,":nombre"=>$nomLaboratorio,":fecha"=>$fecLaboratorio,":codigo"=>$codLaboratorio,":descripcion"=>$desLaboratorio,":mes"=>$mesLaboratorio,":hora"=>$horLaboratorio));
             $sentenceSQL->closeCursor();
