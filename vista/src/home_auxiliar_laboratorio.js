@@ -1,4 +1,10 @@
 $(document).ready(function () {
+
+    // $('#myModal').modal({
+    //     backdrop: 'static',
+    //     keyboard: false
+    //  });
+
     $("#cerrarModal").click(function (e) { 
         $("#btnCerrarModal").click();       
     });
@@ -21,4 +27,5 @@ $(document).ready(function () {
         }
         $("#myModal").modal();
       });
+    
 });

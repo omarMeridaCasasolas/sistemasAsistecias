@@ -52,7 +52,7 @@
                     
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="../controlador/formActualiazarReporte.php" method="post">
+                        <form action="../controlador/formActualizarReporte.php" method="post">
                             <input type="text" name="idRegistro" id="idRegistro" class="d-none">
                             <div class="form-group">
                                 <h4>Trabajo hecho durante el dia: </h4>
