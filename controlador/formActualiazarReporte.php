@@ -1,5 +1,5 @@
 <?php 
-    
+    session_start();
     if(isset($_POST['idRegistro']) && isset($_POST['txtDescripcion']) && isset($_POST['txtObservacion'])){
         $descripcion = $_POST['txtDescripcion'];
         $observacion = $_POST['txtObservacion'];

@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    // $('#myModal').modal({
-    //     backdrop: 'static',
-    //     keyboard: false
-    //  });
 
     $("#cerrarModal").click(function (e) { 
         $("#btnCerrarModal").click();       
@@ -25,7 +21,10 @@ $(document).ready(function () {
             console.log(claveP[0]);
             $("#idRegistro").val(claveP[0]);
         }
-        $("#myModal").modal();
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+         });
       });
     
 });
