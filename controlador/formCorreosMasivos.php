@@ -16,6 +16,9 @@
             $sg = new \SendGrid($apiKey);
             $response = $sg->client->mail()->send()->post($mail);
             $res = $response->statusCode();
+            echo $res;
+            echo $response->headers();
+            echo $response->body();
             if($res != 202){
                 return $res;
             }
