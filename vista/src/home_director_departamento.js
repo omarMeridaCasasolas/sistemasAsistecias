@@ -47,10 +47,10 @@ $(document).ready(function() {
                 data: datosCorreo,
                 success: function (response) {
                     console.log(response);
-                    if(response == 202){
+                    if(response){
                         swal("Exito","Se ha enviado mensaje a todos los correos selecionados","success");
                     }else{
-                        swal("Problema",response,"Info");
+                        swal("Problema",response,"warning");
                     }
                 }
             });
