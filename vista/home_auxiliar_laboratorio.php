@@ -33,6 +33,7 @@
     <header class="bg-dark text-white p-5">
         <h1>Bienvenido Axiliar de laboratorio <?php echo $_SESSION['nombreAuxLab']; ?></h1>
         <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a> 
+        <a href="historial_reportes_Laboratorio.php">Historial de reportes</a>
     </header>
     <main class="bg-white mt-4 mx-auto rounded col-lg-8 col-md-12"> 
         <button type="button" class="d-none" data-toggle="modal" data-target="#myModal" id="btnCerrarModal">
@@ -77,15 +78,17 @@
             </div>
         </div>
         <?php 
+            $diaSiguiente ="";
             foreach ($laboratoriosPorAux as $elemnto) {
                 require_once('../modelo/model_laboratorio.php');
                 $laboratorio = new Laboratorio();
-                $detallesLaboratorio = $laboratorio->mostarLaboratorio($idAuxiliar);
+                $detallesLaboratorio = $laboratorio->mostarLaboratorio($elemnto['id_laboratorio']);
                 echo "<h2>Auxiliar de laboratorio: ".$detallesLaboratorio['nombre_laboratorio']." </h2>";
                 $fechaInicio = $elemnto['fecha_inicio_trabajo'];
-                $fechaReinicio = $elemnto['fecha_reinicio_reporte'];
+                $fechaReinicio = $elemnto['fecha_reinicio_reporte'];  //2021-02-20 fecha de reinicio
                 //Cambiar a cantidad de dias por laboratorio
-                $cantDias = 5;
+                $cantDias = $detallesLaboratorio['dias_trab_sem'];  //5
+                var_dump($cantDias);
                 if($fechaInicio == $fechaReinicio){
                     $nombreDia = date("l", strtotime($fechaReinicio));
                     $diaSiguiente = date("Y-m-d",strtotime($fechaReinicio."+ 1 days")); 
@@ -98,7 +101,7 @@
                                 <th>Observacion</th>
                                 <th>Adjuntar documento</th>
                             </thead><tbody>";
-                    if($cantDias == 5){
+                    if($cantDias == 6){
                         while($nombreDiaSiguiente != "Saturday"){
                             $diasTrabajados = $diasTrabajados." ".$nombreDiaSiguiente;
                             $respuesta = $reporteAuxiliarLaboratorio->reportePorFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
@@ -117,14 +120,122 @@
                                         <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
                                         <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
                                         </tr>";
-                            }
-                            
+                            }    
                             $diaSiguiente = date("Y-m-d",strtotime($diaSiguiente."+ 1 days")); 
                             $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));
                         }
+                        echo "</tbody></table>";
+                        // $res = $horarioLaboratorio->atualizarFechaReinicio($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                        // var_dump($res);
+                    }else{
+                        while($nombreDiaSiguiente != "Saturday"){
+                            if($nombreDiaSiguiente != "Sunday"){
+                                $diasTrabajados = $diasTrabajados." ".$nombreDiaSiguiente;
+                                $respuesta = $reporteAuxiliarLaboratorio->reportePorFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                                if(is_numeric($respuesta)){
+                                    $dila = $reporteAuxiliarLaboratorio->crearReporteDiaFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                                    echo "<tr><td>$diaSiguiente</td> 
+                                            <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
+                                            <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
+                                            <td><a>Sin Enlace</a></td>
+                                            <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
+                                            </tr>";
+                                }else{
+                                    echo "<tr><td>$diaSiguiente</td> 
+                                            <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
+                                            <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
+                                            <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                            <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
+                                            </tr>";
+                                }  
+                            }  
+                            $diaSiguiente = date("Y-m-d",strtotime($diaSiguiente."+ 1 days")); 
+                            $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));
+                        }
+                        echo "</tbody></table>";
+                        // $res = $horarioLaboratorio->atualizarFechaReinicio($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                        // var_dump($res);
                     }
-                    echo "</tbody></table>";
 
+                }else{  //2021-02-20 fecha de reinicio
+                    $nombreDia = date("l", strtotime($fechaReinicio));  //2021-02-20 dia siguiente
+                    $diaSiguiente = date("Y-m-d",strtotime($fechaReinicio."+ 1 days")); //2021-02-21 dia siguiente
+                    $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));  //DOmingo
+                    $diasTrabajados = "";
+                    echo "<table class='table table-hover'>
+                            <thead>
+                                <th>Fecha</th>
+                                <th>Trabajo hecho</th>
+                                <th>Observacion</th>
+                                <th>Adjuntar documento</th>
+                            </thead><tbody>";
+                    if($cantDias == 6){
+                        while($nombreDiaSiguiente != "Saturday"){
+                            $diasTrabajados = $diasTrabajados." ".$nombreDiaSiguiente;
+                            echo $diasTrabajados;
+                            $respuesta = $reporteAuxiliarLaboratorio->reportePorFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                            //echo $respuesta;
+                            if(is_numeric($respuesta)){
+                                $dila = $reporteAuxiliarLaboratorio->crearReporteDiaFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                                echo "<tr><td>$diaSiguiente</td> 
+                                        <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
+                                        <td><a>Sin Enlace</a></td>
+                                        <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
+                                        </tr>";
+                            }else{
+                                echo "<tr><td>$diaSiguiente</td> 
+                                        <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
+                                        <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
+                                        <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                        <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
+                                        </tr>";
+                            }    
+                            $diaSiguiente = date("Y-m-d",strtotime($diaSiguiente."+ 1 days")); 
+                            $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));
+                        }
+                        echo "</tbody></table>";
+                        // $res = $horarioLaboratorio->atualizarFechaReinicio($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                        //var_dump($res);
+                    }else{ //cantidad dias es 5
+                        while($nombreDiaSiguiente != "Saturday"){
+                            if($nombreDiaSiguiente != "Sunday"){
+                                $diasTrabajados = $diasTrabajados." ".$nombreDiaSiguiente;
+                                $respuesta = $reporteAuxiliarLaboratorio->reportePorFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                                //echo $respuesta;
+                                if(is_numeric($respuesta)){
+                                    $dila = $reporteAuxiliarLaboratorio->crearReporteDiaFecha($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                                    echo "<tr><td>$diaSiguiente</td> 
+                                            <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
+                                            <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
+                                            <td><a>Sin Enlace</a></td>
+                                            <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
+                                            </tr>";
+                                }else{
+                                    echo "<tr><td>$diaSiguiente</td> 
+                                            <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
+                                            <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
+                                            <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                            <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
+                                            </tr>";
+                                }  
+                            }  
+                            $diaSiguiente = date("Y-m-d",strtotime($diaSiguiente."+ 1 days")); 
+                            $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));
+                        }
+                        echo "</tbody></table>";
+
+                        // if($diaSiguiente)                        
+                        // $res = $horarioLaboratorio->atualizarFechaReinicio($elemnto['id_horario_laboratorio'],$diaSiguiente);
+                        // var_dump($res);
+                    }
+                }
+                date_default_timezone_set('America/La_Paz');
+                $today = date("Y-m-d");
+                // echo $today."\n";
+                // echo $diaSiguiente."\n";
+                if($today>$diaSiguiente){
+                    $res = $horarioLaboratorio->atualizarFechaReinicio($elemnto['id_horario_laboratorio'],$diaSiguiente);
                 }
             }
         ?>

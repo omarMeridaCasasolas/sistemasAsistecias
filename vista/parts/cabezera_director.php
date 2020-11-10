@@ -24,10 +24,10 @@
 </head>
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
-        <div class="d-block">
-            <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
-        </div>
-
+        <h2 class="text-white p-4"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+        <a href="../controlador/formCerrarSession.php">Cerrar session</a>
+        <button type="button" class="d-none btn btn-info" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-mail-bulk"></i>Enviar correo</button>
+        
+        
     </nav>
 </header>

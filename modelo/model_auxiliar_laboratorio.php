@@ -10,6 +10,24 @@
             $this->connexion_bd=null;
         }
 
+        public function listaCorreosAuxiliarLab($idDepartamento){
+            $sql = "SELECT * FROM auxiliar_laboratorio WHERE id_departamento = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return  json_encode($respuesta);
+        }
+
+        public function listaDeAuxiliaresLabTrabajando($idDepartamento,$idLaboratorio){
+            $sql = "SELECT * FROM auxiliar_laboratorio WHERE id_aux_laboratorio IN(SELECT id_aux_laboratorio FROM horario_laboratorio WHERE id_departamento = :idDepartamento AND id_laboratorio = :idLaboratorio)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array("idDepartamento"=>$idDepartamento,":idLaboratorio"=>$idLaboratorio));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode($respuesta);
+        }
+
         public function listarTableAuxiliarLaboratorio($idDepartamento){
             $sql = "SELECT * FROM auxiliar_laboratorio WHERE id_departamento = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

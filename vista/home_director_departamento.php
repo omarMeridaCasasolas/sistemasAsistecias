@@ -1,31 +1,65 @@
 <?php include_once("parts/cabezera_director.php");?>
 <body class="bg-secondary">
+    <style>
+        #contCorreos {
+            height:100px;
+            background-color: rgba(255,0,0,0.1);
+            overflow-y: scroll;
+            }
+    </style>
     <main class="container bg-white p-2">
-        <div class="text-center"> <a href="personal_laboratorio.php" class="btn btn-primary"><i class="fas fa-vial"></i> Laboratorios</a> <a href="personal_clases.php" class="btn btn-primary"><i class="fas fa-door-open"></i> Clases</a></div>
-        <!-- <div id="exito" class="d-none">
-            <div class='alert alert-success alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Exito!</strong> Se ha creado el director de carrera.
+        <input type="text" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
+        <!-- Modal -->
+        <div class="modal fade" id="abrirVtnCorreo" role="dialog">
+            <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h2 class="modal-title text-white">Enviar @mail</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formEnviarCorreos">
+                        <div class="row">
+                            <div class="form-group col-5">
+                                <label for="idCampo">Escoja el campo</label>
+                                <select name="idCampo" id="idCampo" class="form-control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="Laboratorio">Laboratorio</option>
+                                    <option value="Docente">Docente</option>
+                                    <option value="Auxiliar Docente">Auxiliar Docente</option>
+                                </select>
+                            </div>
+                            <div class="d-none form-group col-7" id="idGrpAmbiente">
+                                <label for="idAmbiente">Seleccione materia-laboratorio</label>
+                                <select name="idAmbiente" id="idAmbiente" class="form-control">
+                                    <option value="Ninguno">Ninguno</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="contCorreos" class="p-2">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="idCorreoAsunto">Asunto :</label>
+                            <input type="text" name="idCorreoAsunto" id="idCorreoAsunto" class="form-control" value="Reportes" required>
+                        </div>
+                        <span>remitente: <strong>"Asistencia_Virtual_UMSS@mail.com"</strong></span>
+                        <h4>Descripcion</h4>
+                        <textarea name="idCorreoDes" id="idCorreoDes" class="form-control" required>Ya esta disponible la lista de hacer reportes</textarea>
+                        <div class="text-center my-2">
+                            <input type="submit" class="btn btn-primary" value="Enviar">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
             </div>
         </div>
-        <div id="error" class="d-none">
-            <div class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Problema!</strong> No se pudo procesar la tarea del director de carrera.
-            </div>
-        </div>
-        <div id="VtnEditarDirector" class="d-none">
-            <div class='alert alert-info alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Tarea terminada!</strong> Se ha actualizado los datos del director de carrera.
-            </div>
-        </div>
-        <div id="VtnEliminarDirector" class="d-none">
-            <div class='alert alert-warning alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Tarea terminada!</strong> Se ha eliminado el director de carrera.
-            </div>
-        </div> -->
+
+        <div class="text-center"> <a href="personal_laboratorio.php" class="btn btn-primary"><i class="fas fa-vial"></i> Laboratorios</a> <a href="personal_clases.php" class="btn btn-primary"><i class="fas fa-door-open"></i> Clases</a> <a class="btn btn-primary" href="reportes_departamento.php"><i class="fas fa-file-signature"></i>Reportes</a></div>
+        </div> 
         <div class="d-none">
             <input type="text" name="idCategoria" id="idCategoria" value="<?php echo $_SESSION['categoria_social'];?>">
         </div>
@@ -137,60 +171,7 @@
         </table>
 
         <br>
-        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
-                Crear personal para laboratorio
-            </button>
-        <div id="exitoPersLab" class="d-none">
-            <div class='alert alert-success alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Exito!</strong> Se ha creado el director de carrera.
-            </div>
-        </div>
-        <div id="errorPersLab" class="d-none">
-            <div class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Problema!</strong> No se ha podido crear el usuario director de carrera.
-            </div>
-        </div> -->
         <br>
-            <!-- mensajes para el personal de laboratorio  -->
-        <!-- <div id="exitoPersLab" class="d-none">
-            <div class='alert alert-success alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Exito!</strong> Se ha creado personal de laboratorio.
-            </div>
-        </div>
-        <div id="errorPersLab" class="d-none">
-            <div class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Problema!</strong> No se pudo procesar la tarea sobre personal de laboratorio.
-            </div>
-        </div>
-        <div id="VtnEditarPersLab" class="d-none">
-            <div class='alert alert-info alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Tarea terminada!</strong> Se ha actualizado los datos de personal de laboratorio.
-            </div>
-        </div>
-        <div id="VtnEliminarPersLab" class="d-none">
-            <div class='alert alert-warning alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Tarea terminada!</strong> Se ha eliminado el auxiliar de laboratorio.
-            </div>
-        </div>
-        <br> -->
-        <!-- <h2 class="text-primary text-center">Personal de laboratorio</h2>
-        <table id="tablaPersonalLaboratorio" class="hover" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Nombre del personal</th>
-                    <th>Asignacion </th>
-                    <th>Correo electronico</th>
-                    <th>Telefono</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-        </table> -->
 
         <div class="modal fade" id="myModal">
             <div class="modal-dialog">
@@ -302,232 +283,6 @@
                 </div>
             </div>
         </div>
-      <!-- 
-        <div class="modal fade" id="myModal3">
-            <div class="modal-dialog">
-                <div class="modal-content"> 
-
-                    <div class="modal-header bg-info">
-                        <h2 class="modal-title text-center">Crear personal para el laboratorio</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div> 
-
-                    <div class="modal-body">
-                    <form action="" id="formInsertarPersonalLaboratorio" method="post" class="was-validated">
-                        <div class="form-group">
-                                <label for="nomPersLab">Nombre personal laboratorio: </label>
-                                <input type="text" name="nomPersLab" id="nomPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="ciPersLab">Carnet de identidad: </label>
-                                <input type="text" name="ciPersLab" id="ciPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="telPersLab">Telefono: </label>
-                                <input type="text" name="telPersLab" id="telPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="correoPersLab">Correo electronico: </label>
-                                <input type="email" name="correoPersLab" id="correoPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="sisPersLab">Codigo SIS: </label>
-                                <input type="password" name="sisPersLab" id="sisPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="passPersLab">Ingrese password: </label>
-                                <input type="password" name="passPersLab" id="passPersLab" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="text-center my-2">
-                            <input type="submit" class="btn  btn-primary" value="Crear personal">
-                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCerrarPersLab">Cancelar</button>
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div> 
-
-        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal4">
-            Crear docente
-        </button>
-        <div id="exitoDocente" class="d-none">
-            <div class='alert alert-success alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Exito!</strong> Se ha creado docente
-            </div>
-        </div>
-        <div id="errorDocente" class="d-none">
-            <div class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Problema!</strong> No se ha podido crear el usuario docente.
-            </div>
-        </div>
-        <h2 class="text-primary text-center">Docentes de la carrera</h2>
-        <table id="tablaDocente" class="hover" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Nombre del docente</th>
-                    <th>Asignacion </th>
-                    <th>Telefono</th>
-                    <th>Correo electronico</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-        </table>
-      
-        crear docente
-        <div class="modal fade" id="myModal4">
-            <div class="modal-dialog">
-                <div class="modal-content">
-    
-                    <div class="modal-header bg-info">
-                        <h2 class="modal-title text-center">Crear docente</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                    <form action="" id="formInsertarDocente" method="post" class="was-validated">
-                        <div class="form-group">
-                                <label for="nomDocente">Nombre del docente: </label>
-                                <input type="text" name="nomDocente" id="nomDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="ciDocente">Carnet de identidad: </label>
-                                <input type="text" name="ciDocente" id="ciDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="telDocente">Telefono: </label>
-                                <input type="text" name="telDocente" id="telDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="correoDocente">Correo electronico: </label>
-                                <input type="email" name="correoDocente" id="correoDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="sisDocente">Codigo SIS: </label>
-                                <input type="password" name="sisDocente" id="sisDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="passDocente">Ingrese password: </label>
-                                <input type="password" name="passDocente" id="passDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="text-center my-2">
-                            <input type="submit" class="btn  btn-primary" value="Crear Docente">
-                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnVentanaDocente">Cancelar</button>
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-          
-        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal6">
-            Crear Auxiliar
-        </button>
-        <div id="exitoAuxiliarDocente" class="d-none">
-            <div class='alert alert-success alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Exito!</strong> Se ha creado docente
-            </div>
-        </div>
-        <div id="errorAuxiliarDocente" class="d-none">
-            <div class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>Problema!</strong> No se ha podido crear el usuario docente.
-            </div>
-        </div>
-        <h2 class="text-primary text-center">Auxiliar de la carrera</h2>
-        <table id="tablaAuxiliar" class="hover" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Nombre del Auxiliar</th>
-                    <th>Asignacion </th>
-                    <th>Telefono</th>
-                    <th>Correo electronico</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-        </table>
-        
-
-        <div class="modal fade" id="myModal6">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-info">
-                        <h2 class="modal-title text-center">Crear Auxiliar de docencia</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                    <form action="" id="formInsertarAuxiliarDocente" method="post" class="was-validated">
-                        <div class="row">
-                            <div class="form-group col-md-7">
-                                <label for="nomAuxiliarDocente">Nombre del auxiliar: </label>
-                                <input type="text" name="nomAuxiliarDocente" id="nomAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-5">
-                                <label for="ciAuxiliarDocente">Carnet de identidad: </label>
-                                <input type="text" name="ciAuxiliarDocente" id="ciAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="telAuxiliarDocente">Telefono: </label>
-                                <input type="text" name="telAuxiliarDocente" id="telAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-7">
-                                <label for="correoAuxiliarDocente">Correo electronico: </label>
-                                <input type="email" name="correoAuxiliarDocente" id="correoAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="sisAuxiliarDocente">Codigo SIS: </label>
-                                <input type="password" name="sisDirector" id="sisAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="passAuxiliarDocente">Ingrese password: </label>
-                                <input type="password" name="passDirector" id="passAuxiliarDocente" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
-                            </div>
-                        </div>
-                        <div class="text-center my-2">
-                            <input type="submit" class="btn  btn-primary" value="Crear usuario">
-                            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnVentanaAuxiliarDocente">Cancelar</button>
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
         
         <!-- ventanas para editar directores -->
         <div class="modal fade" id="myModalEditarDirector">

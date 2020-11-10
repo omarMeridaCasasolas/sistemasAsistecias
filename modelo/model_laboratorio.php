@@ -7,6 +7,17 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+
+        public function reporteDeLaboratorios($idDepartamento){
+            $sql = "SELECT * FROM laboratorio WHERE id_laboratorio IN (SELECT id_laboratorio FROM horario_laboratorio WHERE id_departamento = :id)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            // $res = json_encode($respuesta);
+            return json_encode($respuesta);
+        }
+
         public function elimarLaboratorio($idLaboratorio){
             $sql = "DELETE FROM laboratorio WHERE id_laboratorio = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -62,6 +73,14 @@
         }
 
         public function mostarLaboratorio($idLaboratorio){
+            $sql = "SELECT * FROM laboratorio WHERE id_laboratorio = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idLaboratorio));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta[0];
+        }
+        public function cantidadDiasTrabajo($id){
             $sql = "SELECT * FROM laboratorio WHERE id_laboratorio = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute(array(":id"=>$idLaboratorio));

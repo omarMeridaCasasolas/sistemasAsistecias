@@ -1,18 +1,61 @@
 var tablaCarrera;
 var tablaDirector;
 $(document).ready(function() {
-    //$('#example').DataTable();
+    $("#idCampo").change(function (e) {
+        let tipoUnidad = $("#idCampo").val();
+        console.log(tipoUnidad);
+        switch (tipoUnidad) {
+            case "Ninguno":
+                if($("#idGrpAmbiente").hasClass("d-block")){
+                    $("#idGrpAmbiente").removeClass("d-block");
+                    $("#idGrpAmbiente").addClass("d-none");
+                }
+                break;
+            case "Laboratorio":
+                $("#idGrpAmbiente").removeClass("d-none");
+                $("#idGrpAmbiente").addClass("d-block");
+                obtenerListaLaboratorio();
+                obtenerListaCorreosLaboratorio();
+                break;
+            default:
+                break;
+        }
+        e.preventDefault();
+    });
+
+    $("#btnAbrirCorreo").removeClass("d-none");
+    $("#btnAbrirCorreo").addClass("d-block");
     directoresDisponibles();
-    //var directorCarrera = listarTableDirectorCarrera();
-    // var tableAuxiliarLaboratorio = listarPersonalLaboratorio();
     listarTableDirectorCarrera();
     carrerasDisponibles();
-    //listarPersonalLaboratorio();
-    //listarTableDocente();
     listarCarreras();
 
-    //listarTableAuxiliarDocente();
-    //carrerasDisponibles();
+    $("#formEnviarCorreos").submit(function (e) {
+        let valoresCheck = [];
+        $(".misChecked:checked").each(function(){
+            valoresCheck.push(this.value);
+        });
+        if(valoresCheck.length > 0){
+            let datosCorreo = {
+                titulo: $("#idCorreoAsunto").val(),
+                descripcion: $("#idCorreoDes").val(),
+                correos: valoresCheck
+            }
+            $.ajax({
+                type: "POST",
+                url: "../controlador/formCorreosMasivos.php",
+                data: datosCorreo,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }else{
+            alert("No se puede procesar");
+        }
+        e.preventDefault();
+        
+    });
+
     $("#formEliminarCarrera").submit(function (e) { 
         let datosCarrera = {
         clase: "Carrera",
@@ -525,7 +568,6 @@ var eliminarPersonalLab = function(tbody,table){
         console.log(persLab);
         $(".eliminarPersonalLaboratorio").click();
         $("#nomPersonaldelLab").html(persLab.nombre_auxiliar_lab);
-        //$("#eliminarIdDirector").val(director.nombre_director);
 
         $("#formEliminarPersonalLaboratorio").submit(function (e) { 
             let datosAuxLaboratorio = {
@@ -600,6 +642,61 @@ function directoresDisponibles(){
                 //console.log(element.nombre_director);
                 $('#dirAgregarCarrera').append("<option value='"+element.id_ditector+"'>"+element.nombre_director+"</option>");
                 $('#dirEditarCarrera').append("<option value='"+element.id_ditector+"'>"+element.nombre_director+"</option>");
+            });
+        },
+        error : function(jqXHR, status, error) {
+            console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
+        }
+    });
+}
+
+function  obtenerListaLaboratorio(){
+    $('#idAmbiente option').each(function() {
+        if ( $(this).val() != 'Ninguno' ) {
+            $(this).remove();
+        }
+    });
+    let datosLaboratorio = {
+        clase: "Laboratorio",
+        metodo: "laboratoriosDisponibles",
+        idDepartamento: $("#idDepartamento").val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "../controlador/interprete.php",
+        data: datosLaboratorio,
+        success: function (response) {
+            //console.log(response);
+            let listaLaboratorios= JSON.parse(response);
+            listaLaboratorios.forEach(element => {
+                //console.log(element.nombre_director);
+                $('#idAmbiente').append("<option value='"+element.id_laboratorio+"'>"+element.nombre_laboratorio+"</option>");
+            });
+        },
+        error : function(jqXHR, status, error) {
+            console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
+        }
+    });
+}
+
+function  obtenerListaCorreosLaboratorio(){
+
+    let datosAuxLaboratorio = {
+        clase: "AuxiliarLaboratorio",
+        metodo: "listaCorreosAuxiliarLab",
+        idDepartamento: $("#idDepartamento").val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "../controlador/interprete.php",
+        data: datosAuxLaboratorio,
+        success: function (response) {
+            //console.log(response);
+            let listaAuxiliarLab= JSON.parse(response);
+            listaAuxiliarLab.forEach(element => {
+                //console.log(element.nombre_director);
+                $('#contCorreos').prepend("<label><input type='checkbox' class='misChecked' checked value='"+element.correo_auxiliar_lab+"'> Nombre: "+element.nombre_auxiliar_lab+"("+element.correo_auxiliar_lab+")</label>");
+                // $('#idAmbiente').append("<option value='"+element.id_laboratorio+"'>"+element.nombre_laboratorio+"</option>");
             });
         },
         error : function(jqXHR, status, error) {

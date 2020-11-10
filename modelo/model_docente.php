@@ -60,4 +60,24 @@
             $sentenceSQL->closeCursor();
             return $respuesta[0];
         }
+
+        public function listarReportesDocenteDia($idDocente,$fechaActual){
+            $sql = "SELECT current_date, grupo_horario.hora, grupo.nombre_grupo, materia.nombre_materia
+            FROM docente, docente_grupo, grupo, materia, grupo_horario
+            where docente.id_docente = docente_grupo.id_docente
+            and docente.id_docente = :id
+            and docente_grupo.id_grupo = grupo.id_grupo
+            and grupo.id_grupo = grupo_horario.id_grupo
+            and grupo.id_materia = materia.id_materia
+            and grupo_horario.es_aux = false
+            and grupo_horario.dia = :fecha
+            order by grupo_horario.hora desc";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDocente,":fecha"=>$fechaActual));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //return $respuesta[0];
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
     }

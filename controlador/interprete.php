@@ -256,6 +256,12 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listarReportesDocenteDia':
+                $idDocente = $_REQUEST['docente'];
+                $fechaActual =  recuperarDia();
+                // echo $fechaActual;
+                $res = $docente->listarReportesDocenteDia($idDocente,$fechaActual);
+                break;
             case 'recuperarPasswordDocente':
                 $correo = $_REQUEST['correo'];
                 $respuesta = $docente->recuperarPasswordDocente($correo);
@@ -327,6 +333,15 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listaCorreosAuxiliarLab':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarLaboratorio->listaCorreosAuxiliarLab($idDepartamento);
+                break;
+            case 'listaDeAuxiliaresLabTrabajando':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];
+                $res = $auxiliarLaboratorio->listaDeAuxiliaresLabTrabajando($idDepartamento,$idLaboratorio);
+                break;
             case 'recuperarPasswordAuxLab':
                 $correo = $_REQUEST['correo'];
                 $respuesta = $auxiliarLaboratorio->recuperarPasswordAuxLab($correo);
@@ -391,6 +406,10 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'reporteDeLaboratorios':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $laboratorio->reporteDeLaboratorios($idDepartamento);
+                break;
             case 'laboratoriosDisponibles':
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $res = $laboratorio->laboratoriosDisponibles($idDepartamento);
@@ -423,7 +442,6 @@
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $res = $laboratorio->listarLaboratorios($idDepartamento);
                 break;
-            
             default:
                 # code...
                 break;
@@ -437,6 +455,21 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'obtenerReporteLaboratorioEspecfico':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];                
+                $res = $horarioLaboratorio->obtenerReporteLaboratorioEspecfico($idDepartamento,$idLaboratorio); 
+                break;
+            case 'obtenerTodoReporteLaboratorio':
+                $idDepartamento = $_REQUEST['idDepartamento'];                
+                $res = $horarioLaboratorio->obtenerTodoReporteLaboratorio($idDepartamento); 
+                break;
+
+            case 'obtenerReportePorMetria':
+                $idAuxiliar = $_REQUEST['idAuxiliarLab'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];                
+                $res = $horarioLaboratorio->obtenerReportePorMetria($idAuxiliar,$idLaboratorio); 
+                break;
             case 'insertarHorarioLaboratorio':
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $idAuxiliar = $_REQUEST['idAuxiliarLaboratorio'];                
@@ -450,9 +483,49 @@
                 // Resultado de ejemplo: 6:33 PM
                 $res = $horarioLaboratorio->insertarHorarioLaboratorio($idDepartamento, $idAuxiliar,$idLabConvertido,$fechaInicio); 
                 break;
+            case 'listaLaboratoriosAsignados':
+                $idAuxiliar = $_REQUEST['idAuxiliarLab'];                
+                $res = $horarioLaboratorio->listaLaboratoriosAsignados($idAuxiliar); 
+                break;
+            case 'obtenerReportePorMetria':
+                $idAuxiliar = $_REQUEST['idAuxiliarLab'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];                
+                $res = $horarioLaboratorio->obtenerReportePorMetria($idAuxiliar,$idLaboratorio); 
+                break;
             default:
                 # code...
                 break;
         }
+        return $res;
+    }
+
+    function recuperarDia(){
+        $nombreDIa ="";
+        date_default_timezone_set('America/La_Paz');
+        $dia = Date("N");
+        switch ($dia) {
+            case '1':
+                $nombreDIa = "LU";
+                break;
+            case '2':
+                $nombreDIa = "MA";
+                break;
+            case '3':
+                $nombreDIa = "MI";
+                break;
+            case '4':
+                $nombreDIa = "JU";
+                break;
+            case '5':
+                $nombreDIa = "VI";
+                break;
+            case '6':
+                $nombreDIa = "SA";
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $nombreDIa;
     }
 ?>
