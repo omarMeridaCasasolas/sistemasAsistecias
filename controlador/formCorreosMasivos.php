@@ -6,12 +6,13 @@
 
         require '../vendor/autoload.php';
         $from = new SendGrid\Email(null, "Asistencia_Virtual_UMSS@mail.com");
-        $to = new SendGrid\Email(null, $destino);
+        //$to = new SendGrid\Email(null, $destino);
         $content = new SendGrid\Content("text/html", "<p>".$descripcion."</p>");
 
         for ($i=0; $i < count($_POST['correos']); $i++) { 
             $correo = $_POST['correos'][$i];
-            $mail = new SendGrid\Mail($from, $subject, $correo, $content);
+            $to = new SendGrid\Email(null, $correo);
+            $mail = new SendGrid\Mail($from, $subject, $to, $content);
             $apiKey = getenv('SENDGRID_API_KEY');
             $sg = new \SendGrid($apiKey);
             $response = $sg->client->mail()->send()->post($mail);
