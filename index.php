@@ -44,7 +44,7 @@
             <li class="nav-item" id="idItemTres"><a href="#docente" class="nav-link" id="idLinkTres" data-toggle="tab">Docentes</a></li>
             <li class="nav-item" id="idItemCinco"><a href="#auxiliarDocencia" class="nav-link " id="idLinkCinco" data-toggle="tab">Auxiliares de docencia</a></li>
             <li class="nav-item" id="idItemCuatro"><a href="#auxiliarLaboratorio" class="nav-link" id="idLinkCuatro" data-toggle="tab">Auxiliar de laboratorio</a></li>
-            
+            <li class="nav-item" id="idItemSeis"><a href="#personalLaboral" class="nav-link" id="idLinkSeis" data-toggle="tab">Personal Laboral</a></li>
         </ul>
         <br>
         <div class="tab-content">
@@ -243,7 +243,61 @@
                             </div>
                         </div>
                     </div>
+            </div>
+
+            <div id="personalLaboral" class="container tab-pane fade">
+                <form action="controlador/formSessionPersonalLaboral.php" method="post" class="was-validated">
+                    <h2 class="text-center">Personal Laboral</h2>
+                    <div class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="correo">Ingrese su correo electronico: </label>
+                            <input type="email" name="correo" id="correo" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
+                    </div>
+                    <dov class="row">
+                        <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
+                            <label for="pass">Ingrese password: </label>
+                            <input type="password" name="pass" id="pass" class="form-control" required>
+                            <div class="valid-feedback">Formato aceptado</div>
+                        </div>
+                    </dov>
+                    <div class="text-center pb-2">
+                        <input type="submit" class="btn btn-primary" value="Ingresar">
+                    </div>
+                </form>
+                
+                <h6><a href="" data-toggle="modal" data-target="#myModalTrabajador">Olvidaste tu contraseña</a></h6>
+                <br>
+            </div>
+
+            <!-- ventana modal password Auxiliar Docencia  -->
+            <div id="myModalTrabajador" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h2 class="modal-title" class="text-center">Contraseña-Auxiliares Docencia</h2>
+                                <button type="button" id="btnCerrarVtnPassAuxDoc" class="close" data-dismiss="modal" >&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formRecuperarPasswordAuxDoc" class="was-validated">
+                                <div class="form-group">
+                                    <h5><label for="correoParaRecupararAuxDoc">Escribe tu correo para recibir un mensaje: </label></h5>
+                                    <input type="email" name="correoParaRecupararAuxDoc" id="correoParaRecupararAuxDoc" class="form-control" required>
+                                    <div class="valid-feedback">Formato aceptado</div>
+                                </div>
+                                <h5 id="msmRespuestaAuxDoc" class="text-danger"></h5>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" value="Enviar">    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+        </div>
         </div>
     </main>
     <footer>

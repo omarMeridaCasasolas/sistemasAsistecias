@@ -88,11 +88,20 @@
             //$res = json_encode($respuesta);
             echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
-        public function insertarDirectorAcademico($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca){
-            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,codigo_sis_director,password_director,cargo_director)
-            VALUES(:nom,:ci,:correo,:telef,:sis,:pass,:cargo)";
+
+        public function insertarDirectorAcademicoFacul($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca,$idfacDirAcad){
+            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,codigo_sis_director,password_director,cargo_director,director_actual,id_facultad)
+            VALUES(:nom,:ci,:correo,:telef,:sis,:pass,:cargo,:dir,:idFacultad)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirAcad,":ci"=>$ciDirAcad,":correo"=>$correoDirAcad,":telef"=>$telDirAcad,":sis"=>$sisDirAcad,":pass"=>$passDirAcad,":cargo"=>$cargoDirAca));
+            $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirAcad,":ci"=>$ciDirAcad,":correo"=>$correoDirAcad,":telef"=>$telDirAcad,":sis"=>$sisDirAcad,":pass"=>$passDirAcad,":cargo"=>$cargoDirAca,":dir"=>$facDirAcad,":idFacultad"=>$idfacDirAcad));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+        public function insertarDirectorAcademico($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca){
+            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,codigo_sis_director,password_director,cargo_director,director_actual)
+            VALUES(:nom,:ci,:correo,:telef,:sis,:pass,:cargo,:dir)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirAcad,":ci"=>$ciDirAcad,":correo"=>$correoDirAcad,":telef"=>$telDirAcad,":sis"=>$sisDirAcad,":pass"=>$passDirAcad,":cargo"=>$cargoDirAca,":dir"=>$facDirAcad));
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
@@ -129,4 +138,20 @@
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
+
+    public function actualizarFacultadDirector($idFacultad,$nuevaAsig,$nomFacultad){
+        $sql = "UPDATE director_unidad SET director_actual = :facultad, id_facultad = :nuevaAsig  WHERE id_facultad = :idFacultad";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":facultad"=>$nomFacultad,":nuevaAsig"=>$nuevaAsig,":idFacultad"=>$idFacultad));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
+
+    public function actualizarDirectorAcademico($idDirector,$nomDirector,$codSis,$telDirector,$correoDirector,$nomFacultad,$idFacultad){
+        $sql = "UPDATE director_unidad SET nombre_director = :nom, codigo_sis_director = :sis, correo_electronico_director = :correo ,telefono_director = :telef, director_actual = :dirAct, id_facultad = :idFacultad  WHERE id_ditector = :claveP";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":sis"=>$codSis,":correo"=>$correoDirector,":telef"=>$telDirector,":dirAct"=>$nomFacultad,":idFacultad"=>$idFacultad,":claveP"=>$idDirector));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
 } 

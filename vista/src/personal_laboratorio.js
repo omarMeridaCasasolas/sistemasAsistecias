@@ -1,34 +1,49 @@
+var nombresLaboratorioReservados = [];
+var codigosLaboratorioREservados = [];
 var tablaLaboratorio,tablaAuxiliarLaboratorio;
 $(document).ready(function () {
     listasLaboratorios();
     listasAuxLaboratorios();
+    obtnerNombreSiglasDepartamento();
     //laboratoriosDisponibles();
     $("#formAgregarLaboratorio").submit(function (e) { 
-        let datosLaboratorio = {
-            clase: "Laboratorio",
-            metodo: "agregarLaboratorio",
-            nomLaboratorio: $("#nomAgregarLaboratorio").val(),
-            codLaboratorio: $("#codAgregarLaboratorio").val(),
-            fecLaboratorio: $("#fecAgregarLaboratorio").val(),
-            desLaboratorio: $("#desAgregarLaboratorio").val(), 
-            mesLaboratorio: $("#mesAgregarLaboratorio").val(),
-            horLaboratorio: $("#horAgregarLaboratorio").val(), 
-            idDepartamento: $("#idDepartamento").val()
-        }
-        $.post("../controlador/interprete.php", datosLaboratorio,function (resp, textStatus, jqXHR) {
-                console.log(resp);
-                $("#btnCerrarVtnAgregarLab").click();
-                if(resp == 1){
-                    swal("Exito!!","Se ha creado  el laboratorio :"+datosLaboratorio.nomLaboratorio,"success");
-                    $("#formAgregarLaboratorio")[0].reset();
-                    $('#tablaLaboratorio').dataTable().fnDestroy();
-                    listasLaboratorios();
-                    //laboratoriosDisponibles();
-                }else{
-                    swal("Problema!!",resp,"warning");
-                }   
+        let valor = existeStringEnArreglo(nombresLaboratorioReservados,$("#nomAgregarLaboratorio").val().trim());
+        console.log(valor);
+        if(!valor){
+            $("#idSpanNomLaboratorio").html("");
+            let valorSiglasLab = existeStringEnArreglo(codigosLaboratorioREservados,$("#codAgregarLaboratorio").val().trim());
+            if(!valorSiglasLab){
+                $("#idSpanSiglasLab").html("");
+                let datosLaboratorio = {
+                    clase: "Laboratorio",
+                    metodo: "agregarLaboratorio",
+                    nomLaboratorio: $("#nomAgregarLaboratorio").val().trim(),
+                    codLaboratorio: $("#codAgregarLaboratorio").val().trim(),
+                    fecLaboratorio: $("#fecAgregarLaboratorio").val(),
+                    desLaboratorio: $("#desAgregarLaboratorio").val(), 
+                    mesLaboratorio: $("#mesAgregarLaboratorio").val(),
+                    horLaboratorio: $("#horAgregarLaboratorio").val(), 
+                    idDepartamento: $("#idDepartamento").val()
+                }
+                $.post("../controlador/interprete.php", datosLaboratorio,function (resp, textStatus, jqXHR) {
+                        $("#btnCerrarVtnAgregarLab").click();
+                        if(resp == 1){
+                            swal("Exito!!","Se ha creado  el laboratorio :"+datosLaboratorio.nomLaboratorio,"success");
+                            $("#formAgregarLaboratorio")[0].reset();
+                            $('#tablaLaboratorio').dataTable().fnDestroy();
+                            listasLaboratorios();
+                            //laboratoriosDisponibles();
+                        }else{
+                            swal("Problema!!",resp,"warning");
+                        }   
+                    }
+                );
+            }else{
+                $("#idSpanSiglasLab").html("Ya existe un laboratorio con la sigle "+ $("#codAgregarLaboratorio").val().trim());
             }
-        );
+        }else{
+            $("#idSpanNomLaboratorio").html("Ya existe un laboratorio con ese nombre "+ $("#nomAgregarLaboratorio").val());
+        }
         e.preventDefault();
         
     });
@@ -158,7 +173,6 @@ $(document).ready(function () {
                 }
             );
         e.preventDefault();
-        
     });
 
     //eliminar Auxiliar de Laboratorio
@@ -234,6 +248,35 @@ function listasLaboratorios(){
     laboratoriosDisponibles();
     let idDepartameto = $('#idDepartamento').val();
     tablaLaboratorio = $("#tablaLaboratorio").DataTable({
+        responsive: true,
+        language:{
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        },
         "ajax":{
             "method":"POST",
             "data" : {'clase': 'Laboratorio' , 'metodo':'listarLaboratorios', 'idDepartamento':idDepartameto},
@@ -247,12 +290,44 @@ function listasLaboratorios(){
             {"data": null, "defaultContent":"<button type='button' class='editarLaboratorio btn btn-warning' data-toggle='modal' data-target='#myModalEditarLaboratorio'>"
             +"<i class='far fa-edit'></i></button>  <button type='button' class='eliminarLaboratorio btn btn-danger' data-toggle='modal' data-target='#myModalEliminarLaboratorio' ><i class='fas fa-trash-alt'></i></button>"}
         ]
+
     });
 }
+
+    
 
 function listasAuxLaboratorios(){
     let idDepartamento = $('#idDepartamento').val();
     tablaAuxiliarLaboratorio = $("#tablaAuxiliarLaboratorio").DataTable({
+        responsive: true,
+        language:{
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        },
         "ajax":{
             "method":"POST",
             "data" : {'clase': 'AuxiliarLaboratorio' , 'metodo':'listarTableAuxiliarLaboratorio', 'idDepartamento':idDepartamento},
@@ -302,4 +377,41 @@ function laboratoriosDisponibles(){
             console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
         }
     });
+}
+
+function obtnerNombreSiglasDepartamento(){
+    let datosLaboratorio = {
+        clase: 'Laboratorio' ,
+        metodo: 'listarLaboratorios',
+        idDepartamento :$('#idDepartamento').val()
+    };
+    $.ajax({
+        type: "POST",
+        url: "../controlador/interprete.php",
+        data: datosLaboratorio,
+        success: function (response) {
+            objetoJson = JSON.parse(response);
+            objetoJson.data.forEach(element => {
+                nombresLaboratorioReservados.push(element.nombre_laboratorio);
+                codigosLaboratorioREservados.push(element.siglas_laboratorio);
+            });     
+       }
+    });
+    // console.log(nombresLaboratorioReservados);
+    // console.log(codigosLaboratorioREservados);
+}
+
+function existeStringEnArreglo(array,cadena){
+    // array.forEach(element =>{
+    //     if(element.toLowerCase() == cadena.toLowerCase()){
+    //         return false;
+    //     }
+    // });
+    for (let index = 0; index < array.length; index++) {
+        // const element = array[index];
+        if(array[index].toLowerCase() == cadena.toLowerCase()){
+            return true;
+        }
+    }
+    return false;
 }

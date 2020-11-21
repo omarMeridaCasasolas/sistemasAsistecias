@@ -8,7 +8,11 @@
     require_once("../modelo/model_auxiliar_laboratorio.php");
     require_once("../modelo/model_laboratorio.php");
     require_once("../modelo/model_horario_laboratorio.php");
-    
+    require_once("../modelo/model_funciones.php");
+    require_once("../modelo/model_personal_laboral.php");
+    require_once("../modelo/model_tareas_trabajador.php");
+    require_once("../modelo/model_trabajador_tareas.php");
+
     $clase ="";
     $metodo = "";
     $tmp = "";
@@ -16,6 +20,15 @@
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
         switch($clase){
+            case 'TareasTrabajador':
+                $tmp = ejecutarConsultasTareasTrabajador();
+                break;
+            case 'PersonalLaboral':
+                $tmp = ejecutarConsultasPersonalLaboral();
+                break;
+            case 'Funcionalidad':
+                $tmp = ejecutarConsultasFuncionalidades();
+                break;
             case 'horarioAuxiliarLaboratorio':
                 $tmp = ejecutarConsultasHorarioLab();
                 break;
@@ -46,13 +59,23 @@
             default:
                 break;
         }
-        echo $tmp;
+        echo trim($tmp);
     }
     function ejecutarConsultasAutoridades(){
         $director = new Director();
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'actualizarDirectorAcademico':
+                $idDirector = $_REQUEST['idDirector'];
+                $nomDirector = $_REQUEST['nomDirector'];
+                $codSis = $_REQUEST['codSis'];
+                $telDirector = $_REQUEST['telDirector'];
+                $correoDirector = $_REQUEST['correoDirector'];
+                $nomFacultad= $_REQUEST['nomFacultadAsig'];
+                $idFacultad = $_REQUEST['idFacultad'];
+                $res = $director->actualizarDirectorAcademico($idDirector,$nomDirector,$codSis,$telDirector,$correoDirector,$nomFacultad,$idFacultad);
+                break;
             case 'recuperarPassword':
                 $correo = $_REQUEST['correo'];
                 $respuesta = $director->recuperarPassword($correo);
@@ -82,6 +105,12 @@
             case 'directoresAcademicosDisponibles':
                 $res = $director->directoresAcademicosDisponibles();
                 break;
+                // case 'eliminarDirectorAcademico':
+                //     $res = $director->obtenerDirectorActual($_REQUEST['codigo_sis_director']);
+                //     $facultad = new Facultad();
+                //     $facultad->retirarAsignacionDirectorAcademico($res['director_actual']);
+                //     $res = $director->eliminarDirectorAcademico($_REQUEST['codigo_sis_director']);
+                //     break;
             case 'eliminarDirector':
                 $clavePrimaria = $_REQUEST['clavePrimaria'];
                 $res = $director->eliminarDirector($clavePrimaria);
@@ -144,7 +173,12 @@
                 $sisDirAcad = $_REQUEST['sisDirAcad'];
                 $passDirAcad = $_REQUEST['passDirAcad'];
                 $cargoDirAca = "Director academico";
-                $res = $director->insertarDirectorAcademico($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca);
+                $idfacDirAcad = $_REQUEST['idfacDirAcad'];
+                if(intval($idfacDirAcad) == 666){
+                    $res = $director->insertarDirectorAcademico($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca);
+                }else{
+                    $res = $director->insertarDirectorAcademicoFacul($nomDirAcad,$ciDirAcad,$correoDirAcad,$telDirAcad,$facDirAcad,$sisDirAcad,$passDirAcad,$cargoDirAca,$idfacDirAcad);
+                }
                 break;
             default:
                 # code...
@@ -158,17 +192,45 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'cambiarDirectorAcedemicoFacultad':
+                $idFacultad = $_REQUEST['idFacultad'];
+                $nomDirector = $_REQUEST['nomDirector'];
+                $res = $facultad->cambiarDirectorAcedemicoFacultad($idFacultad,$nomDirector);
+                break;
+            case 'cambiarDirectorNinguno':
+                $idFacultad = $_REQUEST['idFacultad'];
+                $director = "Ninguno";
+                $res = $facultad->cambiarDirectorNinguno($idFacultad,$director);
+                break;
+            case 'AsignarDirectorFacultad':
+                $idFacultad = $_REQUEST['idFacultad'];
+                $nomDirector = $_REQUEST['nomDirector'];
+                $res = $facultad->AsignarDirectorFacultad($idFacultad,$nomDirector);
+                break;
             case 'EditarFacultad':
                 $idFacultad = $_REQUEST['idFacultad'];
                 $nomEditFacultad = $_REQUEST['nomEditFacultad'];
                 $facEditCodigo = $_REQUEST['facEditCodigo'];
                 $facEditFechaCrea = $_REQUEST['facEditFechaCrea'];
-                $dirEditFac = $_REQUEST['dirEditFac'];
-                $res = $facultad->EditarFacultad($idFacultad,$nomEditFacultad,$facEditCodigo,$facEditFechaCrea,$dirEditFac);
+                $res = $facultad->EditarFacultad($idFacultad,$nomEditFacultad,$facEditCodigo,$facEditFechaCrea);
                 break;
             case 'EliminarFacultad':
                 $idFacultad = $_REQUEST['idFacultad'];
-                $res = $facultad->EliminarFacultad($idFacultad);
+                $director = new Director();
+                $nuevaAsig = 666;
+                $nomFacultad = "Ninguno";
+                $resultado = $director->actualizarFacultadDirector($idFacultad,$nuevaAsig,$nomFacultad);
+                if($resultado){
+                    $departamento = new Departamento();
+                    $aux = $departamento->eliminarDepartamentosPorFacultad($idFacultad);
+                    if($aux){
+                        $res = $facultad->EliminarFacultad($idFacultad);
+                    }else{
+                        $res = $aux;
+                    }
+                }else{
+                    $res = $resultado;
+                }
                 break;
             case 'listarFacultades':
                 $res = $facultad->LeerFacultades();
@@ -177,12 +239,13 @@
                 $nomFacultad = $_REQUEST['nomFacultad'];
                 $facCodigo = $_REQUEST['facCodigo'];
                 $facFechaCrea = $_REQUEST['fechaCreacion']; //129
-                $dirFac = $_POST['dirFac'];
+                $dirFac = "Ninguno";
                 $res = $facultad->insertarFacultad($nomFacultad,$facCodigo,$facFechaCrea,$dirFac);
                 break;
             case 'facultadesDisponibles':
                 $res = $facultad->facultadesDisponibles();
                 break;
+
             default:
                 # code...
                 break;
@@ -455,6 +518,12 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'obtenerReporteLaboratorioPorNombreAux':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idLaboratorio = $_REQUEST['idLaboratorio'];
+                $idAuxiliar = $_REQUEST['idAuxiliar'];                
+                $res = $horarioLaboratorio->obtenerReporteLaboratorioPorNombreAux($idDepartamento,$idLaboratorio,$idAuxiliar); 
+                break;
             case 'obtenerReporteLaboratorioEspecfico':
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $idLaboratorio = $_REQUEST['idLaboratorio'];                
@@ -491,6 +560,88 @@
                 $idAuxiliar = $_REQUEST['idAuxiliarLab'];
                 $idLaboratorio = $_REQUEST['idLaboratorio'];                
                 $res = $horarioLaboratorio->obtenerReportePorMetria($idAuxiliar,$idLaboratorio); 
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $res;
+    }
+
+    function  ejecutarConsultasPersonalLaboral(){
+        $personalLaboral = new PersonalLaboral();
+        $metodo = $_REQUEST['metodo'];
+        $res = ""; 
+        switch ($metodo) {
+            case 'ingresarPersonalLaboral':
+                $nomTrabajador = $_REQUEST['nombreTrabajador'];
+                $ciTrabajador = $_REQUEST['ciTrabajador'];
+                $telTrabajador = $_REQUEST['telTrabajador'];
+                $correoTrabajador = $_REQUEST['correoTrabajador'];
+                $cargo = $_REQUEST['cargoTrabajador'];
+                date_default_timezone_set('America/La_Paz');
+                $fecha = date("Y-m-d");
+                $pass = $_REQUEST['passwordTrabajador'];
+                $res = $personalLaboral->ingresarPersonalLaboral($nomTrabajador,$ciTrabajador,$telTrabajador,$correoTrabajador,$cargo,$fecha,$pass);
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $res;
+    }
+
+    function ejecutarConsultasFuncionalidades(){
+        $funcionalidades = new Funcionalidad();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'mostrarFunciones':
+                $cargo = $_REQUEST['cargo'];
+                $res = $funcionalidades->mostrarFunciones($cargo);
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $res;
+    }
+
+    function  ejecutarConsultasTareasTrabajador(){
+        $tareasTrabajador = new TareasTrabajador();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'asignarTareasTrab':
+                //$cargo = $_REQUEST['cargo'];
+                $idTrabajador = $_REQUEST['idTrabajador'];
+                $listaFunciones  = array($_REQUEST['funciones']);
+                $lista = $listaFunciones[0];
+                $arrIdFunciones = array();
+                foreach ($lista as $value) {
+                    $respuesta = $tareasTrabajador->crearFuncionesTrabajador($value);
+                    if(is_numeric($respuesta)){
+                        array_push($arrIdFunciones,$respuesta);
+                    }else{
+                        $res = -1;
+                        return $res;
+                        break;
+                    }
+                }
+                $trabajadorTareas = new TrabajadorTareas();
+                foreach ($arrIdFunciones as $funcion) {
+                    $aux = $trabajadorTareas->asignarTareaTrabajador($idTrabajador,$funcion);
+                    //var_dump($aux);
+                    if(!($aux)){
+                        $res = $aux;
+                        $res = -1;
+                        return $res;
+                        break;
+                    }
+                }
+                $res = 1;
+                //echo $listaFunciones[0];
+                //$res = $funcionalidades->asignarTareasTrab($cargo);
                 break;
             default:
                 # code...

@@ -8,7 +8,7 @@
             }
     </style>
     <main class="container bg-white p-2">
-        <input type="text" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
+        <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
         <!-- Modal -->
         <div class="modal fade" id="abrirVtnCorreo" role="dialog">
             <div class="modal-dialog">

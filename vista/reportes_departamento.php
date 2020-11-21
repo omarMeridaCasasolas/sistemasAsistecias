@@ -3,7 +3,7 @@
     <main class="container bg-white p-2">
         <form action="" id="formBusquedaReportes" class="mx-auto col-lg-5 col-md-7">
             <h2 class="text-center text-primary">Busqueda de reportes por: </h2>
-            <input type="text" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
+            <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
             <div class="form-group">
                 <label for="tipoUnidad">Tipo</label>
                 <select name="tipoUnidad" id="tipoUnidad" class="form-control">
@@ -25,24 +25,26 @@
                     <option value="Todos">Todos</option>
                 </select>
             </div>
-            <div class="text-center">
+            <div class="text-center my-3">
                 <input type="submit" value="Buscar" class="btn btn-secondary">
             </div>
         </form>
 
-        <table id="tablaHistorialReporte" class="display nowrap cell-border" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Materia-Laboratorio</th>
-                    <th>Asignado</th>
-                    <th>Trabajo relizado</th>
-                    <th>Observacion</th>
-                    <th>Documentos entregados</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="table-responsive">
+            <table id="tablaHistorialReporte" class="display nowrap cell-border" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Materia-Laboratorio</th>
+                        <th>Asignado</th>
+                        <th>Trabajo relizado</th>
+                        <th>Observacion</th>
+                        <th>Documentos entregados</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
 
     </main>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

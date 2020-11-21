@@ -22,18 +22,20 @@
                         <form action="" id="formAgregarLaboratorio" method="post">
                             <div class="form-group">
                                     <label for="nomAgregarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomAgregarLaboratorio" id="nomAgregarLaboratorio" class="form-control" required>
+                                    <input type="text" name="nomAgregarLaboratorio" id="nomAgregarLaboratorio" class="form-control" autocomplete="off" required>
                             </div>
+                            <span id="idSpanNomLaboratorio" class="text-danger"></span>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codAgregarLaboratorio">Codigo laboratorio: </label>
-                                    <input type="text" name="codAgregarLaboratorio" id="codAgregarLaboratorio" class="form-control" required>
+                                    <input type="text" name="codAgregarLaboratorio" id="codAgregarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="fecAgregarLaboratorio">fecha de creacion: </label>
-                                    <input type="date" name="fecAgregarLaboratorio" id="fecAgregarLaboratorio" class="form-control" required>
+                                    <input type="date" name="fecAgregarLaboratorio" id="fecAgregarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
+                            <span id="idSpanSiglasLab" class="text-danger"></span>
                             <h4>Descripcion del laboratorio</h4>
                             <textarea rows="6" class="form-control" name="desAgregarLaboratorio" id="desAgregarLaboratorio" required></textarea>
                             <br>
@@ -58,12 +60,14 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="horAgregarLaboratorio">Cant.de dias Trabajo: </label>
-                                    <input type="text" name="horAgregarLaboratorio" id="horAgregarLaboratorio" class="form-control" required>
-                                    <!-- <div class="invalid-feedback">Llene campo:</div> -->
+                                    <select  name="horAgregarLaboratorio" id="horAgregarLaboratorio" class="form-control">
+                                        <option value="5">5 dias</option>
+                                        <option value="6">6 dias</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center my-2">
-                                <input type="submit" class="btn  btn-primary" value="Crear laboratorio">
+                                <input type="submit" class="btn btn-success" value="Crear laboratorio">
                                 <button class="btn btn-danger" class="close" data-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
@@ -85,16 +89,16 @@
                             <input type="text" name="idEditarLaboratorio" id="idEditarLaboratorio" class="d-none">
                             <div class="form-group">
                                     <label for="nomEditarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" required>
+                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codEditarLaboratorio">Codigo laboratorio: </label>
-                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" required>
+                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="fecEditarLaboratorio">fecha de creacion: </label>
-                                    <input type="date" name="fecEditarLaboratorio" id="fecEditarLaboratorio" class="form-control" required>
+                                    <input type="date" name="fecEditarLaboratorio" id="fecEditarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
                             <h4>Descripcion del laboratorio</h4>
@@ -117,16 +121,17 @@
                                     <option value="11">11 meses</option>
                                     <option value="12">12 meses</option>
                                     </select required>
-                                    <!-- <div class="invalid-feedback">llene el campo</div> -->
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="horEditarLaboratorio">Cant. de dias Trabajo: </label>
-                                    <input type="text" name="horEditarLaboratorio" id="horEditarLaboratorio" class="form-control" required>
-                                    <!-- <div class="invalid-feedback">Llene campo:</div> -->
+                                    <label for="horEditarLaboratorio">Cant.de dias Trabajo: </label>
+                                    <select  name="horEditarLaboratorio" id="horEditarLaboratorio" class="form-control">
+                                        <option value="5">5 dias</option>
+                                        <option value="6">6 dias</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center my-2">
-                                <input type="submit" class="btn  btn-primary" value="Actualizar laboratorio">
+                                <input type="submit" class="btn  btn-warning" value="Actualizar laboratorio">
                                 <button class="btn btn-danger" class="close" data-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
@@ -158,7 +163,7 @@
         </div>
 
     <table id="tablaLaboratorio" class="display" style="width:100%">
-        <thead>
+        <thead class="bg-info">
             <th>Siglas</th>
             <th>Nombre de Laboratorio</th>
             <th>Fecha de creacion</th>
@@ -189,22 +194,22 @@
                         <form action="" id="formAgregarAuxLaboratorio" method="post">
                             <div class="form-group">
                                     <label for="nomAgregarAuxLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomAgregarAuxLaboratorio" id="nomAgregarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="nomAgregarAuxLaboratorio" id="nomAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codAgregarAuxLaboratorio">Carnet de identidad: </label>
-                                    <input type="text" name="codAgregarAuxLaboratorio" id="codAgregarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="codAgregarAuxLaboratorio" id="codAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="corAgregarAuxLaboratorio">Correo del auxiliar: </label>
-                                    <input type="email" name="corAgregarAuxLaboratorio" id="corAgregarAuxLaboratorio" class="form-control" required>
+                                    <input type="email" name="corAgregarAuxLaboratorio" id="corAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="telAgregarAuxLaboratorio">Telefono/celular: </label>
-                                    <input type="text" name="telAgregarAuxLaboratorio" id="telAgregarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="telAgregarAuxLaboratorio" id="telAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="pasAgregarAuxLaboratorio">Password: </label>
@@ -232,7 +237,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-warning">
-                        <h2 class="modal-title text-center">Editar laboratorio</h2>
+                        <h2 class="modal-title text-center">Nombre del auxiliar de laboratorio</h2>
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnEditarLab">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -240,16 +245,16 @@
                             <input type="text" name="idEditarLaboratorio" id="idEditarLaboratorio" class="d-none">
                             <div class="form-group">
                                     <label for="nomEditarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" required>
+                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codEditarLaboratorio">Codigo laboratorio: </label>
-                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" required>
+                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="fecEditarLaboratorio">fecha de creacion: </label>
-                                    <input type="date" name="fecEditarLaboratorio" id="fecEditarLaboratorio" class="form-control" required>
+                                    <input type="date" name="fecEditarLaboratorio" id="fecEditarLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
                             <h4>Descripcion del laboratorio</h4>
@@ -330,22 +335,22 @@
                         <input type="text" name="idEditarAuxLaboratorio" id="idEditarAuxLaboratorio" class="d-none">
                         <div class="form-group">
                                     <label for="nomEditarAuxLaboratorio">Nombre del auxiliar de laboratorio: </label>
-                                    <input type="text" name="nomEditarAuxLaboratorio" id="nomEditarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="nomEditarAuxLaboratorio" id="nomEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codEditarAuxLaboratorio">Carnet de identidad: </label>
-                                    <input type="text" name="codEditarAuxLaboratorio" id="codEditarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="codEditarAuxLaboratorio" id="codEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="corEditarAuxLaboratorio">Correo del auxiliar: </label>
-                                    <input type="email" name="corEditarAuxLaboratorio" id="corEditarAuxLaboratorio" class="form-control" required>
+                                    <input type="email" name="corEditarAuxLaboratorio" id="corEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="telEditarAuxLaboratorio">Telefono/celular: </label>
-                                    <input type="text" name="telEditarAuxLaboratorio" id="telEditarAuxLaboratorio" class="form-control" required>
+                                    <input type="text" name="telEditarAuxLaboratorio" id="telEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="dirEditarAuxLaboratorio">Nombre del laboratorio: </label>
@@ -366,7 +371,7 @@
 
 
     <table id="tablaAuxiliarLaboratorio" class="display" style="width:100%">
-        <thead>
+        <thead class="bg-info">
             <th>Nombre de auxiliar Laboratorio</th>
             <th>Responsable de</th>
             <th>Correo Electronico</th>
@@ -376,6 +381,7 @@
     </table>
 
     </main>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="src/personal_laboratorio.js"></script>
 </body>

@@ -7,10 +7,10 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
-        public function EditarFacultad($idFacultad,$nomEditFacultad,$facEditCodigo,$facEditFechaCrea,$dirEditFac){
-            $sql = "UPDATE facultades SET nombre_facultad = :nombre ,codigo_facultad = :codigo,fecha_creacion = :fecha, director_academico = :director WHERE id_facultad = :id";
+        public function EditarFacultad($idFacultad,$nomEditFacultad,$facEditCodigo,$facEditFechaCrea){
+            $sql = "UPDATE facultades SET nombre_facultad = :nombre ,codigo_facultad = :codigo,fecha_creacion = :fecha WHERE id_facultad = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL-> execute(array(":nombre"=>$nomEditFacultad,":codigo"=>$facEditCodigo,":fecha"=>$facEditFechaCrea,":director"=>$dirEditFac,":id"=>$idFacultad));
+            $respuesta = $sentenceSQL-> execute(array(":nombre"=>$nomEditFacultad,":codigo"=>$facEditCodigo,":fecha"=>$facEditFechaCrea,":id"=>$idFacultad));
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
@@ -22,7 +22,7 @@
             return $respuesta;
         }
         public function LeerFacultades(){
-            $sql = "SELECT * FROM facultades WHERE UPPER(codigo_facultad) <> UPPER('NInguna') ";
+            $sql = "SELECT * FROM facultades WHERE UPPER(codigo_facultad) <> UPPER('Ninguno') ";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
@@ -33,7 +33,7 @@
         }
 
         public function facultadesDisponibles(){
-            $sql = "SELECT * FROM facultades WHERE director_academico IS NULL";
+            $sql = "SELECT * FROM facultades WHERE director_academico IS NULL or director_academico = 'Ninguno'";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
@@ -50,5 +50,29 @@
             $sentenceSQL->closeCursor();
             //$res = json_encode($respuesta);
             return $res;
+        }
+
+        public function AsignarDirectorFacultad($idFacultad,$nomDirector){
+            $sql = "UPDATE facultades SET director_academico = :director WHERE id_facultad = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL-> execute(array(":director"=>$nomDirector,":id"=>$idFacultad));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function cambiarDirectorNinguno($idFacultad,$director){
+            $sql = "UPDATE facultades SET director_academico = :director WHERE id_facultad = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL-> execute(array(":director"=>$director,":id"=>$idFacultad));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function cambiarDirectorAcedemicoFacultad($idFacultad,$nomDirector){
+            $sql = "UPDATE facultades SET director_academico = :director WHERE id_facultad = :idFacultad";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL-> execute(array(":director"=>$nomDirector,":idFacultad"=>$idFacultad));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
         }
     } 

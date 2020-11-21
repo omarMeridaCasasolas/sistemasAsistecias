@@ -25,4 +25,12 @@
             return $respuesta;
         }
 
+        public function eliminarDepartamentosPorFacultad($idFacultad){
+            $sql = "DELETE FROM departamento  WHERE id_facultad = :facultad";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":facultad"=>$idFacultad));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
     }
