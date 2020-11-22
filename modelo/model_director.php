@@ -7,7 +7,30 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+        public function obtenerDirectorActual($codigo_sis_director){
+            $sql = "SELECT director_actual FROM director_unidad WHERE codigo_sis_director=:cod_dir";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":cod_dir"=>$codigo_sis_director));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta[0];
+        }
+        public function eliminarDirectorAcademico($codigo_sis_director){
+            $sql = "DELETE FROM director_unidad WHERE codigo_sis_director=:codigo";     
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":codigo"=>$codigo_sis_director));
+            $sentenceSQL->closeCursor();
+            $this->cerrarConexion(); 
+        }
 
+        public function insertarDirectorDepartamental($nomDirector,$ciDirector,$correoDirector,$telDirector,$asigDirector,$sisDirector,$passDirector,$cargoDirector,$textDirector){
+            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,id_departamento,codigo_sis_director,password_director,cargo_director,director_actual)
+            VALUES(:nom,:ci,:correo,:telef,:depar,:sis,:pass,:cargo,:dirActual)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":ci"=>$ciDirector,":correo"=>$correoDirector,":telef"=>$telDirector,":depar"=>$asigDirector,":sis"=>$sisDirector,":pass"=>$passDirector,":cargo"=>$cargoDirector,":dirActual"=>$textDirector));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
 
         public function recuperarPassword($correo){
             $sql = "SELECT * FROM director_unidad WHERE UPPER(correo_electronico_director) = UPPER(:correo)";
@@ -67,10 +90,10 @@
             //echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
         
-        public function listarDirectoresDepartamentales(){
-            $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director departamental'";
+        public function listarDirectoresDepartamentales($categoria){
+            $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute();
+            $sentenceSQL->execute(array(":id_fac"=>$categoria));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             $this->cerrarConexion();
@@ -105,14 +128,26 @@
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
-        public function insertarDirectorDepartamental($nomDirector,$ciDirector,$correoDirector,$telDirector,$asigDirector,$sisDirector,$passDirector,$cargoDirector,$textDirector){
-            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,id_departamento,codigo_sis_director,password_director,cargo_director,director_actual)
-            VALUES(:nom,:ci,:correo,:telef,:depar,:sis,:pass,:cargo,:dirActual)";
+
+        public function editarDirectorDepartamento($id_departamento,$nombre_director,$codigo_sis_director,$director_actual,$telefono_director,$correo_director, $codigo_sis_noModificado){
+            $sql = "UPDATE director_unidad SET id_departamento=:id_dep, nombre_director=:nombre, codigo_sis_director=:codigo, director_actual=:facAsig, telefono_director=:telefono, correo_electronico_director=:correo WHERE codigo_sis_director = :codigo_noModificado";       
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":ci"=>$ciDirector,":correo"=>$correoDirector,":telef"=>$telDirector,":depar"=>$asigDirector,":sis"=>$sisDirector,":pass"=>$passDirector,":cargo"=>$cargoDirector,":dirActual"=>$textDirector));
+            $sentenceSQL ->execute(array(":id_dep"=>$id_departamento, ":nombre"=>$nombre_director, ":codigo"=>$codigo_sis_director,":facAsig"=>$director_actual,":telefono"=>$telefono_director,":correo"=>$correo_director, ":codigo_noModificado"=>$codigo_sis_noModificado));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
-            return $respuesta;
+            $this->cerrarConexion();
+
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
+
+        // public function insertarDirectorDepartamental($nomDirector,$ciDirector,$correoDirector,$telDirector,$asigDirector,$sisDirector,$passDirector,$cargoDirector,$textDirector){
+        //     $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,id_departamento,codigo_sis_director,password_director,cargo_director,director_actual)
+        //     VALUES(:nom,:ci,:correo,:telef,:depar,:sis,:pass,:cargo,:dirActual)";
+        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
+        //     $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":ci"=>$ciDirector,":correo"=>$correoDirector,":telef"=>$telDirector,":depar"=>$asigDirector,":sis"=>$sisDirector,":pass"=>$passDirector,":cargo"=>$cargoDirector,":dirActual"=>$textDirector));
+        //     $sentenceSQL->closeCursor();
+        //     return $respuesta;
+        // }
         
         
         public function insertarDirectorCarrera($nomDirector,$ciDirector,$correoDirector,$telDirector,$asigDirector,$sisDirector,$passDirector,$cargoDirector,$textDirector){

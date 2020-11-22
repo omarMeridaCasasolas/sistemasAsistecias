@@ -7,6 +7,23 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+        
+        public function obtenerIdDepartamentoNomDep($nombre_dep){
+            $sql = "SELECT id_departamento FROM departamento WHERE nombre_departamento=:nom_dep";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":nom_dep"=>$nombre_dep));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta[0];
+        }
+
+        public function retirarAsignacionDirectorDepartamento($nombre_dep){
+            $sql = "UPDATE departamento SET director_departamento=null WHERE nombre_departamento=:nom_dep";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":nom_dep"=>$nombre_dep));
+            $sentenceSQL->closeCursor();
+        }
+
         public function departamentosDisponibles($ambiente){
             $sql = "SELECT * FROM departamento  WHERE director_departamento  IS NULL AND id_facultad = :facultad";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -25,12 +42,40 @@
             return $respuesta;
         }
 
+        public function eliminarDepartamento($id_departamento){
+            $sql = "DELETE FROM departamento WHERE id_departamento=:id_dep";     
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_dep"=>$id_departamento));
+            $sentenceSQL->closeCursor();
+            $this->cerrarConexion(); 
+        }
+
         public function eliminarDepartamentosPorFacultad($idFacultad){
             $sql = "DELETE FROM departamento  WHERE id_facultad = :facultad";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $respuesta = $sentenceSQL->execute(array(":facultad"=>$idFacultad));
             $sentenceSQL->closeCursor();
             return $respuesta;
+        }
+
+        public function insertarNuevoDepartamento($nomDep, $depCod, $depFechaCrea, $ambiente){
+            $sql = "INSERT INTO departamento(id_facultad, nombre_departamento, fecha_creacion_departamento, codigo_departamento)
+            VALUES(:id_fac, :nomDep, :fechaCre, :codDep)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":id_fac"=>$ambiente,":nomDep"=>$nomDep,":fechaCre"=>$depFechaCrea,":codDep"=>$depCod));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function editarDepartamento($codigo_dep_noModificado, $codigo_dep, $nombre_dep, $fecha_creacion_departamento){
+            $sql = "UPDATE departamento SET nombre_departamento=:nom_dep, codigo_departamento=:codigo_dep WHERE codigo_departamento=:codigo_noModificado";       
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL ->execute(array(":nom_dep"=>$nombre_dep,":codigo_dep"=>$codigo_dep, ":codigo_noModificado"=>$codigo_dep_noModificado));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            $this->cerrarConexion();
+
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
 
     }

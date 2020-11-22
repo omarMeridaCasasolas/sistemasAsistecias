@@ -66,6 +66,48 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'eliminarDirectorDepartamento':
+                $codigo_sis_director = $_REQUEST['codigo_sis_director'];
+                $res = $director->obtenerDirectorActual($codigo_sis_director);
+                $departamento = new Departamento();
+                $departamento->retirarAsignacionDirectorDepartamento($res['director_actual']);
+                $res = $director->eliminarDirectorAcademico($codigo_sis_director);
+            break;
+            case 'editarDirectorDepartamento':
+                $nombre_director = $_REQUEST['nombre_director'];
+                $codigo_sis_director = $_REQUEST['codigo_sis_director'];
+                $director_actual = $_REQUEST['director_actual'];
+                $telefono_director = $_REQUEST['telefono_director'];
+                $correo_director = $_REQUEST['correo_director'];
+                $codigo_sis_noModificado = $_REQUEST['codigo_sis_noModificado'];
+                $res = $director->obtenerDirectorActual($codigo_sis_noModificado);
+                if($director_actual == $res['director_actual']){
+                    $res = $director->editarDirectorAcademicoDatosPersonales($nombre_director,$codigo_sis_director,$telefono_director,$correo_director, $codigo_sis_noModificado);
+                }else{
+                    $departamento = new Departamento();
+                    $departamento->retirarAsignacionDirectorDepartamento($res['director_actual']);
+                    $departamento->AsignarDirectorDepartamento($nombre_director, $director_actual);
+                    $res = $departamento->obtenerIdDepartamentoNomDep($director_actual);
+                    $id_departamento = $res['id_departamento'];
+                    $res = $director->editarDirectorDepartamento($id_departamento,$nombre_director,$codigo_sis_director,$director_actual,$telefono_director,$correo_director, $codigo_sis_noModificado);
+                }
+                break;
+            case 'insertarDirectorDepartamental':
+                $nomDirector = $_REQUEST['nomDirector'];
+                $ciDirector = $_REQUEST['ciDirector'];
+                $correoDirector = $_REQUEST['correoDirector'];
+                $telDirector = $_REQUEST['telDirector'];
+                $asigDirector = $_REQUEST['asigDirector'];
+                $sisDirector = $_REQUEST['sisDirector'];
+                $passDirector = $_REQUEST['passDirector'];
+                $cargoDirector = "Director departamental";
+                $textDirector = $_REQUEST['textDirector'];
+                $res = $director->insertarDirectorDepartamental($nomDirector,$ciDirector,$correoDirector,$telDirector,$asigDirector,$sisDirector,$passDirector,$cargoDirector,$textDirector);
+                if($res == 1){
+                    $departamento = new Departamento();
+                    $res = $departamento->AsignarDirectorDepartamento($nomDirector,$textDirector);
+                }
+                break;
             case 'actualizarDirectorAcademico':
                 $idDirector = $_REQUEST['idDirector'];
                 $nomDirector = $_REQUEST['nomDirector'];
@@ -130,7 +172,7 @@
                 $res = $director->listarTableDirectorCarrera();
                 break;
             case 'listarDirectoresDepartamentales':
-                $res = $director->listarDirectoresDepartamentales();
+                $res = $director->listarDirectoresDepartamentales($_REQUEST['categoria']);
                 break;
             case 'insertarDirectorCarrera':
                 $nomDirector = $_REQUEST['nomDirector'];
@@ -257,6 +299,39 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'eliminarDepartamento':
+                $codigo_dep = $_REQUEST['codigo_dep'];
+                $res = $departamento->obtenerIdDepartamento($codigo_dep);
+                $id_departamento = $res['id_departamento'];
+                $director = new Director();
+                $director->quitarAsignacionDirectorDepartamento($id_departamento);
+                $res = $departamento->eliminarDepartamento($id_departamento);
+                break;
+            case 'editarDepartamento':
+                $codigo_dep = $_REQUEST['codigo_dep'];
+                $codigo_dep_noModificado = $_REQUEST['codigo_dep_noModificado'];
+                $nombre_dep = $_REQUEST['nombre_dep'];    
+                $fecha_creacion_departamento = $_REQUEST['fecha_creacion_departamento'];
+                $jefe_dep = $_REQUEST['jefe_dep'];
+                if($jefe_dep == 'Ninguno'){
+                    $departamento->quitarAsignacionDirectorDepartamento($codigo_dep_noModificado);
+                    $res = $departamento->obtenerIdDepartamento($codigo_dep_noModificado);
+                    $id_departamento = $res['id_departamento'];
+                    $director = new Director();
+                    $director->quitarAsignacionDirectorDepartamento($id_departamento);
+                }
+                $res = $departamento->editarDepartamento($codigo_dep_noModificado, $codigo_dep, $nombre_dep, $fecha_creacion_departamento);
+                break;
+            case 'insertarNuevoDepartamento':
+                $ambiente = $_REQUEST['categoria'];
+                $nomDep = $_REQUEST['nomDep'];
+                $depCod = $_REQUEST['depCod'];
+                $depFechaCrea = $_REQUEST['depFechaCrea'];
+                $res = $departamento->insertarNuevoDepartamento($nomDep, $depCod, $depFechaCrea, $ambiente);
+            case 'listarDepartamentos':
+                $ambiente = $_REQUEST['categoria'];
+                $res = $departamento->listarDepartamentos($ambiente);
+                break;
             case 'departamentosDisponibles':
                 $ambiente = $_REQUEST['categoria'];
                 $res = $departamento->departamentosDisponibles($ambiente);
