@@ -275,6 +275,8 @@
     <script src="src/home_auxiliar_laboratorio.js"></script>
 </body>
 </html>
+
+
 <?php
     function fechaParaBoton($diaSiguiente){
         date_default_timezone_set('America/La_Paz');
