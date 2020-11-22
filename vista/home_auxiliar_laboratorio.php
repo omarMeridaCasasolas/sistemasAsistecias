@@ -6,6 +6,15 @@
         $horarioLaboratorio = new HorarioLaboratorio();
         $laboratoriosPorAux = $horarioLaboratorio->listaLaboratoriosAux($idAuxiliar);
 
+        // Nuevo S3    
+        require('vendor/autoload.php');
+        $s3 = new Aws\S3\S3Client([
+            'version'  => '2006-03-01',
+            'region'   => 'us-east-2',
+        ]);
+        $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
+        // NUevo S3
+
         require_once('../modelo/model_reporte_aux_lab.php');
         $reporteAuxiliarLaboratorio = new ReporteAuxLab();
     }else{
@@ -239,17 +248,9 @@
                 }
             }
         ?>
+    </main>
 
-            <!-- Subir archivos por S3 -->
-            <?php
-            require('vendor/autoload.php');
-            // this will simply read AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from env vars
-            $s3 = new Aws\S3\S3Client([
-                'version'  => '2006-03-01',
-                'region'   => 'us-east-2',
-            ]);
-            $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
-            ?>
+    <footer>
             <h1>S3 upload example</h1>
             <?php
                 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
@@ -271,7 +272,7 @@
                         <input name="userfile" type="file"><input type="submit" value="Upload">
                     </form>        
                 <!-- Fin  subir archivos S3   -->
-    </main>    
+    </footer>    
     <script src="src/home_auxiliar_laboratorio.js"></script>
 </body>
 </html>
