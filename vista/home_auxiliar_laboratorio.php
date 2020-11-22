@@ -7,7 +7,7 @@
         $laboratoriosPorAux = $horarioLaboratorio->listaLaboratoriosAux($idAuxiliar);
 
         // Nuevo S3    
-        require('vendor/autoload.php');
+        require('../vendor/autoload.php');
         $s3 = new Aws\S3\S3Client([
             'version'  => '2006-03-01',
             'region'   => 'us-east-2',
