@@ -6,14 +6,14 @@
         $horarioLaboratorio = new HorarioLaboratorio();
         $laboratoriosPorAux = $horarioLaboratorio->listaLaboratoriosAux($idAuxiliar);
 
-        // Nuevo S3    
+        /* Nuevo S3    
         require('../vendor/autoload.php');
-        $s3 = new Aws\S3\S3Client([
+         $s3 = new Aws\S3\S3Client([
             'version'  => '2006-03-01',
             'region'   => 'us-east-2',
         ]);
-        $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
-        // NUevo S3
+        //  $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
+        / NUevo S3 */
 
         require_once('../modelo/model_reporte_aux_lab.php');
         $reporteAuxiliarLaboratorio = new ReporteAuxLab();
@@ -39,8 +39,8 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <body class="bg-secondary">
-    <header class="bg-dark text-white p-5">
-        <h1>Bienvenido Axiliar de laboratorio <?php echo $_SESSION['nombreAuxLab']; ?></h1>
+    <header class="bg-dark text-white p-2">
+        <h1>Bienvenido Auxiliar de laboratorio :<?php echo $_SESSION['nombreAuxLab']; ?></h1>
         <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a> 
         <a href="historial_reportes_Laboratorio.php">Historial de reportes</a>
     </header>
@@ -248,31 +248,7 @@
                 }
             }
         ?>
-    </main>
-
-    <footer class ="bg-white container">
-            <h1>S3 upload example</h1>
-            <?php
-                if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-                // FIXME: you should add more of your own validation here, e.g. using ext/fileinfo
-                    try {
-                    // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                    $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
-                    ?>
-                    <p>Upload <a href="<?=htmlspecialchars($upload->get('ObjectURL'))?>" target='_blank'>successful</a> :)</p>
-                        <?php } catch(Exception $e) { 
-                        echo $e;
-                    ?>
-                    <p>Upload error :(</p>                    
-            <?php 
-                } 
-                    } ?>
-                    <h2>Upload a file</h2>
-                    <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="POST">
-                        <input name="userfile" type="file"><input type="submit" value="Upload">
-                    </form>        
-                <!-- Fin  subir archivos S3   -->
-    </footer>    
+    </main>  
     <script src="src/home_auxiliar_laboratorio.js"></script>
 </body>
 </html>

@@ -50,26 +50,26 @@
                     <form action="" id="formCrearAyudanteRector" method="post">
                         <div class="form-group">
                                 <label for="nomAyudanteRector">Nombre del ayudante: </label>
-                                <input type="text" name="nomAyudanteRector" id="nomAyudanteRector" class="form-control" required>
+                                <input type="text" name="nomAyudanteRector" id="nomAyudanteRector" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" required autocomplete="off">
                             </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="ciAyudanteRector">Carnet identidad: </label>
-                                <input type="text" name="ciAyudanteRector" id="ciAyudanteRector" class="form-control" required>
+                                <input type="text" name="ciAyudanteRector" id="ciAyudanteRector" class="form-control" required pattern="[0-9]{6,8}" autocomplete="off">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="telAyudanteRector">Tel/cel: </label>
-                                <input type="text" name="telAyudanteRector" id="telAyudanteRector" class="form-control" required>
+                                <label for="telAyudanteRector">Telefono/cel: </label>
+                                <input type="text" name="telAyudanteRector" id="telAyudanteRector" class="form-control" required pattern="[0-9]{6,8}" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-7">
                                 <label for="correoAyudanteRector">Correo electronico: </label>
-                                <input type="email" name="correoAyudanteRector" id="correoAyudanteRector" class="form-control" required>
+                                <input type="email" name="correoAyudanteRector" id="correoAyudanteRector" class="form-control" required autocomplete="off">
                             </div>
                             <div class="form-group col-md-5">
                                 <label for="nomCargoAyudanteRector">Nom. cargo: </label>
-                                <input type="text" name="nomCargoAyudanteRector" id="nomCargoAyudanteRector" class="form-control" required>
+                                <input type="text" name="nomCargoAyudanteRector" id="nomCargoAyudanteRector" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" required autocomplete="off">
                             </div>
                         </div>
                         <!-- <div class="form-group">
@@ -124,13 +124,13 @@
                     <form action="" id="formCrearFacultad" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="nomFacultad">Nombre de la facultad: </label>
-                                <input type="text" name="nomFacultad" id="nomFacultad" class="form-control" autocomplete="off" required>
+                                <input type="text" name="nomFacultad" id="nomFacultad" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" autocomplete="off" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="facCodigo">Codigo facultad: </label>
-                                <input type="text" name="facCodigo" id="facCodigo" class="form-control"  autocomplete="off" required>
+                                <input type="text" name="facCodigo" id="facCodigo" class="form-control"  pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,7}" autocomplete="off" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-7">
@@ -190,13 +190,13 @@
                     <input type="text" class="d-none" name="idFacultadEditar" id="idFacultadEditar">
                         <div class="form-group">
                                 <label for="nomEditFacultad">Editar nombre de la facultad: </label>
-                                <input type="text" name="nomEditFacultad" id="nomEditFacultad" class="form-control" required>
+                                <input type="text" name="nomEditFacultad" id="nomEditFacultad" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"  autocomplete="off" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="facEditCodigo">Editar codigo facultad: </label>
-                                <input type="text" name="facEditCodigo" id="facEditCodigo" class="form-control" required>
+                                <input type="text" name="facEditCodigo" id="facEditCodigo" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,6}" autocomplete="off"required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-7">
@@ -247,25 +247,25 @@
                     <form action="" method="post" class="was-validated" id="formAgregarDirectorAcademico">
                         <div class="form-group">
                                 <label for="nomDirAcad">Nombre director Academico</label>
-                                <input type="text" name="nomDirAcad" id="nomDirAcad" class="form-control" required>
+                                <input type="text" name="nomDirAcad" id="nomDirAcad" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,80}" required autocomplete="off">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="ciDirAcad">Carnet de identidad</label>
-                                <input type="text" name="ciDirAcad" id="ciDirAcad" class="form-control" required>
+                                <input type="text" name="ciDirAcad" id="ciDirAcad" class="form-control" required autocomplete="off" pattern="[0-9]{6,8}" >
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="correoDirAcad">Correo electronico: </label>
-                                <input type="email" name="correoDirAcad" id="correoDirAcad" class="form-control" required>
+                                <input type="email" name="correoDirAcad" id="correoDirAcad" class="form-control" required autocomplete="off" >
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="telDirAcad">Telefono: </label>
-                                <input type="text" name="telDirAcad" id="telDirAcad" class="form-control" required>
+                                <input type="text" name="telDirAcad" id="telDirAcad" class="form-control" required autocomplete="off" pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-7">
@@ -278,12 +278,12 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="sisDirAcad">Codigo SIS</label>
-                                <input type="password" name="sisDirAcad" id="sisDirAcad" class="form-control" required>
+                                <input type="password" name="sisDirAcad" id="sisDirAcad" class="form-control" required autocomplete="off" pattern="[0-9]{6,9}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passDirAcad">Ingrese password</label>
-                                <input type="password" name="passDirAcad" id="passDirAcad" class="form-control" required>
+                                <input type="password" name="passDirAcad" id="passDirAcad" class="form-control" required autocomplete="off">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
@@ -335,21 +335,21 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Nombre director academico</label>
-                        <input type="text" name="" id="formCrearnomDirAca" class="form-control" required>
+                        <input type="text" name="" id="formCrearnomDirAca" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{2,80}" required  autocomplete="off">
                         <div class="invalid-feedback">llene el campo</div>
                     </div>
                     <div class="row">
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label for="" class="col-form-label">Carnet de identidad:</label>
-                                <input type="text" class="form-control" id="formCrearCiDirAca" required="">
+                                <input type="text" class="form-control" id="formCrearCiDirAca" required  autocomplete="off">
                             <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
                         <div class="col-lg-7">
                             <div class="form-group">
                                 <label for="" class="col-form-label">Correo electronico:</label>
-                                <input type="email" class="form-control" id="formCrearCorDirAca" required="">
+                                <input type="email" class="form-control" id="formCrearCorDirAca" required  autocomplete="off">
                             <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>   
@@ -357,7 +357,7 @@
                     <div class="row"> 
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="" class="col-form-label">Telefono:</label>
-                            <input type="text" class="form-control" id="formCrearTelDirAca" required="">
+                            <input type="text" class="form-control" id="formCrearTelDirAca" required pattern="[0-9]{6,8}" autocomplete="off">
                         <div class="invalid-feedback">llene el campo</div>           
                         </div>
                         <div class="form-group col-lg-8 col-sm-12">
@@ -371,14 +371,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="" class="col-form-label">Codigo SIS:</label>
-                            <input type="password" class="form-control" id="formCrearCodSisDirAca" required="">
+                            <input type="password" class="form-control" id="formCrearCodSisDirAca" required pattern="[0-9]{6,8}" autocomplete="off">
                             <div class="invalid-feedback">llene el campo</div>
                             </div>               
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="" class="col-form-label">Ingrese password:</label>
-                            <input type="password" class="form-control" id="formCrearPasDirAca" required="">
+                            <input type="password" class="form-control" id="formCrearPasDirAca" required autocomplete="off">
                             <div class="invalid-feedback">llene el campo</div>
                         </div> 
                         </div>  
@@ -408,30 +408,30 @@
             <input type="text" class="d-none" name="idFacultadActDir" id="idFacultadActDir">
                 <div class="form-group">
                     <label for="">Nombre director academico</label>
-                    <input type="text" name="" id="formEditarNomDirAca" class="form-control" required>
+                    <input type="text" name="" id="formEditarNomDirAca" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,80}"  required autocomplete="off">
                     <div class="invalid-feedback">llene el campo</div>
                 </div>
                 <div class="row">
                     <div class="form-group col-4">
                     <label for="formEditarCodSisDirAca">Codigo SIS:</label>
-                    <input type="text" class="form-control" id="formEditarCodSisDirAca" required="">
+                    <input type="text" class="form-control" id="formEditarCodSisDirAca" required pattern="[0-9]{6,8}" autocomplete="off">
                     <div class="invalid-feedback">llene el campo</div>
                     </div>
                     <div class="form-group col-8">
                     <label for="formEditarFacAsiDirAca" >Facultad asignada:</label>
-                    <select class="form-control" id="formEditarFacAsiDirAca" name="formEditarFacAsiDirAca" required="">
+                    <select class="form-control" id="formEditarFacAsiDirAca" name="formEditarFacAsiDirAca" required autocomplete="off">
                     </select>
                     </div>    
                 </div>
                 <div class="row"> 
                     <div class="form-group col-4">
                         <label for="formEditarTelDirAca" >Telefono</label>
-                        <input type="text" class="form-control" id="formEditarTelDirAca" required="">
+                        <input type="text" class="form-control" id="formEditarTelDirAca" required pattern="[0-9]{6,8}" autocomplete="off">
                         <div class="invalid-feedback">llene el campo</div>             
                     </div>
                     <div class="form-group col-8">
                     <label for="formEditarCorDirAca" >Correo electronico</label>
-                    <input type="text" class="form-control" id="formEditarCorDirAca">
+                    <input type="email" class="form-control" id="formEditarCorDirAca" required autocomplete="off">
                     <div class="invalid-feedback">llene el campo</div>
                     </div>  
                 </div> 

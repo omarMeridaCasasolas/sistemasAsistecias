@@ -30,7 +30,7 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <body class="bg-secondary">
-    <header class="bg-dark text-white p-5">
+    <header class="bg-dark text-white p-2">
         <h1>Bienvenido Axiliar de laboratorio <?php echo $_SESSION['nombreAuxLab']; ?></h1>
         <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a> 
     </header>
@@ -51,8 +51,9 @@
                 </div>
             
         </form>
+        <div class="responsive">
         <table id="tablaHistorialReporteLaboratorio" class="display nowrap cell-border" style="width:100%">
-            <thead>
+            <thead class="bg-info">
                 <tr>
                     <th>Fecha</th>
                     <th>Trabajo relizado</th>
@@ -62,6 +63,7 @@
                 </tr>
             </thead>
         </table>
+        </div>
     </main>    
     <script src="src/historial_repotes_laboratorio.js"></script>
 </body>

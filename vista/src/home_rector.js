@@ -2,7 +2,7 @@ var tablaFacultad, tablaDirector;
 $(document).ready(function() {
     facultadesDisponibles();
     mostarFacultades();
-    listarDirectoresDisponibles();
+    //listarDirectoresDisponibles();
     mostrarListaDirectoresAcademicos();
     mostrarFuncionalidades();
     
@@ -582,10 +582,10 @@ function listarDirectoresDisponibles(){
         url: "../controlador/interprete.php",
         data: datosDirector,
         success: function (response) {
-            //let obj= JSON.parse(response);
-            // obj.forEach(element => {
-            //     $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
-            // });
+            let obj= JSON.parse(response);
+            obj.forEach(element => {
+                $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
+            });
         },
         error : function(jqXHR, status, error) {
             console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
@@ -604,7 +604,7 @@ function mostrarFuncionalidades(){
         url: "../controlador/interprete.php",
         data: datos,
         success: function (response) {
-            //console.log(response);
+            console.log(response);
             let listaFunciones = JSON.parse(response);
             listaFunciones.forEach(element => {
                 $("#myDivFuncionesRector").prepend("<label><input type='checkbox' class='misChecked' value='"+element.nombre_funcionalidad+"'> "+element.nombre_funcionalidad+"</label><br>");

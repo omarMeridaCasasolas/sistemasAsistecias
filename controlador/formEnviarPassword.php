@@ -2,7 +2,7 @@
     // If you are using Composer
     require '../vendor/autoload.php';
                     
-    $from = new SendGrid\Email(null, "Asistencia_Virtual_UMSS@mail.com");
+    $from = new SendGrid\Email(null, "umss_asistencia_vitrual@mail.com");
     $subject = "Recuperacion de password ";
     $to = new SendGrid\Email(null, $destino);
     $content = new SendGrid\Content("text/html", "<p>Hemos visto que ha tenido problemas para recordar su password <strong>$password</strong></p>");

@@ -5,7 +5,7 @@
         $descripcion = $_POST['descripcion'];
 
         require '../vendor/autoload.php';
-        $from = new SendGrid\Email(null, "Asistencia_Virtual_UMSS@mail.com");
+        $from = new SendGrid\Email(null, "umss_asistencia_vitrual@mail.com");
         //$to = new SendGrid\Email(null, $destino);
         $content = new SendGrid\Content("text/html", "<p>".$descripcion."</p>");
 

@@ -189,4 +189,12 @@
         $sentenceSQL->closeCursor();
         return $respuesta;
     }
+
+    // public function directoresAcademicosDisponibles(){
+    //     $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director academico' WHERE ";
+    //     $sentenceSQL = $this->connexion_bd->prepare($sql);
+    //     $sentenceSQL->execute();
+    //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+    //     return $respuesta;
+    // }
 } 
