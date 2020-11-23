@@ -250,7 +250,7 @@
         ?>
     </main>
 
-    <footer>
+    <footer class ="bg-white container">
             <h1>S3 upload example</h1>
             <?php
                 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
