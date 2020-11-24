@@ -32,6 +32,16 @@
             return $respuesta;
         }
 
+        public function listarDirectoresDepartamentales($categoria){
+            $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_fac"=>$categoria));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //$res = json_encode($respuesta);
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
         public function recuperarPassword($correo){
             $sql = "SELECT * FROM director_unidad WHERE UPPER(correo_electronico_director) = UPPER(:correo)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -90,16 +100,16 @@
             //echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
         
-        public function listarDirectoresDepartamentales($categoria){
-            $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute(array(":id_fac"=>$categoria));
-            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-            $sentenceSQL->closeCursor();
-            $this->cerrarConexion();
-            //$res = json_encode($respuesta);
-            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
-        }
+        // public function listarDirectoresDepartamentales($categoria){
+        //     $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
+        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
+        //     $sentenceSQL->execute(array(":id_fac"=>$categoria));
+        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+        //     $sentenceSQL->closeCursor();
+        //     $this->cerrarConexion();
+        //     //$res = json_encode($respuesta);
+        //     echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        // }
 
         public function listarTableDirectorCarrera(){
             $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director de carrera'";

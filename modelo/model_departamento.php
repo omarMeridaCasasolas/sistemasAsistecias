@@ -16,6 +16,7 @@
             $sentenceSQL->closeCursor();
             return $respuesta[0];
         }
+        
         public function eliminarDepartamento_acoplado($codigo_departamento){
             //ObtenerIdDepartamento
             $sql = "SELECT id_departamento FROM departamento WHERE codigo_departamento=:cod_dep";
@@ -24,6 +25,19 @@
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $id_departamento = ($respuesta[0])['id_departamento'];
 
+            //EliminarDirectorDepartamento
+            $sql = "DELETE FROM director_unidad WHERE id_departamento=:id_dep";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_dep"=>$id_departamento));
+            $sentenceSQL->closeCursor();
+
+            //EliminarDepartamento
+            $sql = "DELETE FROM departamento WHERE id_departamento=:id_dep";     
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":id_dep"=>$id_departamento));
+            $sentenceSQL->closeCursor();
+        }
+        
         public function retirarAsignacionDirectorDepartamento($nombre_dep){
             $sql = "UPDATE departamento SET director_departamento=null WHERE nombre_departamento=:nom_dep";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -85,4 +99,13 @@
             echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
 
+        public function listarDepartamentos($ambiente){
+            $sql = "SELECT * FROM departamento WHERE id_facultad = :id_fac";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_fac"=>$ambiente));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //$res = json_encode($respuesta);
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
     }
