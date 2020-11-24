@@ -75,4 +75,15 @@
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
+
+        public function obtenerCodigoFacultad($id_facultad){
+            $sql = "SELECT codigo_facultad FROM facultades WHERE id_facultad=:id_fac";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_fac"=>$id_facultad));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            //echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+            return $res;
+        }
     } 

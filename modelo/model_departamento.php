@@ -16,6 +16,13 @@
             $sentenceSQL->closeCursor();
             return $respuesta[0];
         }
+        public function eliminarDepartamento_acoplado($codigo_departamento){
+            //ObtenerIdDepartamento
+            $sql = "SELECT id_departamento FROM departamento WHERE codigo_departamento=:cod_dep";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":cod_dep"=>$codigo_departamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $id_departamento = ($respuesta[0])['id_departamento'];
 
         public function retirarAsignacionDirectorDepartamento($nombre_dep){
             $sql = "UPDATE departamento SET director_departamento=null WHERE nombre_departamento=:nom_dep";
