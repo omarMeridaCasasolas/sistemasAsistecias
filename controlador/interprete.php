@@ -403,9 +403,9 @@
                 $res = $carrera->carrerasDisponibles($ambiente);
                 break;
             default:
-                # code...
                 break;
         }
+        $carrera->cerrarConexion();
         return $res;
     }
     function ejecutarConsultasDocente(){

@@ -6,15 +6,6 @@
         $horarioLaboratorio = new HorarioLaboratorio();
         $laboratoriosPorAux = $horarioLaboratorio->listaLaboratoriosAux($idAuxiliar);
 
-        /* Nuevo S3    
-        require('../vendor/autoload.php');
-         $s3 = new Aws\S3\S3Client([
-            'version'  => '2006-03-01',
-            'region'   => 'us-east-2',
-        ]);
-        //  $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
-        / NUevo S3 */
-
         require_once('../modelo/model_reporte_aux_lab.php');
         $reporteAuxiliarLaboratorio = new ReporteAuxLab();
     }else{
@@ -40,7 +31,7 @@
 </head>
 <body class="bg-secondary">
     <header class="bg-dark text-white p-2">
-        <h1>Bienvenido Auxiliar de laboratorio :<?php echo $_SESSION['nombreAuxLab']; ?></h1>
+        <h1 class=>Bienvenido Auxiliar de laboratorio: <?php echo $_SESSION['nombreAuxLab']; ?></h1>
         <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a> 
         <a href="historial_reportes_Laboratorio.php">Historial de reportes</a>
     </header>
@@ -48,6 +39,18 @@
         <button type="button" class="d-none" data-toggle="modal" data-target="#myModal" id="btnCerrarModal">
             Open modal
         </button>
+
+        <form action="" id="formLaboratoriosAuxLab" class="pt-3">
+            <div class="row">
+                <div class="form-group col-5">
+                    <label for="nomLaboratorioAux">Seleciones Laboratorio</label>
+                    <select name="nomLaboratorioAux" id="nomLaboratorioAux" class="form-control">
+                        <option value="">Laboratorio de mantenimiento</option>
+                        <option value="">Ninguno</option>
+                    </select>
+                </div>
+            </div>
+        </form>
 
         <!-- The Modal -->
         <div class="modal fade" id="myModal">
@@ -92,23 +95,26 @@
                 require_once('../modelo/model_laboratorio.php');
                 $laboratorio = new Laboratorio();
                 $detallesLaboratorio = $laboratorio->mostarLaboratorio($elemnto['id_laboratorio']);
-                echo "<h2>Auxiliar de laboratorio: ".$detallesLaboratorio['nombre_laboratorio']." </h2>";
+                echo "<div class='p-3'><h2>Auxiliar de laboratorio: ".$detallesLaboratorio['nombre_laboratorio']." </h2></div>";
                 $fechaInicio = $elemnto['fecha_inicio_trabajo'];
                 $fechaReinicio = $elemnto['fecha_reinicio_reporte'];  //2021-02-20 fecha de reinicio
                 //Cambiar a cantidad de dias por laboratorio
                 $cantDias = $detallesLaboratorio['dias_trab_sem'];  //5
-                var_dump($cantDias);
+                //var_dump($cantDias);
                 if($fechaInicio == $fechaReinicio){
                     $nombreDia = date("l", strtotime($fechaReinicio));
                     $diaSiguiente = date("Y-m-d",strtotime($fechaReinicio."+ 1 days")); 
                     $nombreDiaSiguiente = date("l", strtotime($diaSiguiente));
                     $diasTrabajados = "";
                     echo "<table class='table table-hover'>
-                            <thead>
+                            <thead class='bg-info'>
                                 <th>Fecha</th>
                                 <th>Trabajo hecho</th>
                                 <th>Observacion</th>
                                 <th>Adjuntar documento</th>
+                                <th>hora llegada</th>
+                                <th>hora salida</th>
+                                <th>Opciones</th>
                             </thead><tbody>";
                     if($cantDias == 6){
                         while($nombreDiaSiguiente != "Saturday"){
@@ -120,6 +126,8 @@
                                         <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
                                         <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
                                         <td><a>Sin Enlace</a></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
                                         <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
                                         </tr>";
                             }else{
@@ -127,6 +135,8 @@
                                         <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
                                         <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
                                         <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                        <td>".$respuesta['lab_hor_llegada']."</td>
+                                        <td>".$respuesta['lab_hor_salida']."</td>
                                         <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
                                         </tr>";
                             }    
@@ -147,6 +157,8 @@
                                             <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
                                             <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
                                             <td><a>Sin Enlace</a></td>
+                                            <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
+                                            <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
                                             <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
                                             </tr>";
                                 }else{
@@ -154,6 +166,8 @@
                                             <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
                                             <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
                                             <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                            <td>".$respuesta['lab_hor_llegada']."</td>
+                                            <td>".$respuesta['lab_hor_salida']."</td>
                                             <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
                                             </tr>";
                                 }  
@@ -177,6 +191,9 @@
                                 <th>Trabajo hecho</th>
                                 <th>Observacion</th>
                                 <th>Adjuntar documento</th>
+                                <th>hora llegada</th>
+                                <th>hora salida</th>
+                                <th>Opciones</th>
                             </thead><tbody>";
                     if($cantDias == 6){
                         while($nombreDiaSiguiente != "Saturday"){
@@ -190,6 +207,8 @@
                                         <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
                                         <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
                                         <td><a>Sin Enlace</a></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
                                         <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
                                         </tr>";
                             }else{
@@ -197,6 +216,8 @@
                                         <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
                                         <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
                                         <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                        <td>".$respuesta['lab_hor_llegada']."</td>
+                                        <td>".$respuesta['lab_hor_salida']."</td>
                                         <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
                                         </tr>";
                             }    
@@ -218,6 +239,8 @@
                                             <td><textarea id='' style='resize: none;' placeholder='Aqui va el trabajo hecho' class='form-control' disabled></textarea></td>
                                             <td><textarea id='' style='resize: none;' placeholder='Aqui va las observaciones' class='form-control' disabled></textarea></td> 
                                             <td><a>Sin Enlace</a></td>
+                                             <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
+                                        <td><textarea id='' style='resize: none;' placeholder='hh:mm:ss' class='form-control' disabled></textarea></td>
                                             <td><button class='btn btn-primary' ".fechaParaBoton($diaSiguiente)." data-toggle='modal' data-target='#myModal'>Generar</button></td>
                                             </tr>";
                                 }else{
@@ -225,6 +248,8 @@
                                             <td><textarea id='txt_des_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_des' style='resize: none;' class='form-control' disabled> ".$respuesta['trabajo_lab_hecho']."</textarea></td>
                                             <td><textarea id='txt_obs_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' name ='txt_obs' style='resize: none;' class='form-control' disabled>".$respuesta['obs_reporte_lab']."</textarea></td> 
                                             <td><a id='url_".$respuesta['id_reporte_lab']."_".$diaSiguiente."' href='".$respuesta['doc_reporte_lab']."'>Link</a></td>
+                                            <td>".$respuesta['lab_hor_llegada']."</td>
+                                            <td>".$respuesta['lab_hor_salida']."</td>
                                             <td><button type='button'class='btn btn-primary generarReporte' ".fechaParaBoton($diaSiguiente)." id='btn_generar/".$respuesta['id_reporte_lab']."_".$diaSiguiente."'>Generar</button></td>
                                             </tr>";
                                 }  
