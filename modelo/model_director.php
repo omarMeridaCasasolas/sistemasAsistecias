@@ -207,4 +207,28 @@
     //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
     //     return $respuesta;
     // }
+
+    public function buscarUsuarioNomCargo($nombre,$cargo){
+        $sql = "SELECT * FROM director_unidad WHERE cargo_director = :cargo AND nombre_director = :nombre ";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $sentenceSQL->execute(array(":cargo"=>$cargo,":nombre"=>$nombre));
+        $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($respuesta[0]);
+    }
+
+    public function actualizarDatosDirectorUrl($idUsuario,$correo ,$telefono,$password,$enlace){
+        $sql = "UPDATE director_unidad SET correo_electronico_director = :correo, password_director = :pass, telefono_director = :telf, user_tmp = :enlace WHERE id_ditector = :id";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":pass"=>$password,":telf"=>$telefono,":enlace"=>$enlace,":id"=>$idUsuario));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
+
+    public function actualizarDatosDirector($idUsuario,$correo ,$telefono,$password){
+        $sql = "UPDATE director_unidad SET correo_electronico_director = :correo, password_director = :pass, telefono_director = :telf  WHERE id_ditector = :id";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":pass"=>$password,":telf"=>$telefono,":id"=>$idUsuario));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
 } 

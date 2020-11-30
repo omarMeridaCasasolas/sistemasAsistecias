@@ -66,6 +66,11 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'buscarUsuarioNomCargo':
+                $nombre = $_REQUEST['nombre'];
+                $cargo = $_REQUEST['cargo'];
+                $res = $director->buscarUsuarioNomCargo($nombre,$cargo);    
+                break;
             case 'eliminarDirectorDepartamento':
                 $codigo_sis_director = $_REQUEST['codigo_sis_director'];
                 $res = $director->obtenerDirectorActual($codigo_sis_director);

@@ -24,13 +24,79 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <header>
+    <input type="text" name="cargoActualUsuario" id="cargoActualUsuario" class="d-none" value="<?php echo $_SESSION['cargo']; ?>">
+    <input type="text" name="nomActualUsuario" id="nomActualUsuario" class="d-none" value="<?php echo $_SESSION['nombre_autoridad']; ?>">
+
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+        <div>
+        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/Avatares/user-icon-vector.jpg" class="rounded" alt="Cinque Terre" width="75" height="75"> 
+            <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+        </div>
         <div class="d-block">
         <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
         </div>
+        <br>
+        <button type="button" class="btn btn-warning" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos">
+        <i class="fas fa-user-cog"></i>
+  </button>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModalEditarDatos">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-info">
+          <h4 class="modal-title">Cambiar datos peronales</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form action="../controlador/formActualizarDatosUsuario.php" id="editFormSelf" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <input type="text" name="idUsuarioSync" id="idUsuarioSync" class="d-none">
+                    <div class="form-group col-7">
+                        <label for="editCorreo">Correo electronico:</label>
+                        <input type="text" name="editCorreo" id="editCorreo" class="form-control" required>
+                    </div>
+                    <div class="form-group col-5">
+                        <label for="editTel">Telefono:</label>
+                        <input type="text" name="editTel" id="editTel" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="nuevoPass">Nueva contraseña</label>
+                        <input type="text" name="nuevoPass" id="nuevoPass" class="form-control">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="repeatPAss">Repetir contaseña</label>
+                        <input type="text" name="repeatPAss" id="repeatPAss" class="form-control">
+                    </div>
+                </div>
+                <span class="text-danger" id="changePassUser"></span>
+                <div class="form-group">
+                    <label for="myFile">Selecione una foto o imagen</label>
+                    <input type="file" name="myFile" id="myFile" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="editPass">Contraseña:</label>
+                    <input type="text" name="editPass" id="editPass" class="form-control" required>
+                    <span class="text-danger" id="editUsurPassSelf"></span>
+                </div>
+                <div class="text-center">
+                <input type="submit" class="btn btn-secondary" value="Actualizar">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
     </nav>
 </header>
+
 <!-- HU agregar funcionalidades a X usuario -->
     <div>
     <button type="button" class="float-rigth btn btn-light" data-toggle="modal" data-target="#vtnAsignarFunciones" id="btnAyunRector">
