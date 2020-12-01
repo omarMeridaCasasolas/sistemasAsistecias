@@ -58,7 +58,9 @@
             </div>
         </div>
 
-        <div class="text-center"> <a href="personal_laboratorio.php" class="btn btn-primary"><i class="fas fa-vial"></i> Laboratorios</a> <a href="personal_clases.php" class="btn btn-primary"><i class="fas fa-door-open"></i> Clases</a> <a class="btn btn-primary" href="reportes_departamento.php"><i class="fas fa-file-signature"></i>Reportes</a></div>
+        <div class="text-center"> <a href="personal_laboratorio.php" class="btn btn-primary"><i class="fas fa-vial"></i> Laboratorios</a> <a href="personal_clases.php" class="btn btn-primary"><i class="fas fa-door-open"></i> Clases</a> <a class="btn btn-primary" href="reportes_departamento.php"><i class="fas fa-file-signature"></i>Reportes</a>
+            <a href="reportes_auxiliar_pizarra.php" class="btn btn-primary"> Reportes auxliar de pizarras</a>
+        </div>
         </div> 
         <div class="d-none">
             <input type="text" name="idCategoria" id="idCategoria" value="<?php echo $_SESSION['categoria_social'];?>">

@@ -29,7 +29,7 @@
 
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div>
-        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/Avatares/user-icon-vector.jpg" class="rounded" alt="Cinque Terre" width="75" height="75"> 
+        <img src="<?php echo $_SESSION['myFoto'];?>" class="rounded" alt="Cinque Terre" width="75" height="75"> 
             <h2 class="text-white p-2"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
         </div>
         <div class="d-block">
@@ -67,11 +67,11 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="nuevoPass">Nueva contraseña</label>
-                        <input type="text" name="nuevoPass" id="nuevoPass" class="form-control">
+                        <input type="password" name="nuevoPass" id="nuevoPass" class="form-control">
                     </div>
                     <div class="form-group col-6">
                         <label for="repeatPAss">Repetir contaseña</label>
-                        <input type="text" name="repeatPAss" id="repeatPAss" class="form-control">
+                        <input type="password" name="repeatPAss" id="repeatPAss" class="form-control">
                     </div>
                 </div>
                 <span class="text-danger" id="changePassUser"></span>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editPass">Contraseña:</label>
-                    <input type="text" name="editPass" id="editPass" class="form-control" required>
+                    <input type="password" name="editPass" id="editPass" class="form-control" required>
                     <span class="text-danger" id="editUsurPassSelf"></span>
                 </div>
                 <div class="text-center">
