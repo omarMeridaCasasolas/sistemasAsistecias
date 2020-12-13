@@ -108,4 +108,16 @@
             //$res = json_encode($respuesta);
             echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
+
+        public function mostrarDepartamentos($ambiente){
+            $sql = "SELECT * FROM departamento WHERE id_facultad = :id_fac AND nombre_departamento <> 'Ninguno'";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_fac"=>$ambiente));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //$res = json_encode($respuesta);
+            return json_encode($respuesta);
+        }
+
+
     }

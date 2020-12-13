@@ -1,0 +1,8 @@
+#contenedorDocuemnto{
+    margin: 10px;
+    min-width: 1080px;
+    min-height: 720px;
+    border: 4px solid black;
+    border-radius: 1px;
+    padding: 5px;
+}

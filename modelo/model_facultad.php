@@ -86,4 +86,14 @@
             //echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
             return $res;
         }
+
+        public function mostrarFacultades(){
+            $sql = "SELECT * FROM facultades WHERE director_academico <> 'Ninguno'";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //$res = json_encode($respuesta);
+            return json_encode($respuesta);
+        }
     } 

@@ -10,6 +10,15 @@
             $this->connexion_bd=null;
         }
 
+        public function obtenerAuxiliarDocente($idAuxiliar){
+            $sql = "SELECT * FROM auxiliar_docente WHERE id_aux_docente = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL ->execute(array(":id"=>$idAuxiliar));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode($respuesta[0]); 
+        }
+
         public function listarTableAuxiliarDocente(){
             $sql = "SELECT * FROM auxiliar_docente";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -64,6 +73,15 @@
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             return $respuesta[0];
+        }
+
+        public function listaDeAuxiliares($idDepartamento){
+            $sql = "SELECT * FROM auxiliar_docente WHERE id_aux_docente IN (SELECT id_auxiliar_docente FROM departamento_auxiliar_docente WHERE id_departamento = :id)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode($respuesta);
         }
 
     }

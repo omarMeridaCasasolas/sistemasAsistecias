@@ -12,6 +12,9 @@
     require_once("../modelo/model_personal_laboral.php");
     require_once("../modelo/model_tareas_trabajador.php");
     require_once("../modelo/model_trabajador_tareas.php");
+    require_once("../modelo/model_clase.php");
+    require_once("../modelo/model_materia.php");
+    require_once("../modelo/model_enlaces.php");
 
     $clase ="";
     $metodo = "";
@@ -20,6 +23,9 @@
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
         switch($clase){
+            case 'Enlace':
+                $tmp = ejecutarConsultasEnlaces();
+                break;
             case 'TareasTrabajador':
                 $tmp = ejecutarConsultasTareasTrabajador();
                 break;
@@ -56,11 +62,100 @@
             case 'Laboratorio':
                 $tmp = ejecutarConsultasLaboratorio();
                 break;
+            case "Clase":
+                $tmp = ejecutarConsultasClase();
+                break;
+            case "Materia":
+                $tmp = ejecutarConsultasMateria();
+                break;
             default:
                 break;
         }
         echo trim($tmp);
     }
+
+    function ejecutarConsultasEnlaces(){
+        $enlace = new Enlace();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'obtenerEnlacesClase':
+                $idClase = $_REQUEST['idClase'];
+                $res = $enlace->obtenerEnlacesClase($idClase);
+                break;
+        
+            default:
+                # code...
+                break;   
+                         
+        }
+        $enlace->cerrarConexion();
+        return $res;
+    }
+
+
+    function ejecutarConsultasMateria(){
+        $materia = new Materia();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'obtenerReporteMes':
+                $fechaAntes = $_REQUEST['fechaAntes'];
+                $fechaDespues = $_REQUEST['fechaDespues'];
+                $idMateria = $_REQUEST['idMateria'];
+                $idAuxiliar = $_REQUEST['idAuxiliar'];
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $materia->obtenerReporteMes($idMateria,$idAuxiliar,$fechaAntes,$fechaDespues,$idDepartamento);
+                break;
+            case 'listaMateriaAuxPizarra':
+                $idAuxPizarra = $_REQUEST['idAuxPizarra'];
+                $res = $materia->listaMateriaAuxPizarra($idAuxPizarra);
+                break;
+            case 'obtenerMateriaPorDepartamento':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $fechaInicio = $_REQUEST['fechaInicio'];
+                $fechaFinal = $_REQUEST['fechaFinal'];
+                $res = $materia->obtenerMateriaPorDepartamento($idDepartamento,$fechaInicio,$fechaFinal);
+                break;
+        
+            default:
+                # code...
+                break;   
+                         
+        }
+        $materia->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasClase(){
+        $clase = new Clase();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'enviarReporteAsistenciaDPA':
+                $idClase = $_REQUEST['idClase'];
+                $estado = $_REQUEST['estado'];
+                $res = $clase->enviarReporteAsistenciaDPA($idClase,$estado);
+                break;
+            case 'enviarReporteAsistenciaJD':
+                $idClase = $_REQUEST['idClase'];
+                $estado = $_REQUEST['estado'];
+                $res = $clase->enviarReporteAsistenciaJD($idClase,$estado);
+                break;
+            case 'obtenerAuxliaresPizarra':
+                //$idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $clase->obtenerAuxliaresPizarra();
+                break;
+        
+            default:
+                # code...
+                break;   
+                         
+        }
+        $clase->cerrarConexion();
+        return $res;
+    }
+
     function ejecutarConsultasAutoridades(){
         $director = new Director();
         $metodo = $_REQUEST['metodo'];
@@ -239,6 +334,9 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'mostrarFacultades':
+                $res = $facultad->mostrarFacultades();
+                break;
             case 'cambiarDirectorAcedemicoFacultad':
                 $idFacultad = $_REQUEST['idFacultad'];
                 $nomDirector = $_REQUEST['nomDirector'];
@@ -304,6 +402,10 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'mostrarDepartamentos':
+                $codigo_dep = $_REQUEST['idFacultad'];
+                $res = $departamento->mostrarDepartamentos($codigo_dep);
+                break;
             case 'eliminarDepartamento':
                 $codigo_dep = $_REQUEST['codigo_dep'];
                 $res = $departamento->eliminarDepartamento_acoplado($codigo_dep);
@@ -459,6 +561,14 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listaDeAuxiliares':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarDocente->listaDeAuxiliares($idDepartamento);
+                break;
+            case 'obtenerAuxiliarDocente':
+                $idAuxiliar = $_REQUEST['idAuxilirDocente'];
+                $res = $auxiliarDocente->obtenerAuxiliarDocente($idAuxiliar);
+                break;
             case 'recuperarPasswordAuxDoc':
                 $correo = $_REQUEST['correo'];
                 $respuesta = $auxiliarDocente->recuperarPasswordAuxDoc($correo);

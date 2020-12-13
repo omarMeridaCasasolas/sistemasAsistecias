@@ -1,8 +1,66 @@
-<?php include_once("parts/cabezera_director.php");?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes UTI</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+</head>
 <body class="bg-secondary">
     <main class="container bg-white p-2">
+        <form action="" id="formObtenerReporte">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="idFacultadaes">Facultad:</label>
+                    <select name="idFacultadaes" id="idFacultadaes" class="form-control" required>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idDepartamentos">Departamento:</label>
+                    <select name="idDepartamentos" id="idDepartamentos" class="form-control" required>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idAuxPizarra">Auxiliar de pizarra:</label>
+                    <select name="idAuxPizarra" id="idAuxPizarra" class="form-control" required>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idMateria">Materia:</label>
+                    <select name="idMateria" id="idMateria" class="form-control" required>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center">
+                <h6 id="descResultado"></h6>
+                <input type="submit" class="btn btn-primary" value="Obtener" required>
+            </div>
+        </form>
+
+        <h5>Reporte del mes de : <strong>Noviembre</strong></span></h5>
+            <table id="tablaMateriaAuxiliares" class="display nowrap cell-border" style="width:100%">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Materia</th>
+                        <th>Codigo materia</th>
+                        <th>Plataforma</th>
+                        <th>Asistencia</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div> 
+
         <!-- Modal Editar Facultad ventana -->
-        <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
         <div class="modal fade" id="myModal4">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -96,7 +154,7 @@
                         </div>
 
                         <div class="text-center my-2">
-                            <input type="submit" class="btn  btn-primary" value="Enviar reporte">
+                            <input type="submit" class="btn  btn-primary" value="Actualizar">
                             <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" id="btnCloseEditarFacultad">Cancelar</button>
                         </div>
                     </form>
@@ -104,33 +162,17 @@
                 </div>
             </div>
         </div>
-        <h3 class="text-center my-3">Reportes de auxiliares de pizarra</h3>
-        <div class="table-responsive">
-        <h5>Fecha inicio: <span id="fechaInicio"></span>  al: <span id="fechaFinal"></span></h5>
-            <table id="tablaMateriaAuxiliares" class="display nowrap cell-border" style="width:100%">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Materia</th>
-                        <th>Codigo materia</th>
-                        <th>Plataforma</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-            </table>
-        </div> 
-        <!-- <div class="reporteSemanal">
-            <h3 id="MateriaReporte"></h3>
-            <h2 >Fecha inicio: <span id="fechaInicio"></span>  -  Fecha-Final: <span id="fechaFinal"></span></h2>
-        </div> -->
 
-
-
+        <form action="">
+            <div class="text-center">
+                <input type="submit" class="btn btn-secondary" value="Enviar Datos">
+            </div>
+        </form>
     </main>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
     <!-- <script src="/bower_components/moment/locale/es.js"></script> -->
-    <script src="src/reportes_auxiliar_pizarra.js"></script>
+    <script src="src/reportes_auxiliar_uti_dpa.js"></script>
 </body>
 </html>
