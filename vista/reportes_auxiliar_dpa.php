@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +19,7 @@
 </head>
 <body class="bg-secondary">
     <main class="container bg-white p-2">
-        <form action="" id="formObtenerReporte">
+        <form action="../controlador/obtenerReportesAuxDepartamento.php" id="" method="post">
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="idFacultadaes">Facultad:</label>
@@ -29,18 +32,21 @@
                     </select>
                 </div>
             </div>
+            <input type="text" name="fechaInicio" id="fechaInicio" class="d-none">
+            <input type="text" name="fechaFinal" id="fechaFinal" class="d-none">
             <div class="text-center">
                 <h6 id="descResultado"></h6>
-                <input type="submit" class="btn btn-primary" value="Obtener" required>
+                <input type="submit" class="btn btn-primary" value="Obtener" disabled="disabled" id="btnSubmit">
             </div>
         </form>
 
         <h5>Reporte del mes de : <strong>Noviembre - 2020</strong></span></h5>
+            <div id="cajaTabla">
             <table id="tablaMateriaAuxiliares" class="table table-hover" style="width:100%">
                 <thead class="bg-info">
                     <tr>
                         <th>Nombre del Auxiliar</th>
-                        <th>Horas Asistidas</th>
+                        <th>Total horas</th>
                         <th>Faltas Mensuales</th>
                         <th>Hrs. Licencia </th>
                         <th>Hrs. baja</th>
@@ -96,16 +102,20 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div> 
-        <br>
-        <br>
         <hr>
         <p><strong>Total de horas pagables por departamento/mes : </strong> 504 Hrs/mes</p>
         <p><strong>Total de horas no pagables por departamento/mes : </strong> 100 Hrs/mes</p>
-        <div class="text-center">
-            <a href="vista_previa_reporte_auxiliar">Vista previa</a>
-            <button class="btn btn-secondary">Imprimir</button>
-        </div>
+        <form action="getHTMLPDF.php" method="post" target="_blank">
+            <div class="text-center">
+                <input type="text" name="gestionPlanilla" id="gestionPlanilla" class="d-none">
+                <input type="text" name="nomFacultad" id="nomFacultad" class="d-none">
+                <input type="text" name="nomDepartamento" id="nomDepartamento" class="d-none">
+                <a href="vista_previa_reporte_auxiliar.php">Vista previa</a>
+                <input type="submit" class="btn btn-secondary" value="Generar PDF">
+            </div>
+        </form>
 
         <!-- Modal Editar Facultad ventana -->
         <div class="modal fade" id="myModal4">

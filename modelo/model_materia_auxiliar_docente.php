@@ -2,64 +2,22 @@
 <?php
 //listarTableDocente()
     require_once("conexion.php");
-    class Clase extends Conexion{
-        public function Clase(){
+    class MateriaAuxDocente extends Conexion{
+        public function MateriaAuxDocente(){
             parent::__construct();
         }
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
 
-        public function enviarReporteAsistenciaDPA($idClase,$estado){
-            $sql = "UPDATE clase SET revisado = 'UTI', existe_falta_clase = :estado  WHERE codigo_clase = :id";
+       public function listaDeMateriasPorAuxiliar($idDepartamentos){
+            $sql = "SELECT * FROM materia_auxiliar_docente where id_materia in (select id_materia from materia where id_departamento = idDepartamento)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL->execute(array(":estado"=>$estado,":id"=>$idClase));
-            $sentenceSQL->closeCursor();
-            return $respuesta;
-        }
-        public function obtenerAuxliaresPizarra($idDepartamento,$fechaInicio,$FechaFinal){
-            //$sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE id_aux_docente is not null AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal AND clase.id_materia IN(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
-            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE id_aux_docente is not null 
-            AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal
-            AND clase.id_materia IN(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute(array(":id"=>$idDepartamento,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$FechaFinal));
+            $sentenceSQL ->execute(array("idDepartamento"=>$idDepartamentos));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
-            return json_encode($respuesta);
-        }
-
-        public function enviarReporteAsistenciaJD($idClase,$estado){
-            $sql = "UPDATE clase SET revisado = 'Jefe Departamento', existe_falta_clase = :estado  WHERE codigo_clase = :id";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL->execute(array(":estado"=>$estado,":id"=>$idClase));
-            $sentenceSQL->closeCursor();
-            return $respuesta;
-        }
-
-        public function obtenerAuxliaresPizarraArray($idDepartamento,$fechaInicio,$FechaFinal){
-            //$sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE id_aux_docente is not null AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal AND clase.id_materia IN(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
-            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE id_aux_docente is not null 
-            AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal
-            AND clase.id_materia IN(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute(array(":id"=>$idDepartamento,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$FechaFinal));
-            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-            $sentenceSQL->closeCursor();
-            return $respuesta;
-        }
-
-        public function obtenerClasesAuxPorMes($idDepartamentos,$fechaInicio,$fechaFinal){
-            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE id_aux_docente is not null 
-            AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal
-            AND clase.id_materia IN(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute(array(":id"=>$idDepartamento,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$FechaFinal));
-            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-            $sentenceSQL->closeCursor();
-            return $respuesta;
-        }
-
+            return $respuesta; 
+       }
         // public function listarTableDocente(){
         //     $sql = "SELECT * FROM docente";
         //     $sentenceSQL = $this->connexion_bd->prepare($sql);

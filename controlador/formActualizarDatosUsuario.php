@@ -48,7 +48,6 @@
                 }else{
                     header("Location:../vista/home_rector.php?result=".$res);
                 }
-
             }catch(Exception $e) {
                 echo $e;
             }
