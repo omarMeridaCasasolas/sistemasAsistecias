@@ -1,6 +1,64 @@
 <?php include_once("parts/cabezera_director.php");?>
 <body class="bg-secondary">
     <main class="container bg-white p-2">
+
+    <button type="button" class="btn btn-warning" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos">
+        <i class="fas fa-user-cog"></i></button>
+        <!-- The Modal -->
+  <div class="modal fade" id="myModalEditarDatos">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-info">
+          <h4 class="modal-title">Cambiar datos peronales</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form action="../controlador/formActualizarDatosUsuario.php" id="editFormSelf" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <input type="text" name="idUsuarioSync" id="idUsuarioSync" class="d-none" value="79">
+                    <div class="form-group col-7">
+                        <label for="editCorreo">Correo electronico:</label>
+                        <input type="text" name="editCorreo" id="editCorreo" class="form-control" value="joseLuisBalderramaIdina@gmail.com">
+                    </div>
+                    <div class="form-group col-5">
+                        <label for="editTel">Telefono:</label>
+                        <input type="text" name="editTel" id="editTel" class="form-control" value="78787925">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="nuevoPass">Nueva contraseña</label>
+                        <input type="password" name="nuevoPass" id="nuevoPass" class="form-control">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="repeatPAss">Repetir contaseña</label>
+                        <input type="password" name="repeatPAss" id="repeatPAss" class="form-control">
+                    </div>
+                </div>
+                <span class="text-danger" id="changePassUser"></span>
+                <div class="form-group">
+                    <label for="myFile">Selecione una foto o imagen</label>
+                    <input type="file" name="myFile" id="myFile" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="editPass">Contraseña:</label>
+                    <input type="password" name="editPass" id="editPass" class="form-control" required>
+                    <span class="text-danger" id="editUsurPassSelf"></span>
+                </div>
+                <div class="text-center">
+                <input type="submit" class="btn btn-secondary" value="Actualizar">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
         <div id="exito" class="d-none">
             <div class='alert alert-success alert-dismissible'>
                 <button type='button' class='close' data-dismiss='alert'>&times;</button>

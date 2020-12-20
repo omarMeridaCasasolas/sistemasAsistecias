@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if(isset($_POST['idUsuarioSync']) && isset($_POST['editCorreo']) && isset($_POST['editTel']) && isset($_POST['nuevoPass'])){
+    if(true){
         $correo = $_POST['editCorreo'];
         $telefono = $_POST['editTel'];
         $password = $_POST['nuevoPass'];
