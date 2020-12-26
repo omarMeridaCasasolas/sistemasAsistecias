@@ -32,6 +32,16 @@
             return $respuesta;
         }
 
+        public function listarDirectoresDepartamentales($categoria){
+            $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id_fac"=>$categoria));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            //$res = json_encode($respuesta);
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
         public function recuperarPassword($correo){
             $sql = "SELECT * FROM director_unidad WHERE UPPER(correo_electronico_director) = UPPER(:correo)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
@@ -90,16 +100,16 @@
             //echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
         
-        public function listarDirectoresDepartamentales($categoria){
-            $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
-            $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $sentenceSQL->execute(array(":id_fac"=>$categoria));
-            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-            $sentenceSQL->closeCursor();
-            $this->cerrarConexion();
-            //$res = json_encode($respuesta);
-            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
-        }
+        // public function listarDirectoresDepartamentales($categoria){
+        //     $sql = "SELECT * from director_unidad inner join departamento on director_unidad.id_departamento = departamento.id_departamento where departamento.id_facultad=:id_fac";
+        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
+        //     $sentenceSQL->execute(array(":id_fac"=>$categoria));
+        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+        //     $sentenceSQL->closeCursor();
+        //     $this->cerrarConexion();
+        //     //$res = json_encode($respuesta);
+        //     echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        // }
 
         public function listarTableDirectorCarrera(){
             $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director de carrera'";
@@ -186,6 +196,38 @@
         $sql = "UPDATE director_unidad SET nombre_director = :nom, codigo_sis_director = :sis, correo_electronico_director = :correo ,telefono_director = :telef, director_actual = :dirAct, id_facultad = :idFacultad  WHERE id_ditector = :claveP";
         $sentenceSQL = $this->connexion_bd->prepare($sql);
         $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":sis"=>$codSis,":correo"=>$correoDirector,":telef"=>$telDirector,":dirAct"=>$nomFacultad,":idFacultad"=>$idFacultad,":claveP"=>$idDirector));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
+
+    // public function directoresAcademicosDisponibles(){
+    //     $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director academico' WHERE ";
+    //     $sentenceSQL = $this->connexion_bd->prepare($sql);
+    //     $sentenceSQL->execute();
+    //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+    //     return $respuesta;
+    // }
+
+    public function buscarUsuarioNomCargo($nombre,$cargo){
+        $sql = "SELECT * FROM director_unidad WHERE cargo_director = :cargo AND nombre_director = :nombre ";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $sentenceSQL->execute(array(":cargo"=>$cargo,":nombre"=>$nombre));
+        $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($respuesta[0]);
+    }
+
+    public function actualizarDatosDirectorUrl($idUsuario,$correo ,$telefono,$password,$enlace){
+        $sql = "UPDATE director_unidad SET correo_electronico_director = :correo, password_director = :pass, telefono_director = :telf, user_tmp = :enlace WHERE id_ditector = :id";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":pass"=>$password,":telf"=>$telefono,":enlace"=>$enlace,":id"=>$idUsuario));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
+
+    public function actualizarDatosDirector($idUsuario,$correo ,$telefono,$password){
+        $sql = "UPDATE director_unidad SET correo_electronico_director = :correo, password_director = :pass, telefono_director = :telf  WHERE id_ditector = :id";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":pass"=>$password,":telf"=>$telefono,":id"=>$idUsuario));
         $sentenceSQL->closeCursor();
         return $respuesta;
     }

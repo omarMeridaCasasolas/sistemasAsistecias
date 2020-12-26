@@ -1,11 +1,40 @@
-var tablaFacultad, tablaDirector;
+var tablaFacultad, tablaDirector,passwordActual;
 $(document).ready(function() {
+    let URLActual = location.href;
+    //console.log(URLActual);
+    let listaValores = URLActual.split("?");
+    if(listaValores.length>=2){
+        let parametros = listaValores[listaValores.length-1].split("=");
+        if(parametros[1] == "success"){
+            Swal.fire('Exito',"Se ha actualizados sus datos personales",'success');
+        }else{
+            Swal.fire('Problema',"Problemas al actulizar sus datos",'info');
+        }
+    }
+
     facultadesDisponibles();
     mostarFacultades();
-    listarDirectoresDisponibles();
+    //listarDirectoresDisponibles();
     mostrarListaDirectoresAcademicos();
     mostrarFuncionalidades();
     
+    obtnerDatosPropios(); 
+
+    $("#editFormSelf").submit(function (e) { 
+        let getPass= $("#editPass").val();
+        console.log(getPass);
+        if(passwordActual != getPass){
+            $("#editUsurPassSelf").html("*Ingrese su contraseña vigente");
+            e.preventDefault();
+        }else{
+            $("#editUsurPassSelf").html("");
+            if($("#nuevoPass").val() != $("#repeatPAss").val()){
+                $("#changePassUser").html("Las contraseña tienen que concidir!!");
+                e.preventDefault();
+            }
+        }
+    });
+
     $(document).on("click", "#crearDirectorAcademico", function(){   
         cargarFacultadesDisponibles("formCrearFacAsiDirAca");     ;
         $(".modal-header").css("background-color", "#007bff");
@@ -392,7 +421,7 @@ $(document).ready(function() {
         facEditCodigo: $("#facEditCodigo").val(),
         facEditFechaCrea: $("#facEditFechaCrea").val()
         };
-        console.log(datosFacultad);
+        //console.log(datosFacultad);
         $.post("../controlador/interprete.php",datosFacultad,function(resp){
             $("#btnCloseEditarFacultad").click();
             if(resp == 1){
@@ -582,10 +611,10 @@ function listarDirectoresDisponibles(){
         url: "../controlador/interprete.php",
         data: datosDirector,
         success: function (response) {
-            //let obj= JSON.parse(response);
-            // obj.forEach(element => {
-            //     $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
-            // });
+            let obj= JSON.parse(response);
+            obj.forEach(element => {
+                $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
+            });
         },
         error : function(jqXHR, status, error) {
             console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
@@ -659,4 +688,29 @@ function cargarFacultadAsignada(idElemSelect, nombreFacultadAsignada){
     option.innerHTML = nombreFacultadAsignada
     option.selected = "true";
     elemSelect.appendChild(option);
+}
+
+function obtnerDatosPropios(){
+    let cargo = $("#cargoActualUsuario").val();
+    let nombre = $("#nomActualUsuario").val();
+    let datosUsuario = {
+        clase:"Director",
+        metodo:"buscarUsuarioNomCargo",
+        cargo: cargo,
+        nombre: nombre
+    };
+    $.ajax({
+        type: "POST",
+        url: "../controlador/interprete.php",
+        data: datosUsuario,
+        success: function (response) {
+            //console.log(response);
+            let usuario = JSON.parse(response)
+            console.log(usuario);
+            $("#editCorreo").val(usuario.correo_electronico_director);
+            $("#editTel").val(usuario.telefono_director);
+            passwordActual = usuario.password_director;
+            $("#idUsuarioSync").val(usuario.id_ditector);
+        }
+    });
 }

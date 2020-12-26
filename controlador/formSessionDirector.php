@@ -11,6 +11,7 @@
             $_SESSION["codigo_autoridad"] = $res["id_ditector"];
             $_SESSION["cargo"] = $res["cargo_director"];
             $_SESSION['nombre_autoridad'] = $res['nombre_director'];
+            $_SESSION['myFoto'] = $res['user_tmp'];
             if(!empty($res['id_facultad'])){
                 $_SESSION['categoria_social'] = $res['id_facultad'];
             }else{

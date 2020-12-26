@@ -1,5 +1,6 @@
 $(document).ready(function() {
     let categoria = $("#idCategoria").val();
+    cargarTituloFacultad(categoria);
     listarTableDepartamentos = $("#tableDepartamentos").DataTable({
         "ajax":{
             "method":"POST",
@@ -140,7 +141,7 @@ $(document).ready(function() {
                 )
             }
         });             
-        
+      
     });
 
     //CrearJefeDepartamento
@@ -302,4 +303,30 @@ function borrarContenidoPrevio(elemSelect){
   while (elemSelect.hasChildNodes()) {
     elemSelect.removeChild(elemSelect.firstChild);
   }
+}
+
+function cargarTituloFacultad(id_facultad){
+    let datosAmbiente = {
+        clase: "Facultad",
+        metodo: "obtenerCodigoFacultad",
+        id_facultad: id_facultad
+    }
+    $.ajax({
+        type: "POST",
+        url: "../controlador/interprete.php",
+        data: datosAmbiente,
+        success: function (response) {
+            //$('#asigDirector').children('option:not(:first)').remove();
+            //console.log(response);
+            let obj= JSON.parse(response);
+            obj.forEach(element => {
+                //$('#asigDirector').append("<option value="+element.id_departamento+">"+element.nombre_departamento+"</option>");
+                let h2 = document.getElementById("codigoFacultadAsignada");
+                h2.innerHTML = "Departamentos de "+element.codigo_facultad;
+            });
+        },
+        error : function(jqXHR, status, error) {
+            console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
+        }
+    });
 }
