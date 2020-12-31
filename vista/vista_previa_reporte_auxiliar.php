@@ -1,3 +1,49 @@
+<?php
+    session_start();
+    function asignarMes($num){
+        $mes = '';
+        switch ($num) {
+            case '01':
+                $mes = "Enero";
+                break;
+            case '02':
+                $mes = "Febrero";
+                break;
+            case '03':
+                $mes = "Marzo";
+                break;
+            case '04':
+                $mes = "Abril";
+                break;
+            case '05':
+                $mes = "Mayo";
+                break;
+            case '06':
+                $mes = "Junio";
+                break;
+            case '07':
+                $mes = "Julio";
+                break;
+            case '08':
+                $mes = "Agosto";
+                break;
+            case '09':
+                $mes = "Septiembre";
+                break;
+            case '10':
+                $mes = "Octubre";
+                break;
+            case '11':
+                $mes = "Noviembre";
+                break;
+            default:
+                $mes = "Diciembre";
+                # code...
+                break;
+        }
+        return $mes;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,63 +59,58 @@
          <h3 class="text-center">Planilla de pago por departamento Noviembre-2020</h3>
          <h5>Facultad de ciencias y Tecnologia</h5>
          <h5>Departamento de Informactica y Sistemas</h5>  
-         <table id="tablaMateriaAuxiliares" class="table table-bordered" style="width:100%">
+         <div id="cajaTabla">
+            <table id="tablaMateriaAuxiliares" class="table table-hover" style="width:100%">
                 <thead class="bg-info">
                     <tr>
                         <th>Nombre del Auxiliar</th>
-                        <th>Horas Asistidas</th>
-                        <th>Faltas Mensuales</th>
+                        <th>Total hrs</th>
+                        <th>Cant. faltas</th>
                         <th>Hrs. Licencia </th>
                         <th>Hrs. baja</th>
                         <th>Horas pagable</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
+                    <?php 
+                        $horasPagablesDeparamento = 0;
+                        $horasNoPagablesDeparamento = 0;
+                        if(isset($_SESSION['datosReporte'])){
+                            $listaDeAuxiliares = $_SESSION['datosReporte'];
+                            foreach ($listaDeAuxiliares as $x) {
+                                $llave = key($x);
+                                echo "<tr>
+                                    <td>$llave</td>
+                                    <td>".$x[$llave]['horasTotal']." Hrs</td>
+                                    <td>".$x[$llave]['faltas']."</td>
+                                    <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
+                                    <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
+                                    <td>".$x[$llave]['horasPagables']." Hrs</td>
+                                  </tr>";
+                                  $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
+                                  $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
+                            }
+                        }else{
+                            echo "<tr>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                  </tr>";
+                        }
+                    ?>
                 </tbody>
             </table>
-            <hr>
-            <h6><strong>Total de horas pagables por departamento/mes : </strong> 504 Hrs/mes</h6>
-            <h6><strong>Total de horas no pagables por departamento/mes : </strong> 100 Hrs/mes</h6>
+        </div> 
+        <hr>
+        <?php 
+            if(isset($_SESSION['datosReporte'])){
+                echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
+                echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento,"Hrs/mes</h6> ";
+            }
+        ?>
             <br>
             <br>
             <br>

@@ -40,209 +40,73 @@ if(isset($_POST['nomDepartamento'])){
          <h3 class="text-center">Planilla de pago por departamento <?php echo $gestionPlanilla;?></h3>
          <h5><?php echo $nomFacultad;?></h5>
          <h5><?php echo $nomDepartamento;?></h5>  
-         <?php 
-            // echo "<table id='tablaMateriaAuxiliares' class='table table-bordered' style='width:95%'>
-            // <thead class='bg-info'>
-            //     <tr>
-            //         <th>Nombre del Auxiliar</th>
-            //         <th>Horas Asistidas</th>
-            //         <th>Faltas Mensuales</th>
-            //         <th>Hrs. Licencia </th>
-            //         <th>Hrs. baja</th>
-            //         <th>Horas pagable</th>
-            //     </tr>
-            // </thead>
-            // <tbody>";
-            //     $clase = new Clase();
-            //     $tmp = explode("-",$gestionPlanilla);
-            //     $fechaInicio = $tmp[1]."-"$tmp[0]."-"."01";
-            //     $fechaFinal = date("Y-m-t", strtotime($fechaInicio));
-            //     $listaDeClases = $clase->obtenerAuxliaresPizarraArray($idDepartamento,$fechaInicio,$fechaFinal);
-            //     if(count($listaDeClases) == 0){
-            //         echo "<tr>
-            //                 <td>No tiene Datos</td>
-            //                 <td>No tiene Datos</td>
-            //                 <td>No tiene Datos</td>
-            //                 <td>No tiene Datos</td>
-            //                 <td>No tiene Datos</td>
-            //                 <td>No tiene Datos</td>
-            //             </tr>
-            //             </tbody>
-            //         </table>
-            //         ";
-            //     }else{
-            //         echo ""
-            //         foreach ($listaDeClases as $elemnto) {
-            //             echo "<tr>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                 </tr>
-            //         }
-            //     }
-            // ";
-         ?> 
-         <table id="tablaMateriaAuxiliares" class="table table-bordered" style="width:95%">
+            <table id="tablaMateriaAuxiliares" class="table table-bordered" style="width:95%">
                 <thead class="bg-info">
                     <tr>
                         <th>Nombre del Auxiliar</th>
-                        <th>Horas Asistidas</th>
-                        <th>Faltas Mensuales</th>
+                        <th>Total hrs</th>
+                        <th>Cant. faltas</th>
                         <th>Hrs. Licencia </th>
                         <th>Hrs. baja</th>
                         <th>Horas pagable</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Juan perez</td>
-                        <td>54 hrs</td>
-                        <td>5</td>
-                        <td>12 horas</td>
-                        <td>10 horas</td>
-                        <td>50 hrs</td>
-                    </tr>
+                    <?php 
+                        $horasPagablesDeparamento = 0;
+                        $horasNoPagablesDeparamento = 0;
+                        if(isset($_SESSION['datosReporte'])){
+                            $listaDeAuxiliares = $_SESSION['datosReporte'];
+                            foreach ($listaDeAuxiliares as $x) {
+                                $llave = key($x);
+                                echo "<tr>
+                                    <td>$llave</td>
+                                    <td>".$x[$llave]['horasTotal']." Hrs</td>
+                                    <td>".$x[$llave]['faltas']."</td>
+                                    <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
+                                    <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
+                                    <td>".$x[$llave]['horasPagables']." Hrs</td>
+                                  </tr>";
+                                  $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
+                                  $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
+                            }
+                        }else{
+                            echo "<tr>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
+                                  </tr>";
+                        }
+                    ?>
                 </tbody>
             </table>
-            <h6><strong>Total de horas pagables por departamento/mes : </strong> 504 Hrs/mes</h6>
-            <h6><strong>Total de horas no pagables por departamento/mes : </strong> 100 Hrs/mes</h6>
+            <?php 
+            if(isset($_SESSION['datosReporte'])){
+                echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
+                echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento," Hrs/mes</h6> ";
+            }
+            ?>
             <br>
             <br>
             <br>
-         <div class="text-center">
+            <br>
+         <div class="text-center" style="clear: both;"> 
             <span>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</span>
             <br>
-            <span>Director del DPA</span>
+            <span>Director del DPA - UTI</span>
             <br>
             <span>Aqui va el nombre</span>
-         </div>       
-     </div>
-</body>
-</html>
-
+         </div>
+         </div></body></html>
 <?php
 use Dompdf\Dompdf;
-
-//generate some PDFs!
-$dompdf = new DOMPDF();  //if you use namespaces you may use new \DOMPDF()
-$dompdf->setPaper('a4', 'landscape');
-$dompdf->loadHtml(ob_get_clean());
-// ob_get_clean();
-$dompdf->render();
-$dompdf->stream("sample.pdf", array("Attachment"=>0));
+    $dompdf = new DOMPDF();  //if you use namespaces you may use new \DOMPDF()
+    $dompdf->setPaper('a4', 'landscape');
+    $dompdf->loadHtml(ob_get_clean());
+    // ob_get_clean();
+    $dompdf->render();
+    $dompdf->stream("sample.pdf", array("Attachment"=>0));
 ?>

@@ -1,12 +1,12 @@
 <?php include_once("parts/cabezera_director.php");?>
 <body class="bg-secondary">
-    <style>
+    <!-- <style>
         #contCorreos {
             height:100px;
             background-color: rgba(255,0,0,0.1);
             overflow-y: scroll;
             }
-    </style>
+    </style> -->
     <main class="container bg-white p-2">
         <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
         <!-- Modal -->

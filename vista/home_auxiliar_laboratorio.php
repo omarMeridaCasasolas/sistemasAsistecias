@@ -36,6 +36,7 @@
         <a href="historial_reportes_Laboratorio.php">Historial de reportes</a>
     </header>
     <main class="bg-white mt-4 mx-auto rounded col-lg-8 col-md-12"> 
+
         <button type="button" class="d-none" data-toggle="modal" data-target="#myModal" id="btnCerrarModal">
             Open modal
         </button>
@@ -51,6 +52,43 @@
                 </div>
             </div>
         </form>
+
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2" id="btnCerrarModal">
+            Solicitar Permiso
+        </button>
+
+        <div class="modal fade" id="myModal2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-info">
+                        <h4 class="modal-title">Solicitar licencia</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST" action="../controlador/form_solicitar_licencia_aux_lab.php">
+                           <input type="text" name="idHorarioLab" id="idHorarioLab" class="d-none" value="2">
+                           <label for="">Seleccione fechas de licencia</label>
+                           <div id="contFechasLicencia" class="bg-light p-1">
+                           </div>
+                           <hr>
+                           <h6> Descripcion sobre el permiso</h5>
+                           <textarea name="descPermiso" id="descPermiso" class="form-control" required></textarea>
+                           <hr>
+                           <label for="miFilePermiso"></label>
+                           <input type="file" name="miFilePermiso" id="miFilePermiso" class="form-control">   
+                           <div class="text-center my-2">
+                                <input type="submit" value="Enviar" class="btn btn-secondary"> 
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                           </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- The Modal -->
         <div class="modal fade" id="myModal">

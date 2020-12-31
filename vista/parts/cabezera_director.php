@@ -23,11 +23,56 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <header>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <h2 class="text-white p-4"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+    <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <h2 class="text-white p-4"><?php //echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
         <a href="../controlador/formCerrarSession.php">Cerrar session</a>
-        <button type="button" class="d-none btn btn-info" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-mail-bulk"></i>Enviar correo</button>
+        <button type="button" class="d-none btn btn-info" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-envelope"></button>
         
-        
+    </nav> -->
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
+        <!-- Brand -->
+        <img src="<?php echo $_SESSION['myFoto'];?>" class="rounded" width="75" height="75">
+        <h2 class="text-white d-inline-block"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h2>
+            <div class="float-right py-2">
+                <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-envelope"></i></button>
+                <button type="button" class="btn btn-primary d-inline-block"><i class="fas fa-user-edit"></i></button>
+                <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        <ul class="navbar-nav">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Ambientes:
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="ambiente_docente.php">Docentes</a>
+                <a class="dropdown-item" href="ambiente_pizarra.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="personal_laboratorio.php">Aux. Laboratorio</a>
+            </div>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Reportes:
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="reportes_departamento_docentes.php">Docentes</a>
+                <a class="dropdown-item" href="reportes_departamento_pizarra.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="reportes_departamento_laboratorio.php">Aux. Laboratorio</a>
+            </div>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Historial:
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="historial_departamento_docentes.php">Docentes</a>
+                <a class="dropdown-item" href="historial_departamento_pizarra.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="historial_departamento_laboratorio.php">Aux. Laboratorio</a>
+            </div>
+            </li>
+        </ul>
     </nav>
 </header>

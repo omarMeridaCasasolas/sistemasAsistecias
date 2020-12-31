@@ -8,7 +8,21 @@
             $this->connexion_bd=null;
         }
         
+        public function solicitarLicenciaAuxLab($id,$fecha,$descripcionLicencia){
+            $sql = "UPDATE reporte_aux_lab SET sol_licencia = true, desc_licencia = :descLicencia WHERE id_horario_laboratorio = :id AND fecha_reporte_lab = :fecha ";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":descLicencia"=>$descripcionLicencia,":id"=>$id,":fecha"=>$fecha));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
 
+        public function solicitarLicenciaAuxLabURL($id,$fecha,$descripcionLicencia,$enlace){
+            $sql = "UPDATE reporte_aux_lab SET sol_licencia = true, desc_licencia = :descLicencia ,enl_licencia = :enlace WHERE id_horario_laboratorio = :id AND fecha_reporte_lab = :fecha ";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":descLicencia"=>$descripcionLicencia,":id"=>$id,":fecha"=>$fecha ,":enlace"=>$enlace));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
         
 
         public function reportePorFecha($idHoarario,$fecha){

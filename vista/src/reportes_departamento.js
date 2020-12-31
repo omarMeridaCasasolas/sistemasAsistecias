@@ -4,7 +4,7 @@ $(document).ready(function () {
         "language": {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
-            "sZeroRecords":    "No se encontraron resultados",
+            "sZeroRecords":    "Selecione elementos a buscar",
             "sEmptyTable":     "Ningún dato disponible en esta tabla",
             "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
@@ -17,27 +17,72 @@ $(document).ready(function () {
         }
     });
 
-    $("#tipoUnidad").change(function (e) {
-        let tipoUnidad = $("#tipoUnidad").val();
-        console.log(tipoUnidad);
-        switch (tipoUnidad) {
-            case "Ninguno":
-                if($("#elemGrupo").hasClass("d-block")){
-                    $("#elemGrupo").removeClass("d-block");
-                    $("#elemGrupo").addClass("d-none");
-                }
-                break;
-            case "Laboratorios":
-                $("#labNombre").html("Selecione laboratorio");
-                $("#elemGrupo").removeClass("d-none");
-                $("#elemGrupo").addClass("d-block");
-                actulaizarListaDeDepartamentosLab();
-                break;
-            default:
-                break;
+    $("#tablaHistorialReporte tbody").on('click','button.verDetalles',function () {
+        var dataReporte = tablaReporte.row( $(this).parents('tr') ).data();
+        $("#fechaReporte").html(dataReporte.fecha_reporte_lab);
+        $("#laboratorioReporte").html(dataReporte.nombre_laboratorio);
+        $("#responsableReporte").html(dataReporte.nombre_auxiliar_lab);
+        $("#trabajoReporte").html(dataReporte.trabajo_lab_hecho);
+        $("#obsReporte").html(dataReporte.obs_reporte_lab);
+        let revision = dataReporte.revision;
+        //$("#reporteAsistencia").val(revision); 
+        if(revision != undefined){
+            $("#reporteAsistencia").val(revision);
         }
-        e.preventDefault();
+        console.log(revision);
+
+        if(dataReporte.doc_reporte_lab != ""){
+            $("#enlaceReporte").removeClass("d-none");
+            $("#enlaceReporte").addClass("d-inline-block");
+            $("#enlaceReporte").attr("href", dataReporte.doc_reporte_lab)
+        }else{
+            $("#enlaceReporte").removeClass("d-inline-block");
+            $("#enlaceReporte").addClass("d-none");
+            $("#enlaceReporte").hide();
+        }
+        let x = dataReporte.sol_licencia;
+        //console.log(x);
+        if(dataReporte.sol_licencia != undefined){
+            $("#contLicencia").show();
+            $("#motivoLicencia").html(dataReporte.desc_licencia);
+            if(dataReporte.enl_licencia != undefined){
+                $("#enlaceLicencia").removeClass("d-none");
+                $("#enlaceLicencia").addClass("d-inline-block");
+                $("#enlaceLicencia").attr("href", dataReporte.enl_licencia);
+                $("#enlaceLicencia").html("Enlace");
+            }else{
+                $("#enlaceLicencia").removeClass("d-inline-block");
+                $("#enlaceLicencia").addClass("d-none");
+                $("#enlaceLicencia").hide();
+            }
+        }else{
+            $("#contLicencia").hide();
+        }
     });
+
+    // $("#tipoUnidad").change(function (e) {
+    //     let tipoUnidad = $("#tipoUnidad").val();
+    //     console.log(tipoUnidad);
+    //     switch (tipoUnidad) {
+    //         case "Ninguno":
+    //             if($("#elemGrupo").hasClass("d-block")){
+    //                 $("#elemGrupo").removeClass("d-block");
+    //                 $("#elemGrupo").addClass("d-none");
+    //             }
+    //             break;
+    //         case "Laboratorios":
+    //             $("#labNombre").html("Selecione laboratorio");
+    //             $("#elemGrupo").removeClass("d-none");
+    //             $("#elemGrupo").addClass("d-block");
+    //             actulaizarListaDeDepartamentosLab();
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     e.preventDefault();
+    // });
+
+    actulaizarListaDeDepartamentosLab();
 
     $("#tipoGrupo").change(function (e) {
         let tipoUnidad = $("#tipoGrupo").val();
@@ -56,31 +101,42 @@ $(document).ready(function () {
     });
 
     $("#formBusquedaReportes").submit(function (e) { 
-        let tipoUnidad = $("#tipoUnidad").val();
-        switch (tipoUnidad) {
-            case "Laboratorios":
-                let nombreLaboratorio = $("#tipoGrupo").val();
-                if(nombreLaboratorio == "Todos"){
-                    obtenerTodosReportesLaboratorio();
-                }else{
-                    let nombreAuxLaboratorio = $("#TipoNombre").val();
-                    if(nombreAuxLaboratorio == "Todos"){
-                        obtenerReportesAsociadosLaboratorio(nombreLaboratorio);
-                    }else{
-                        obtenerReportesAsociadosLabAuxiliar(nombreLaboratorio,nombreAuxLaboratorio);
-                    }
-                }
-                break;
-            case "Docente":
-                console.log("Docente "+tipoUnidad);    
-                break;
-            case "Auxiliar de docencia":
-                console.log("Auxilia docencia "+tipoUnidad);
-                break;
-            
-            default:
-                break;
+        let nombreLaboratorio = $("#tipoGrupo").val();
+        if(nombreLaboratorio == "Todos"){
+            obtenerTodosReportesLaboratorio();
+        }else{
+            let nombreAuxLaboratorio = $("#TipoNombre").val();
+            if(nombreAuxLaboratorio == "Todos"){
+                obtenerReportesAsociadosLaboratorio(nombreLaboratorio);
+            }else{
+                obtenerReportesAsociadosLabAuxiliar(nombreLaboratorio,nombreAuxLaboratorio);
+            }
         }
+        // let tipoUnidad = $("#tipoUnidad").val();
+        // switch (tipoUnidad) {
+        //     case "Laboratorios":
+        //         let nombreLaboratorio = $("#tipoGrupo").val();
+        //         if(nombreLaboratorio == "Todos"){
+        //             obtenerTodosReportesLaboratorio();
+        //         }else{
+        //             let nombreAuxLaboratorio = $("#TipoNombre").val();
+        //             if(nombreAuxLaboratorio == "Todos"){
+        //                 obtenerReportesAsociadosLaboratorio(nombreLaboratorio);
+        //             }else{
+        //                 obtenerReportesAsociadosLabAuxiliar(nombreLaboratorio,nombreAuxLaboratorio);
+        //             }
+        //         }
+        //         break;
+        //     case "Docente":
+        //         console.log("Docente "+tipoUnidad);    
+        //         break;
+        //     case "Auxiliar de docencia":
+        //         console.log("Auxilia docencia "+tipoUnidad);
+        //         break;
+            
+        //     default:
+        //         break;
+        // }
         e.preventDefault();
         
     });
@@ -98,6 +154,8 @@ function actulaizarListaDeDepartamentosLab(){
         data: datosTipo,
         success: function (response) {
             let listaLaboratorios = JSON.parse(response);
+            $("#tipoGrupo").empty();
+            $("#tipoGrupo").append("<option value='Todos'>Todos</option>");
             listaLaboratorios.forEach(element => {
                 $("#tipoGrupo").append("<option value='"+element.id_laboratorio+"'>"+element.nombre_laboratorio+"</option>");
             });
@@ -172,9 +230,7 @@ function obtenerTodosReportesLaboratorio(){
             {"data":"nombre_laboratorio"},
             {"data":"nombre_auxiliar_lab"},
             {"data":"trabajo_lab_hecho"},
-            {"data":"obs_reporte_lab"}, 
-            {"data":"doc_reporte_lab"},
-            {"data": null,"defaultContent":"<button type='button' class='editarFacultad btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
+            {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]
     });
 }
@@ -227,9 +283,7 @@ function obtenerReportesAsociadosLaboratorio(nombreLaboratorio){
             {"data":"nombre_laboratorio"},
             {"data":"nombre_auxiliar_lab"},
             {"data":"trabajo_lab_hecho"},
-            {"data":"obs_reporte_lab"}, 
-            {"data":"doc_reporte_lab"},
-            {"data": null,"defaultContent":"<button type='button' class='editarFacultad btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
+            {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]
     });
 }
@@ -283,9 +337,7 @@ function obtenerReportesAsociadosLabAuxiliar(nombreLaboratorio,nombreAuxLaborato
             {"data":"nombre_laboratorio"},
             {"data":"nombre_auxiliar_lab"},
             {"data":"trabajo_lab_hecho"},
-            {"data":"obs_reporte_lab"}, 
-            {"data":"doc_reporte_lab"},
-            {"data": null,"defaultContent":"<button type='button' class='editarFacultad btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
+            {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]
     });
 }

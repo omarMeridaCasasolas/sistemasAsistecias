@@ -1,47 +1,9 @@
-<?php 
+<?php
     session_start();
-    function asignarMes($num){
-        $mes = '';
-        switch ($num) {
-            case '01':
-                $mes = "Enero";
-                break;
-            case '02':
-                $mes = "Febrero";
-                break;
-            case '03':
-                $mes = "Marzo";
-                break;
-            case '04':
-                $mes = "Abril";
-                break;
-            case '05':
-                $mes = "Mayo";
-                break;
-            case '06':
-                $mes = "Junio";
-                break;
-            case '07':
-                $mes = "Julio";
-                break;
-            case '08':
-                $mes = "Agosto";
-                break;
-            case '09':
-                $mes = "Septiembre";
-                break;
-            case '10':
-                $mes = "Octubre";
-                break;
-            case '11':
-                $mes = "Noviembre";
-                break;
-            default:
-                $mes = "Diciembre";
-                # code...
-                break;
-        }
-        return $mes;
+    if(isset($_SESSION['nombreTrabajador'])){
+        
+    }else{
+        header("Location:../index.php?error=auntentificacion&tipo=docente");
     }
 ?>
 <!DOCTYPE html>
@@ -49,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportes UTI</title>
+    <title>UTI-DPA</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
     
@@ -61,8 +23,43 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <body class="bg-secondary">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
+        <!-- Brand -->
+        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png" class="rounded" width="75" height="75">
+        <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
+        <div class="float-right py-3">
+            <button class="btn btn-primary"><i class="fas fa-envelope"></i></button>
+            <button class="btn btn-primary"><i class="fas fa-user-edit"></i></button>
+            <a href="" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        <ul class="navbar-nav">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Reportes:
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="reportes_docentes.php">Docentes</a>
+                <a class="dropdown-item" href="reportes_auxiliar_uti_dpa.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="reportes_uti_aux_lab.php">Aux. Laboratorio</a>
+            </div>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Historial:
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="historial_docentes_uti_dpa.php">Docentes</a>
+                <a class="dropdown-item" href="historial_auxiliar_uti_dpa.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="historial_labo_uti_dpa.php">Aux. Laboratorio</a>
+            </div>
+            </li>
+        </ul>
+    </nav>
+    <main class="container bg-white py-4">
     <main class="container bg-white p-2">
-        <form action="../controlador/obtenerReportesAuxDepartamento.php" id="" method="post">
+        <form action="" id="formObtenerReporte">
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="idFacultadaes">Facultad:</label>
@@ -74,82 +71,37 @@
                     <select name="idDepartamentos" id="idDepartamentos" class="form-control" required>
                     </select>
                 </div>
+                <div class="form-group col-md-6">
+                    <label for="idAuxPizarra">Auxiliar de pizarra:</label>
+                    <select name="idAuxPizarra" id="idAuxPizarra" class="form-control" required>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idMateria">Materia:</label>
+                    <select name="idMateria" id="idMateria" class="form-control" required>
+                    </select>
+                </div>
             </div>
-            <input type="text" name="fechaInicio" id="fechaInicio" class="d-none">
-            <input type="text" name="fechaFinal" id="fechaFinal" class="d-none">
             <div class="text-center">
                 <h6 id="descResultado"></h6>
-                <input type="submit" class="btn btn-primary" value="Obtener" disabled="disabled" id="btnSubmit">
+                <input type="submit" class="btn btn-primary" value="Obtener" required>
             </div>
         </form>
 
-        <h5>Reporte del mes de : <strong><?php $fecha = date("m"); $tmp = intval($fecha) -1; echo asignarMes($tmp);?> - 2020</strong></span></h5>
-            <div id="cajaTabla">
-            <table id="tablaMateriaAuxiliares" class="table table-hover" style="width:100%">
+        <h5>Reporte del mes de : <strong>Noviembre</strong></span></h5>
+            <table id="tablaMateriaAuxiliares" class="display nowrap cell-border" style="width:100%">
                 <thead class="bg-info">
                     <tr>
-                        <th>Nombre del Auxiliar</th>
-                        <th>Total hrs</th>
-                        <th>Cant. faltas</th>
-                        <th>Hrs. Licencia </th>
-                        <th>Hrs. baja</th>
-                        <th>Horas pagable</th>
-                        <th>Detalles</th>
+                        <th>Fecha</th>
+                        <th>Materia</th>
+                        <th>Codigo materia</th>
+                        <th>Plataforma</th>
+                        <th>Asistencia</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php 
-                        $horasPagablesDeparamento = 0;
-                        $horasNoPagablesDeparamento = 0;
-                        if(isset($_SESSION['datosReporte'])){
-                            $listaDeAuxiliares = $_SESSION['datosReporte'];
-                            foreach ($listaDeAuxiliares as $x) {
-                                $llave = key($x);
-                                echo "<tr>
-                                    <td>$llave</td>
-                                    <td>".$x[$llave]['horasTotal']." Hrs</td>
-                                    <td>".$x[$llave]['faltas']."</td>
-                                    <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
-                                    <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
-                                    <td>".$x[$llave]['horasPagables']." Hrs</td>
-                                    <td><a href='reporte_asistencia.php?id=".$x[$llave]['id_auxiliar']."'>Ver detalles</a></td>
-                                  </tr>";
-                                  $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
-                                  $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
-                            }
-                        }else{
-                            echo "<tr>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                    <td>Selecione departamento</td>
-                                  </tr>";
-                        }
-                    ?>
-                </tbody>
             </table>
-            </div>
         </div> 
-        <hr>
-        <?php 
-            if(isset($_SESSION['datosReporte'])){
-                echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
-                echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento," Hrs/mes</h6> ";
-            }
-        ?>
-        <hr>
-        <form action="getHTMLPDF.php" method="post" target="_blank">
-            <div class="text-center">
-                <input type="text" name="gestionPlanilla" id="gestionPlanilla" class="d-none">
-                <input type="text" name="nomFacultad" id="nomFacultad" class="d-none">
-                <input type="text" name="nomDepartamento" id="nomDepartamento" class="d-none">
-                <a href="vista_previa_reporte_auxiliar.php">Vista previa</a>
-                <input type="submit" class="btn btn-secondary" value="Generar PDF">
-            </div>
-        </form>
 
         <!-- Modal Editar Facultad ventana -->
         <div class="modal fade" id="myModal4">
@@ -253,11 +205,13 @@
                 </div>
             </div>
         </div>
+
+        <form action="">
+            <div class="text-center">
+                <input type="submit" class="btn btn-secondary" value="Enviar Datos">
+            </div>
+        </form>
     </main>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-    <!-- <script src="/bower_components/moment/locale/es.js"></script> -->
-    <script src="src/reportes_auxiliar_dpa.js"></script>
+    </main>
 </body>
 </html>

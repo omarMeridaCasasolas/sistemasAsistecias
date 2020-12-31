@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    obtenerDiasPermiso();
 
     $("#cerrarModal").click(function (e) { 
         $("#btnCerrarModal").click();       
@@ -28,3 +28,23 @@ $(document).ready(function () {
       });
     
 });
+
+function obtenerDiasPermiso(){
+    // let fecga = new Date; // get current date
+    // let first = curr.getDate() - curr.getDay() +1 ; // First day is the day of the month - the day of the week
+    // let last = first + 6; // last day is the first day + 6
+    // console.log(first);
+    // console.log(last);
+    var days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes","Sabado", "Domingo"];
+    
+    $('table>tbody tr').each(function(){
+        $(this).find('td:first').each(function(){
+            console.log($(this).html());
+            let fecha = new Date($(this).html());
+            let diaFecha = days[fecha.getDay()]
+            $("#contFechasLicencia").append("<div class='form-check'>"+
+            "<label class='form-check-label'><input type='checkbox' name='fechas[]' class='form-check-input' value='"+$(this).html()+"'>"+$(this).html()+" ("+diaFecha+")</label></div>");
+        })
+    })
+
+}

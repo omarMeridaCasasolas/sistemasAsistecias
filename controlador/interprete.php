@@ -23,6 +23,9 @@
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
         switch($clase){
+            case 'Correo':
+                $tmp = ejecutarConsultasCorreo();
+                break;
             case 'Enlace':
                 $tmp = ejecutarConsultasEnlaces();
                 break;
@@ -72,6 +75,22 @@
                 break;
         }
         echo trim($tmp);
+    }
+    function ejecutarConsultasCorreo(){
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'enviarCorreoSimple':
+                $destino = $_REQUEST['to'];
+                $asunto = $_REQUEST['asunto'];
+                $descripcion = $_REQUEST['descripcion'];
+                $res = require_once("../controlador/formEnviarPassword.php");
+                break;
+            default:
+                # code...
+                break;        
+        }
+        return $res;
     }
 
     function ejecutarConsultasEnlaces(){
@@ -132,6 +151,11 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listarClasesDocentes':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idFacultad = $_REQUEST['idFacultad'];
+                $res = $clase->listarClasesDocentes($idFacultad,$idDepartamento);
+                break;
             case 'enviarReporteAsistenciaDPA':
                 $idClase = $_REQUEST['idClase'];
                 $estado = $_REQUEST['estado'];
