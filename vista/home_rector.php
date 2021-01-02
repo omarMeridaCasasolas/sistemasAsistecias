@@ -38,62 +38,61 @@
         <br>
         <button type="button" class="btn btn-warning" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos">
         <i class="fas fa-user-cog"></i>
-  </button>
+        </button>
 
-  <!-- The Modal -->
-  <div class="modal fade" id="myModalEditarDatos">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header bg-info">
-          <h4 class="modal-title">Cambiar datos peronales</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModalEditarDatos">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title">Cambiar datos peronales</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="../controlador/formActualizarDatosUsuario.php" id="editFormSelf" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <input type="text" name="idUsuarioSync" id="idUsuarioSync" class="d-none">
+                            <div class="form-group col-7">
+                                <label for="editCorreo">Correo electronico:</label>
+                                <input type="text" name="editCorreo" id="editCorreo" class="form-control" required>
+                            </div>
+                            <div class="form-group col-5">
+                                <label for="editTel">Telefono:</label>
+                                <input type="text" name="editTel" id="editTel" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="nuevoPass">Nueva contraseña</label>
+                                <input type="password" name="nuevoPass" id="nuevoPass" class="form-control">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="repeatPAss">Repetir contaseña</label>
+                                <input type="password" name="repeatPAss" id="repeatPAss" class="form-control">
+                            </div>
+                        </div>
+                        <span class="text-danger" id="changePassUser"></span>
+                        <div class="form-group">
+                            <label for="myFile">Selecione una foto o imagen</label>
+                            <input type="file" name="myFile" id="myFile" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPass">Contraseña:</label>
+                            <input type="password" name="editPass" id="editPass" class="form-control" required>
+                            <span class="text-danger" id="editUsurPassSelf"></span>
+                        </div>
+                        <div class="text-center">
+                        <input type="submit" class="btn btn-secondary" value="Actualizar">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <!-- Modal body -->
-        <div class="modal-body">
-            <form action="../controlador/formActualizarDatosUsuario.php" id="editFormSelf" method="POST" enctype="multipart/form-data">
-                <div class="row">
-                    <input type="text" name="idUsuarioSync" id="idUsuarioSync" class="d-none">
-                    <div class="form-group col-7">
-                        <label for="editCorreo">Correo electronico:</label>
-                        <input type="text" name="editCorreo" id="editCorreo" class="form-control" required>
-                    </div>
-                    <div class="form-group col-5">
-                        <label for="editTel">Telefono:</label>
-                        <input type="text" name="editTel" id="editTel" class="form-control" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="nuevoPass">Nueva contraseña</label>
-                        <input type="password" name="nuevoPass" id="nuevoPass" class="form-control">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="repeatPAss">Repetir contaseña</label>
-                        <input type="password" name="repeatPAss" id="repeatPAss" class="form-control">
-                    </div>
-                </div>
-                <span class="text-danger" id="changePassUser"></span>
-                <div class="form-group">
-                    <label for="myFile">Selecione una foto o imagen</label>
-                    <input type="file" name="myFile" id="myFile" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label for="editPass">Contraseña:</label>
-                    <input type="password" name="editPass" id="editPass" class="form-control" required>
-                    <span class="text-danger" id="editUsurPassSelf"></span>
-                </div>
-                <div class="text-center">
-                <input type="submit" class="btn btn-secondary" value="Actualizar">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
-        </div>
-        
-      </div>
     </div>
-  </div>
+
     </nav>
 </header>
 
@@ -459,7 +458,7 @@
     </div>
 </div>  
 
-<!-- modal editar direcotr academicos     -->
+<!-- modal editar director academicos     -->
 <div class="modal fade" id="myModaEditDirector">
     <div class="modal-dialog">
         <div class="modal-content">

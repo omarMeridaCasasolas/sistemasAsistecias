@@ -1,18 +1,9 @@
-<?php include_once("parts/cabezera_director.php");?>
+<?php include_once("parts/cabezera_jefe_departamento.php");?>
 <body class="bg-secondary">
-    <main class="container bg-white p-2">
+    <main class="bg-white p-4 mx-auto rounded col-lg-9 col-md-12 min-vh-100">
         <form action="" id="formBusquedaReportes" class="mx-auto col-lg-5 col-md-7">
             <h2 class="text-center text-primary">HISTORIAL LABORATORIO </h2>
             <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
-            <!-- <div class="form-group">
-                <label for="tipoUnidad">Tipo</label>
-                <select name="tipoUnidad" id="tipoUnidad" class="form-control">
-                    <option value="Ninguno">Ninguno</option>
-                    <option value="Laboratorios">Laboratorios</option>
-                    <option value="Docente">Docente</option>
-                    <option value="Auxiliar de docencia">Auxiliar de docencia</option>
-                </select>
-            </div> -->
             <div id="elemGrupo" class="form-group">
                 <label for="tipoGrupo" id="labNombre">Selecione Laboratorio</label>
                 <select name="tipoGrupo" id="tipoGrupo" class="form-control">
@@ -35,7 +26,7 @@
                 <thead>
                     <tr class="bg-info">
                         <th>Fecha</th>
-                        <th>Materia-Laboratorio</th>
+                        <th>Laboratorio</th>
                         <th>Asignado</th>
                         <th>Trabajo relizado</th>
                         <th>Opciones</th>

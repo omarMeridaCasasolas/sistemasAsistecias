@@ -10,8 +10,17 @@
             $this->connexion_bd=null;
         }
 
-       public function listaDeMateriasPorAuxiliar($idDepartamentos){
-            $sql = "SELECT * FROM materia_auxiliar_docente where id_materia in (select id_materia from materia where id_departamento = :idDepartamento)";
+        public function listaDeMateriasPorAuxiliar($idDepartamentos){
+                $sql = "SELECT * FROM materia_auxiliar_docente where id_materia in (select id_materia from materia where id_departamento = :idDepartamento)";
+                $sentenceSQL = $this->connexion_bd->prepare($sql);
+                $sentenceSQL ->execute(array(":idDepartamento"=>$idDepartamentos));
+                $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+                $sentenceSQL->closeCursor();
+                return $respuesta; 
+        }
+
+        public function listaDeMateriasPorDocente($idDepartamentos){
+            $sql = "SELECT * FROM materia_docente where id_materia in (select id_materia from materia where id_departamento = :idDepartamento)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL ->execute(array(":idDepartamento"=>$idDepartamentos));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

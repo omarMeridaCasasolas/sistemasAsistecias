@@ -44,6 +44,7 @@ if(isset($_POST['nomDepartamento'])){
                 <thead class="bg-info">
                     <tr>
                         <th>Nombre del Auxiliar</th>
+                        <th>Materia</th>
                         <th>Total hrs</th>
                         <th>Cant. faltas</th>
                         <th>Hrs. Licencia </th>
@@ -55,12 +56,13 @@ if(isset($_POST['nomDepartamento'])){
                     <?php 
                         $horasPagablesDeparamento = 0;
                         $horasNoPagablesDeparamento = 0;
-                        if(isset($_SESSION['datosReporte'])){
-                            $listaDeAuxiliares = $_SESSION['datosReporte'];
+                        if(isset($_SESSION['datosReporteDocente'])){
+                            $listaDeAuxiliares = $_SESSION['datosReporteDocente'];
                             foreach ($listaDeAuxiliares as $x) {
                                 $llave = key($x);
                                 echo "<tr>
                                     <td>$llave</td>
+                                    <td>".$x[$llave]['materia']."</td>
                                     <td>".$x[$llave]['horasTotal']." Hrs</td>
                                     <td>".$x[$llave]['faltas']."</td>
                                     <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
@@ -72,6 +74,8 @@ if(isset($_POST['nomDepartamento'])){
                             }
                         }else{
                             echo "<tr>
+                                <td>Selecione departamento</td>
+                                    <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>
@@ -84,7 +88,7 @@ if(isset($_POST['nomDepartamento'])){
                 </tbody>
             </table>
             <?php 
-            if(isset($_SESSION['datosReporte'])){
+            if(isset($_SESSION['datosReporteDocente'])){
                 echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
                 echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento," Hrs/mes</h6> ";
             }

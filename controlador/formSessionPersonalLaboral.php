@@ -15,6 +15,9 @@
             $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
             $_SESSION['cargoTrabajador'] = $respuesta['cargo_nom_trab'];
             $_SESSION['foto_trabajador'] = $respuesta['foto_trabajador'];
+            $_SESSION['correoTrabajador'] = $respuesta['correo_trabajador'];
+            $_SESSION['telefonoTrabajador'] = $respuesta['tel_trabajador'];
+
             header("Location:../vista/home_uti.php");
         }else{
             if($respuesta['unidad'] == "DPA" && $respuesta['cargo_nom_trab'] == "Jefe DPA"){
@@ -23,6 +26,9 @@
                 $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
                 $_SESSION['cargoTrabajador'] = $respuesta['cargo_nom_trab'];
                 $_SESSION['foto_trabajador'] = $respuesta['foto_trabajador'];
+                $_SESSION['correoTrabajador'] = $respuesta['correo_trabajador'];
+                $_SESSION['telefonoTrabajador'] = $respuesta['tel_trabajador'];
+
                 header("Location:../vista/home_dpa.php");
             }else{
                 if(isset($respuesta['nombre_trabador']) && isset($respuesta['cargo_nom_trab'])){

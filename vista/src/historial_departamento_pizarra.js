@@ -29,21 +29,18 @@ $(document).ready(function () {
         
     });
 
-    listaDeFacultades();   
-    $("#idFacultadaes").change(function (e) { 
-        listaDepartamentos();
-        e.preventDefault();
-    });
+    listaMaterias();
 
-    $("#buscarReportesDocentes").submit(function (e) { 
-        datosDocentes = {
-            clase: "Clase",
-            metodo: "listarClasesDocentes",
-            idFacultad: $("#idFacultadaes").val(),
-            idDepartamento: $("#idDepartamentos").val()
-        };
-        listarReporte(datosDocentes);
+    $("#formBuscarReportes").submit(function (e) { 
         e.preventDefault();
+        datos = {
+            clase: "Clase",
+            metodo: "listarClasesAuxiliaresID",
+            idMateria: $("#idMateria").val(),
+        };
+        console.log(datos);
+        listarReporte(datos);
+        //e.preventDefault();
     })
 
     $("#tablaHistorialReporte tbody").on('click','button.verDetalles',function () {
@@ -51,7 +48,7 @@ $(document).ready(function () {
         //console.log(datoReporte );
         $("#fechaClase").html(datoReporte.fecha_clase+" -> "+datoReporte.periodo_hora_clase);
         $("#nomMateria").html(datoReporte.nombre_materia);
-        $("#nomResponsable").html(datoReporte.nombre_docente);
+        $("#nomResponsable").html(datoReporte.nombre_aux_docente);
         $("#idAvance").html(datoReporte.contenido_clase);
         $("#idPlataforma").html(datoReporte.plataforma_clase);
         $("#idObservacion").html(datoReporte.observaciones_clase);
@@ -119,49 +116,26 @@ $(document).ready(function () {
     });
 });
 
-function listaDeFacultades(){
-    let datosFacultad = {
-        clase: "Facultad",
-        metodo: "mostrarFacultades"
-    }
-    $.ajax({
-        type: "POST",
-        url: "../controlador/interprete.php",
-        data: datosFacultad,
-        success: function (response) {
-            //console.log(response);
-            listaFacultades = JSON.parse(response);
-            $("#idFacultadaes").empty();
-            listaFacultades.forEach(element => {
-                $('#idFacultadaes').append("<option value='"+element.id_facultad+"'>"+element.nombre_facultad+"</option>");
-            });
-            //let nombreFacultad = $("#idFacultadaes option:selected").text();
-            //$("#nomFacultad").val(nombreFacultad);
-            //console.log(nombreFacultad);
-            listaDepartamentos();
-        }
-    });
-}
 
-function listaDepartamentos(){
+function listaMaterias(){
     let datosDepartamento = {
-        clase: "Departamento",
-        metodo: "mostrarDepartamentos",
-        idFacultad: $("#idFacultadaes").val(),
+        clase: "Materia",
+        metodo: "listaMateriasPorDepartamento",
+        idDepartamento: $("#idDepartamento").val(),
     }
     $.ajax({
         type: "POST",
         url: "../controlador/interprete.php",
         data: datosDepartamento,
         success: function (response) {
-            // console.log(response);
-            let listaDepartmentos = JSON.parse(response);
-            $("#idDepartamentos").empty();
-            if(listaDepartmentos.length == 0){
-                $('#idDepartamentos').append("<option value='Ninguno'>No existe datos</option>");
+            console.log(response);
+            let listaMaterias = JSON.parse(response);
+            $("#idMateria").empty();
+            if(listaMaterias.length == 0){
+                $('#idMateria').append("<option value='Ninguno'>No existe datos</option>");
             }else{
-                listaDepartmentos.forEach(element => {
-                    $('#idDepartamentos').append("<option value='"+element.id_departamento+"'>"+element.nombre_departamento+"</option>");
+                listaMaterias.forEach(element => {
+                    $('#idMateria').append("<option value='"+element.id_materia+"'>"+element.nombre_materia+" - "+element.codigo_materia+"</option>");
                 });
             }
             //let nombreDepartamento = $("#idDepartamentos option:selected").text();
@@ -172,15 +146,15 @@ function listaDepartamentos(){
     });
 }
 
-function listarReporte(datosDocentes){
+function listarReporte(datos){
     $('#tablaHistorialReporte').dataTable().fnDestroy();
     tablaReporte = $("#tablaHistorialReporte").DataTable({
         responsive: true,
     language:{
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+        "sZeroRecords":    "No existe ningun auxiliar asociado a la materia",
+        "sEmptyTable":     "No existe ningun auxiliar asociado a la materia",
         "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -206,14 +180,14 @@ function listarReporte(datosDocentes){
         },
         "ajax":{
             "method":"POST",
-            "data" : datosDocentes,
+            "data" : datos,
             "url":"../controlador/interprete.php"
         },
         "columns":[
             {"data":"fecha_clase"},
             {"data":"periodo_hora_clase"},
             {"data":"nombre_materia"}, 
-            {"data":"nombre_docente"},
+            {"data":"nombre_aux_docente"},
             {"data":"contenido_clase"},
             {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]

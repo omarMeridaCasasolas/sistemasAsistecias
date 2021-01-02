@@ -9,6 +9,39 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+    
+        public function listarClasesAuxiliaresID($idMateria){
+            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia 
+            INNER JOIN auxiliar_docente ON clase.id_aux_docente = auxiliar_docente.id_aux_docente
+            WHERE clase.id_materia = :id AND clase.id_aux_docente is not null";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idMateria));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
+        public function listarClasesDocentesID($idMateria){
+            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia 
+            INNER JOIN docente ON clase.id_docente = docente.id_docente
+            WHERE clase.id_materia = :id AND clase.id_docente is not null";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idMateria));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
+
+        public function listarClasesAuxiliares($idFacultad,$idDepartamento){
+            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia INNER JOIN auxiliar_docente ON clase.id_aux_docente = auxiliar_docente.id_aux_docente
+            WHERE clase.id_aux_docente is not null AND clase.id_materia in(SELECT materia.id_materia FROM materia WHERE id_departamento = :id)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
 
         public function listarClasesDocentes($idFacultad,$idDepartamento){
             $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia INNER JOIN docente ON clase.id_docente = docente.id_docente
@@ -74,6 +107,17 @@
             $sql = "SELECT * FROM clase Cl JOIN auxiliar_docente Ad ON Cl.id_aux_docente = Ad.id_aux_docente  WHERE id_materia = :idMateria AND Cl.id_aux_docente = :idAuxiliar AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute(array(":idMateria"=>$idMateria,":idAuxiliar"=>$idAuxiliar,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function obtenerDocentesArrayMateria($idMateria,$idDocente,$fechaInicio,$fechaFinal){
+            $sql = "SELECT * FROM clase Cl INNER JOIN docente doc ON Cl.id_docente = doc.id_docente 
+            INNER JOIN materia ON Cl.id_materia = materia.id_materia
+             WHERE Cl.id_materia = :idMateria AND Cl.id_docente = :idDocente AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":idMateria"=>$idMateria,":idDocente"=>$idDocente,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             return $respuesta;

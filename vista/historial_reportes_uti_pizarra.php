@@ -1,5 +1,10 @@
 <?php 
     session_start();
+    if(isset($_SESSION['nombreTrabajador'])){
+
+    }else{
+        header("Location:../index.php?error=auntentificacion");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,14 +22,14 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
         <!-- Brand -->
-        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png" class="rounded" width="75" height="75">
+        <img src="<?php echo $_SESSION['foto_trabajador']; ?>" class="rounded" width="75" height="75">
         <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
         <div class="float-right py-3">
-            <button class="btn btn-primary"><i class="fas fa-envelope"></i></button>
-            <button class="btn btn-primary"><i class="fas fa-user-edit"></i></button>
-            <a href="" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <a href="home_uti.php" class="btn btn-primary"><i class="fas fa-home"></i></a>
+            <button class="btn btn-primary" data-toggle='modal' data-target='#abrirVtnCorreo'><i class="fas fa-envelope"></i></button>
+            <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
             </div>
         <ul class="navbar-nav">
             <!-- Dropdown -->
@@ -44,8 +49,8 @@
                 Historial:
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="historial_docentes_uti_dpa.php">Docentes</a>
-                <a class="dropdown-item" href="historial_auxiliar_uti_dpa.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="historial_reportes_uti_docentes.php">Docentes</a>
+                <a class="dropdown-item" href="historial_reportes_uti_pizarra.php">Aux. pizarra</a>
                 <a class="dropdown-item" href="historial_labo_uti_dpa.php">Aux. Laboratorio</a>
             </div>
             </li>
@@ -54,7 +59,7 @@
 <body class="bg-secondary">
     <main class="bg-white p-4 mx-auto rounded col-lg-8 col-md-12 min-vh-100">
         <!-- Formulario para Docentes -->
-        <h2 class="text-center">Historial de reportes</h2>
+        <h2 class="text-center">Historial Reportes Auxiliares de pizarra</h2>
         <form action="" id="buscarReportesDocentes">
             <div class="form-group mx-auto col-lg-4 col-md-7">
                 <label for="idFacultadaes">Seleccione Facultadad</label>
@@ -88,7 +93,45 @@
         </div>
 
     </main>    
-    <!-- Modal Editar Facultad ventana -->
+    <!-- Modal Email-->
+    <div class="modal fade" id="abrirVtnCorreo">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h2 class="modal-title text-white">Enviar @mail</h2>
+                    <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnMail">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formEnviarCorreos">
+                        <div class="form-group">
+                            <label for="destinoCorreo">Escribe destino</label>
+                            <input type="email" name="destinoCorreo" id="destinoCorreo" class="form-control" required>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-4">
+                                <label for="fromMail">Asunto: </label>
+                                <input type="text" disabled name="fromMail" id="fromMail" class="form-control" value="<?php echo $_SESSION['cargoTrabajador'];?>">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="idCorreoAsunto">_</label>
+                                <input type="text" name="idCorreoAsunto" id="idCorreoAsunto" class="form-control" value="Reportes" required>
+                            </div>
+                        </div>
+                        <span>remitente: <strong>"Asistencia_Virtual_UMSS@mail.com"</strong></span>
+                        <h4>Descripcion</h4>
+                        <textarea name="descCorreo" id="descCorreo" class="form-control" required>Ya esta disponible la lista de hacer reportes</textarea>
+                        <div class="text-center my-2">
+                            <input type="submit" class="btn btn-primary" value="Enviar">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>    
+        </div>
+    </div>
+
+    <!-- Historial de reportes-->
         <div class="modal fade" id="myModal4">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -118,6 +161,13 @@
                             <h6><strong>Asunto licencia: </strong><span id="asuntoLicencia">Sin licencia</span></h6>
                             <a href="#" target="_blank" rel="noopener noreferrer" id="enlaceLicencia">Enlace</a>
                         </div>
+                        <div class="form-group">
+                            <label for="idAsistencia">Asistencia :</label>
+                            <select name="idAsistencia" id="idAsistencia" disabled class="form-control">
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
                         <div class="text-center">
                             <button data-dismiss="modal" class="btn btn-danger">Cerrar</button>
                         </div>
@@ -125,7 +175,8 @@
                 </div>
             </div>
         </div>
-
-    <script src="src/historial_reportes_uti_docentes.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="src/historial_reportes_uti_pizarra.js"></script>
 </body>
 </html>

@@ -10,6 +10,15 @@
             $this->connexion_bd=null;
         }
 
+        public function listaMateriasPorDepartamento($idDepartamento){
+            $sql = "SELECT * FROM materia WHERE id_departamento = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode($respuesta); 
+        }
+
         public function obtenerReporteMes($idMateria,$idAuxiliar,$fechaInicio,$FechaFinal,$idDepartamento){
             $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia 
             WHERE fecha_clase BETWEEN :fechaInicio AND :fechaFinal AND revisado = 'Jefe Departamento' AND clase.id_materia = :idMateria AND clase.id_aux_docente = :idAuxiliar

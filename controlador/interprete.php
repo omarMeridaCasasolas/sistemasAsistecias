@@ -118,6 +118,10 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listaMateriasPorDepartamento':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $materia->listaMateriasPorDepartamento($idDepartamento);
+                break;
             case 'obtenerReporteMes':
                 $fechaAntes = $_REQUEST['fechaAntes'];
                 $fechaDespues = $_REQUEST['fechaDespues'];
@@ -151,6 +155,19 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'listarClasesDocentesID':
+                $idMateria = $_REQUEST['idMateria'];
+                $res = $clase->listarClasesDocentesID($idMateria);
+                break;
+            case 'listarClasesAuxiliaresID':
+                $idMateria = $_REQUEST['idMateria'];
+                $res = $clase->listarClasesAuxiliaresID($idMateria);
+                break;
+            case 'listarClasesAuxiliares':
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $idFacultad = $_REQUEST['idFacultad'];
+                $res = $clase->listarClasesAuxiliares($idFacultad,$idDepartamento);
+                break;
             case 'listarClasesDocentes':
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $idFacultad = $_REQUEST['idFacultad'];
@@ -629,6 +646,17 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            case 'obtenerReportesLaboratorioSem':
+                $fechaInicio = $_REQUEST['fechaInicio'];
+                $fechaFinal = $_REQUEST['fechaFinal'];
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarLaboratorio->obtenerReportesLaboratorioSem($idDepartamento,$fechaInicio,$fechaFinal);
+                break;
+            case 'listarHistorialLaboratorio':
+                //echo $_REQUEST['idDepartament'];
+                $idDepartamento = $_REQUEST['idDepartamento'];
+                $res = $auxiliarLaboratorio->listarHistorialLaboratorio($idDepartamento);
+                break;
             case 'listaCorreosAuxiliarLab':
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $res = $auxiliarLaboratorio->listaCorreosAuxiliarLab($idDepartamento);

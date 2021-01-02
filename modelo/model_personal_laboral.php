@@ -32,6 +32,23 @@
             $sentenceSQL->closeCursor();
             return $respuesta[0];
         }
+
+        public function actualizarDatosUTIDPAUrl($id,$correo ,$telefono,$password,$enlace){
+            $sql = "UPDATE personal_laboral SET correo_trabajador = :correo, tel_trabajador = :tel, password_trabajador = :pass, foto_trabajador = :enlace WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":tel"=>$telefono,":pass"=>$password,":enlace"=>$enlace,":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function actualizarDatosUTIDPA($id,$correo ,$telefono,$password){
+            $sql = "UPDATE personal_laboral SET correo_trabajador = :correo, tel_trabajador = :tel, password_trabajador = :pass WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":correo"=>$correo,":tel"=>$telefono,":pass"=>$password,":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
         // public function listarTableDocente(){
         //     $sql = "SELECT * FROM docente";
         //     $sentenceSQL = $this->connexion_bd->prepare($sql);

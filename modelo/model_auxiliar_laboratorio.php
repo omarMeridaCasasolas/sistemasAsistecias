@@ -10,6 +10,30 @@
             $this->connexion_bd=null;
         }
 
+        public function obtenerReportesLaboratorioSem($idDepartamento,$fechaInicio,$fechaFinal){
+            $sql = "SELECT * FROM reporte_aux_lab INNER JOIN horario_laboratorio ON reporte_aux_lab.id_horario_laboratorio = horario_laboratorio.id_horario_laboratorio
+            INNER JOIN auxiliar_laboratorio ON horario_laboratorio.id_aux_laboratorio = auxiliar_laboratorio.id_aux_laboratorio
+            INNER JOIN laboratorio ON horario_laboratorio.id_laboratorio = laboratorio.id_laboratorio
+            WHERE horario_laboratorio.id_departamento = :id AND fecha_reporte_lab BETWEEN :fechaInicio AND :fechaFinal";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
+        public function listarHistorialLaboratorio($idDepartamento){
+            $sql = "SELECT * FROM reporte_aux_lab INNER JOIN horario_laboratorio ON reporte_aux_lab.id_horario_laboratorio = horario_laboratorio.id_horario_laboratorio
+            INNER JOIN auxiliar_laboratorio ON horario_laboratorio.id_aux_laboratorio = auxiliar_laboratorio.id_aux_laboratorio
+            INNER JOIN laboratorio ON horario_laboratorio.id_laboratorio = laboratorio.id_laboratorio
+            WHERE horario_laboratorio.id_departamento = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$idDepartamento));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
         public function listaCorreosAuxiliarLab($idDepartamento){
             $sql = "SELECT * FROM auxiliar_laboratorio WHERE id_departamento = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

@@ -60,10 +60,10 @@ $(document).ready(function (){
             {"data": null,"defaultContent":"<button type='button' class='revisarInforme btn btn-warning btn-sm' data-toggle='modal' data-target='#myModal4'><i class='far fa-edit'></i></button>"}
         ]
     });
-
     $("#tablaMateriaAuxiliares tbody").on('click','button.revisarInforme',function () {
         var dataEdit = tablaMateriaAuxiliares.row( $(this).parents('tr') ).data();
         console.log(dataEdit);
+        $("#fechaReporteView").html(dataEdit.fecha_clase);
         $("#idClase").val(dataEdit.codigo_clase);
         let datosAuxiliar = {
             clase: 'AuxiliarDocente',
@@ -80,6 +80,8 @@ $(document).ready(function (){
                 $("#nomResponsable").val(auxiliarDoc.nombre_aux_docente);
             }
         });
+
+        
 
         let datosRecursos = {
             clase: 'Enlace',
@@ -167,6 +169,14 @@ $(document).ready(function (){
             $("#radio1").prop('checked', false);
             $("#radio2").prop('checked', true);
         }
+
+        if(dataEdit.clase_con_licencia == true){
+            $("#descLicencia").html(dataEdit.descripcion_licencia);
+            $("#idEnlaceLicencia").attr("href", dataEdit.enlace_licencia);
+            $("#idEnlaceLicencia").show();
+        }else{
+            $("#idEnlaceLicencia").hide();
+        }
     });
 
     $("#formEditarFacultad").submit(function (e) { 
@@ -192,7 +202,6 @@ $(document).ready(function (){
                 }
             }
         });
-
         e.preventDefault();
         
     });

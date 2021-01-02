@@ -1,6 +1,33 @@
 var tablaReporte;
 $(document).ready(function () {
     tablaReporte = $("#tablaHistorialReporte").DataTable();
+    $("#formEnviarCorreos").submit(function (e) { 
+        datos = {
+            clase: "Correo",
+            metodo: "enviarCorreoSimple",
+            to: $("#destinoCorreo").val(),
+            asunto: $("#fromMail").val() +" || "+ $("#idCorreoAsunto").val(), 
+            descripcion: $("#descCorreo").html()
+        };
+        console.log(datos);
+        $.ajax({
+            type: "POST",
+            url: "../controlador/interprete.php",
+            data: datos,
+            success: function (response) {
+                //console.log(response);
+                let res = response.trim();
+                if(res == "2021"){
+                    Swal.fire("Exito","Se a enviado el correo a: "+datos.to,"success");
+                }else{
+                    Swal.fire("Problema",res,"info");
+                }
+            }
+        });
+        $("#btnCerrarVtnMail").click();
+        e.preventDefault();
+        
+    });
 
     listaDeFacultades();   
     $("#idFacultadaes").change(function (e) { 
@@ -11,7 +38,7 @@ $(document).ready(function () {
     $("#buscarReportesDocentes").submit(function (e) { 
         datosDocentes = {
             clase: "Clase",
-            metodo: "listarClasesDocentes",
+            metodo: "listarClasesAuxiliares",
             idFacultad: $("#idFacultadaes").val(),
             idDepartamento: $("#idDepartamentos").val()
         };
@@ -21,13 +48,15 @@ $(document).ready(function () {
 
     $("#tablaHistorialReporte tbody").on('click','button.verDetalles',function () {
         let datoReporte = tablaReporte.row( $(this).parents('tr') ).data();
-        console.log(datoReporte );
+        //console.log(datoReporte );
         $("#fechaClase").html(datoReporte.fecha_clase+" -> "+datoReporte.periodo_hora_clase);
         $("#nomMateria").html(datoReporte.nombre_materia);
-        $("#nomResponsable").html(datoReporte.nombre_docente);
+        $("#nomResponsable").html(datoReporte.nombre_aux_docente);
         $("#idAvance").html(datoReporte.contenido_clase);
         $("#idPlataforma").html(datoReporte.plataforma_clase);
-        $("#idObservacion").html(datoReporte.ovservaciones_clases);
+        $("#idObservacion").html(datoReporte.observaciones_clase);
+        $("#idAsistencia").val(String(datoReporte.existe_falta_clase));
+        console.log(datoReporte.existe_falta_clase);
         let licencia =  datoReporte.clase_con_licencia;
         if(licencia == true){
             $("#asuntoLicencia").html(datoReporte.descripcion_licencia);
@@ -42,7 +71,7 @@ $(document).ready(function () {
             $("#enlaceLicencia").hide();
         }
 
-        console.log(datoReporte.clase_recuperacion);
+        //console.log(datoReporte.clase_recuperacion);
         if(datoReporte.clase_recuperacion == true){
             $("#fechaRecuperacion").html(datoReporte.fecha_reposicion+" -> "+datoReporte.hora_reposicion);
             $("#avanzeRecuperacion").html(datoReporte.avanze_posicion);
@@ -184,7 +213,7 @@ function listarReporte(datosDocentes){
             {"data":"fecha_clase"},
             {"data":"periodo_hora_clase"},
             {"data":"nombre_materia"}, 
-            {"data":"nombre_docente"},
+            {"data":"nombre_aux_docente"},
             {"data":"contenido_clase"},
             {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]

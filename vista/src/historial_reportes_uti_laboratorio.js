@@ -35,34 +35,48 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $("#buscarReportesDocentes").submit(function (e) { 
-        datosDocentes = {
-            clase: "Clase",
-            metodo: "listarClasesDocentes",
-            idFacultad: $("#idFacultadaes").val(),
+    $("#buscarReportesLaboratorio").submit(function (e) { 
+        datosLaboratorio = {
+            clase: "AuxiliarLaboratorio",
+            metodo: "listarHistorialLaboratorio",
             idDepartamento: $("#idDepartamentos").val()
         };
-        listarReporte(datosDocentes);
+        console.log(datosLaboratorio);
+        listarReporte(datosLaboratorio);
         e.preventDefault();
     })
 
     $("#tablaHistorialReporte tbody").on('click','button.verDetalles',function () {
         let datoReporte = tablaReporte.row( $(this).parents('tr') ).data();
-        //console.log(datoReporte );
-        $("#fechaClase").html(datoReporte.fecha_clase+" -> "+datoReporte.periodo_hora_clase);
-        $("#nomMateria").html(datoReporte.nombre_materia);
-        $("#nomResponsable").html(datoReporte.nombre_docente);
-        $("#idAvance").html(datoReporte.contenido_clase);
-        $("#idPlataforma").html(datoReporte.plataforma_clase);
-        $("#idObservacion").html(datoReporte.observaciones_clase);
-        $("#idAsistencia").val(String(datoReporte.existe_falta_clase));
-        console.log(datoReporte.existe_falta_clase);
-        let licencia =  datoReporte.clase_con_licencia;
-        if(licencia == true){
-            $("#asuntoLicencia").html(datoReporte.descripcion_licencia);
-            $("#enlaceLicencia").attr("href", datoReporte.enlace_licencia);
-            $("#enlaceLicencia").show();
+        console.log(datoReporte );
+        $("#fechaClase").html(datoReporte.fecha_reporte_lab);
+        $("#nomMateria").html(datoReporte.nombre_laboratorio);
+        $("#nomResponsable").html(datoReporte.nombre_auxiliar_lab);
+        $("#idAvance").html(datoReporte.trabajo_lab_hecho);
+        $("#idObservacion").html(datoReporte.obs_reporte_lab);
+        let resEnlace = datoReporte.doc_reporte_lab;
+        //console.log(datoReporte.doc_reporte_lab);
+        if(resEnlace == undefined){
+            //console.log("Es indefinido");
+            $("#documentoReporte").html("Sin enlace");
+            $("#documentoReporte").hide();
+        }else{
+            //console.log("No Es indefinido");
+           //$("#documentoReporte").html(datoReporte.descripcion_licencia);
+            $("#documentoReporte").attr("href", datoReporte.doc_reporte_lab);
+            $("#documentoReporte").show();
+        }
 
+        //console.log(String(datoReporte.asistido));
+        $("#idAsistencia").val(String(datoReporte.asistido));
+
+
+        let licencia =  datoReporte.sol_licencia;
+        console.log(licencia);
+        if(licencia == true){
+            $("#asuntoLicencia").html(datoReporte.desc_licencia);
+            $("#enlaceLicencia").attr("href", datoReporte.enl_licencia);
+            $("#enlaceLicencia").show();
         }else{
             //$('#claseLicencia').empty();
             $("#asuntoLicencia").html("No tiene licencia");
@@ -70,6 +84,7 @@ $(document).ready(function () {
             // $("#enlaceLicencia").html("Sin enlace");
             $("#enlaceLicencia").hide();
         }
+
 
         //console.log(datoReporte.clase_recuperacion);
         if(datoReporte.clase_recuperacion == true){
@@ -172,7 +187,7 @@ function listaDepartamentos(){
     });
 }
 
-function listarReporte(datosDocentes){
+function listarReporte(datosLaboratorio){
     $('#tablaHistorialReporte').dataTable().fnDestroy();
     tablaReporte = $("#tablaHistorialReporte").DataTable({
         responsive: true,
@@ -206,15 +221,14 @@ function listarReporte(datosDocentes){
         },
         "ajax":{
             "method":"POST",
-            "data" : datosDocentes,
+            "data" : datosLaboratorio,
             "url":"../controlador/interprete.php"
         },
         "columns":[
-            {"data":"fecha_clase"},
-            {"data":"periodo_hora_clase"},
-            {"data":"nombre_materia"}, 
-            {"data":"nombre_docente"},
-            {"data":"contenido_clase"},
+            {"data":"fecha_reporte_lab"},
+            {"data":"nombre_laboratorio"},
+            {"data":"nombre_auxiliar_lab"}, 
+            {"data":"trabajo_lab_hecho"},
             {"data": null,"defaultContent":"<button type='button' class='verDetalles btn btn-warning' data-toggle='modal' data-target='#myModal4'> ver detalles </button>"}
         ]
     });
