@@ -25,7 +25,7 @@
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
         <!-- Brand -->
-        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png" class="rounded" width="75" height="75">
+        <img src="<?php echo $_SESSION['foto_trabajador'];?>" class="rounded" width="75" height="75">
         <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
         <div class="float-right py-3">
             <button class="btn btn-primary"><i class="fas fa-envelope"></i></button>
