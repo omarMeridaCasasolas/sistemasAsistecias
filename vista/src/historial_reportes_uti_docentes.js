@@ -1,5 +1,17 @@
 var tablaReporte;
 $(document).ready(function () {
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (date < 10) {
+        date = '0' + date;
+    }
+    $("#div_date_time").html(year + "-" + month + "-" + date);  
+    
     tablaReporte = $("#tablaHistorialReporte").DataTable();
     $("#formEnviarCorreos").submit(function (e) { 
         datos = {

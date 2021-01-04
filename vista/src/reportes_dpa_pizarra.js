@@ -7,6 +7,14 @@ $(document).ready(function () {
         tmpFecha.setMonth(tmpFecha.getMonth() - 1);
     }
 
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (date < 10) {
+        date = '0' + date;
+    }
+    $("#div_date_time").html(year + "-" + month + "-" + date);
+
 
     let mes = tmpFecha.getMonth()+1;
     let year = tmpFecha.getFullYear();

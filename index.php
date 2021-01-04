@@ -37,14 +37,14 @@
                     </div>
                 </div>
     <main class="bg-white mt-4 mx-auto rounded col-lg-6 col-md-10">
-        <h1 class="text-center text-danger py-2">Sistema de Asistencia Virtual UMSS</h1>
+        <h1 class="text-center text-danger py-2">Sistema de Asistencia Virtual SAVIR-UMSS</h1>
         <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active" id="idItemUno"><a href="#indice" class="nav-link active" id="idLinkUno" data-toggle="tab">Indice</a></li>
-            <li class="nav-item" id="idItemDos"><a href="#autoridadesAcademicas" class="nav-link" id="idLinkDos" data-toggle="tab">Autoridades Academicas</a></li>
-            <li class="nav-item" id="idItemTres"><a href="#docente" class="nav-link" id="idLinkTres" data-toggle="tab">Docentes</a></li>
-            <li class="nav-item" id="idItemCinco"><a href="#auxiliarDocencia" class="nav-link " id="idLinkCinco" data-toggle="tab">Auxiliares de docencia</a></li>
-            <li class="nav-item" id="idItemCuatro"><a href="#auxiliarLaboratorio" class="nav-link" id="idLinkCuatro" data-toggle="tab">Auxiliar de laboratorio</a></li>
-            <li class="nav-item" id="idItemSeis"><a href="#personalLaboral" class="nav-link" id="idLinkSeis" data-toggle="tab">Personal Laboral</a></li>
+            <li class="nav-item active" id="idItemUno"><a href="#indice" class="nav-link active" id="idLinkUno" data-toggle="tab"><h5>Indice</h5></a></li>
+            <li class="nav-item" id="idItemDos"><a href="#autoridadesAcademicas" class="nav-link" id="idLinkDos" data-toggle="tab"><h5>Autoridades</h5></a></li>
+            <li class="nav-item" id="idItemTres"><a href="#docente" class="nav-link" id="idLinkTres" data-toggle="tab"><h5>Docentes</h5></a></li>
+            <li class="nav-item" id="idItemCinco"><a href="#auxiliarDocencia" class="nav-link " id="idLinkCinco" data-toggle="tab"><h5>Aux. docencia</h5></a></li>
+            <li class="nav-item" id="idItemCuatro"><a href="#auxiliarLaboratorio" class="nav-link" id="idLinkCuatro" data-toggle="tab"><h5>Aux. laboratorio</h5></a></li>
+            <li class="nav-item" id="idItemSeis"><a href="#personalLaboral" class="nav-link" id="idLinkSeis" data-toggle="tab"><h5>Personal laboral</h5></a></li>
         </ul>
         <br>
         <div class="tab-content">
@@ -56,7 +56,7 @@
                     <div class="col-md-8">
                         <h2>Acerca de UMSS</h2>
                         <p>La Universidad Mayor de San Simón o por sus siglas (UMSS) es una universidad pública de Bolivia cuya sede está ubicada en la ciudad de Cochabamba teniendo otras unidades académicas en distintos puntos del departamento de Cochabamba. </p>
-                        <p>Ofrece carreras profesionales y estudios de postgrado y de segunda especialización, además cursos de extensión comunal. Según el ranking webometrics, es considerada una de las mejores universidad de Bolivia, pero tiene retos para mejorar y tener reconocimiento a nivel latinoamericano.</p>
+                        <p>El presente proyecto tiene por objeto dotar a la UMSS de un instrumento técnico normativo que permita un adecuado control de asistencia, puntualidad y permanencia del personal docente a dedicación parcial en clases presenciales, según las características propias de las áreas de conocimiento y naturaleza teórica, práctica, taller, laboratorio de las diferentes Asignaturas, Carreras y Unidades Académicas; a través de un sistema biométrico dactilar, digital, ocular, tarjeta magnética u otro, en el marco de lo dispuesto mediante Resolución del HCU N°27/16 de fecha 21 de diciembre de 2016, y en correspondencia con el Reglamento General de la Docencia.</p>
                         <h4>Contactos</h4>
                         <h6><span><i class="fas fa-globe"></i> <a href="www.umss.edu.bo">www.umss.edu.bo</a> </span>       <span><i class="fas fa-at"></i> informaciones@umss.edu.bo </span>        <span><i class="fas fa-phone"></i> +591 4 4251515</span></h6>
                         <h4>Redes Sociales</h4>

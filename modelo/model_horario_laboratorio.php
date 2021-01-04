@@ -8,6 +8,20 @@
             $this->connexion_bd=null;
         }
         
+        public function resportesUltimoMes($id,$fechaInicio,$fechaFinal){
+            $sql = "SELECT * FROM horario_laboratorio hl INNER JOIN reporte_aux_lab ral ON ral.id_horario_laboratorio = hl.id_horario_laboratorio 
+            INNER JOIN auxiliar_laboratorio al ON al.id_aux_laboratorio = hl.id_aux_laboratorio
+            INNER JOIN laboratorio la ON la.id_laboratorio = hl.id_laboratorio 
+            WHERE hl.id_departamento = :id AND ral.fecha_reporte_lab BETWEEN :fechaInicio AND :fechaFinal";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$id,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            // $res = json_encode($respuesta);
+            return $respuesta;
+        }
+
+        
         public function insertarHorarioLaboratorio($idDepartamento, $idAuxiliar,$idLaboratorio,$fechaInicio){
             $sql = "INSERT INTO horario_laboratorio(id_departamento,id_aux_laboratorio,id_laboratorio,fecha_inicio_trabajo,fecha_reinicio_reporte) VALUES(:idDepartamento, :idAuxiliar, :idLaboratorio, :fecha_inicio ,:fecha_reinicio)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

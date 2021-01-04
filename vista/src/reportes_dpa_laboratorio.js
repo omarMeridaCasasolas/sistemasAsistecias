@@ -15,6 +15,7 @@ $(document).ready(function () {
     }
     $("#div_date_time").html(year + "-" + month + "-" + date);
 
+
     let mes = tmpFecha.getMonth()+1;
     let year = tmpFecha.getFullYear();
     let fechaReporte = mes +"-"+year;
@@ -31,7 +32,7 @@ $(document).ready(function () {
     $("#enlaceVistaPrevia").hide();
     $("#enlaceVistaPrevia").click(function (e) { 
         //e.preventDefault();
-        $("#enlaceVistaPrevia").attr("href", "vista_previa_reporte_docentes.php?fecha="+$("#gestionPlanilla").val()+"&fac="+$("#nomFacultad").val()+"&dep="+$("#nomDepartamento").val());
+        $("#enlaceVistaPrevia").attr("href", "vista_previa_reporte_laboratorio.php?fecha="+$("#gestionPlanilla").val()+"&fac="+$("#nomFacultad").val()+"&dep="+$("#nomDepartamento").val());
     });
 
 });

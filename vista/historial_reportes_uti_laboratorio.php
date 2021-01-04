@@ -20,11 +20,13 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
         <!-- Brand -->
         <img src="<?php echo $_SESSION['foto_trabajador']; ?>" class="rounded" width="75" height="75">
-        <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
+        <h4 class="text-white d-inline-block"><?php echo $_SESSION['cargoTrabajador'].": ".$_SESSION['nombreTrabajador'];?></h4>
         <div class="float-right py-3">
             <a href="home_uti.php" class="btn btn-primary"><i class="fas fa-home"></i></a>
             <button class="btn btn-primary" data-toggle='modal' data-target='#abrirVtnCorreo'><i class="fas fa-envelope"></i></button>
             <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <br>
+            <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
             </div>
         <ul class="navbar-nav">
             <!-- Dropdown -->
@@ -46,13 +48,13 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="historial_reportes_uti_docentes.php">Docentes</a>
                 <a class="dropdown-item" href="historial_reportes_uti_pizarra.php">Aux. pizarra</a>
-                <a class="dropdown-item" href="historial_labo_uti_dpa.php">Aux. Laboratorio</a>
+                <a class="dropdown-item" href="historial_reportes_uti_laboratorio">Aux. Laboratorio</a>
             </div>
             </li>
         </ul>
     </nav>
 <body class="bg-secondary">
-    <main class="bg-white p-4 mx-auto rounded col-lg-8 col-md-12">
+    <main class="bg-white p-4 mx-auto rounded col-lg-8 col-md-12 min-vh-100">
         <!-- Formulario para laboratorio -->
         <h2 class="text-center">Historial Reportes Auxiliares de Laboratorio</h2>
         <form action="" id="buscarReportesLaboratorio">

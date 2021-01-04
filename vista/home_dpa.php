@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTI-DPA</title>
+    <title>home DPA</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
     
@@ -25,12 +25,14 @@
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
         <!-- Brand -->
-        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png" class="rounded" width="75" height="75">
-        <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
+        <img src="<?php echo $_SESSION['foto_trabajador'];?>" class="rounded" width="75" height="75">
+        <h4 class="text-white d-inline-block"><?php echo $_SESSION['cargoTrabajador'].": ".$_SESSION['nombreTrabajador'];?></h4>
         <div class="float-right py-3">
-            <button class="btn btn-primary"><i class="fas fa-envelope"></i></button>
-            <button class="btn btn-primary"><i class="fas fa-user-edit"></i></button>
+            <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos"><i class="fas fa-user-edit"></i></button>
+            <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-envelope"></i></button>
             <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <br>
+            <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
         </div>
         <ul class="navbar-nav">
             <!-- Dropdown -->
@@ -65,5 +67,6 @@
         <hr>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla, vitae! Tenetur, est nam? Eum nulla architecto porro laboriosam dolores, quasi magni molestiae. Atque quis vero porro ipsa veniam, culpa dolore!</p>
     </main>
+    <script src="src/home_dpa.php"></script>
 </body>
 </html>
