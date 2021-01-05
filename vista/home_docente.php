@@ -22,42 +22,47 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
 </head>
-<body class="bg-dark">
-    <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <h1 class="bg-white">Bienvenido <?php echo $_SESSION['nombreDocente']; ?></h1>
-            <div class="d-block">
-                <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a>
-            </div>
-        </nav>
-    </header>
-    <main class="bg-secondary">
+<body class="bg-secondary">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
+        <!-- Brand -->
+        <img src="<?php echo $_SESSION['foto_user'];?>" class="rounded" width="75" height="75">
+        <h4 class="text-white d-inline-block">Docente: <?php echo $_SESSION['nombreDocente'];?></h4>
+        <div class="float-right py-3">
+            <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos"><i class="fas fa-user-edit"></i></button>
+            <a href="historial_reportes_docente.php" class="btn btn-primary"><i class="far fa-clipboard"></i></a>
+            <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <br>
+            <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
+        </div>
+    </nav>
+    <main class="bg-secondary container bg-white min-vh-100">
         <form action="post" id="escogerClases">
             <input type="text" style="display: none;" name="idDocente" id="idDocente" value="<?php echo $_SESSION['idDocente'];?>">
         </form>
         <br>
-        <h2 class="text-primary text-center bg-dark">Formulario de Control de Avance en Clase Virtual</h2>
+        <h2 class="text-primary text-center">Control de Avance docente en Clase Virtual</h2>
         <br>
-        <div class="row">
-            <div class="form-group col-md-2">
-                <h5 class="text-primary bg-dark form-control">FACULTAD: </h5>
-            </div>
-            <div class="form-group col-md-6">
-                <select class="text-primary bg-dark form-control" id="selectFacultad"></select>  
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-2">
-                <h5 class="text-primary bg-dark form-control">DEPARTAMENTO: </h5>
-            </div>
-            <div class="form-group col-md-6">
-                <select class="text-primary bg-dark form-control" id="selectDepartamento"></select>  
-            </div>
-        </div>
-        <div id="divSeccionFormulario" style="display: none;">
-            <h3 class="text-primary bg-dark text-center">INFORME SEMANAL</h3>
-            <br>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <h5>FACULTAD: </h5>
 
+                </div>
+                <div class="form-group col-md-6">
+                    <select class=" form-control" id="selectFacultad"></select>  
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <h5>DEPARTAMENTO: </h5>
+                </div>
+                <div class="form-group col-md-6">
+                    <select class=" form-control" id="selectDepartamento"></select>  
+                </div>
+            </div>
+        <div id="divSeccionFormulario" style="display: none;">
+            <h3 class="text-primary text-center">INFORME SEMANAL</h3>
+            <br>
+            <hr>
             <!-- Codigo Omar  -->
             <button type="button" class="text-primary bg-dark btn btn-primary" id="btnLicencia" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Soliciatar Licencia</button>
             <!-- The Modal -->
@@ -108,16 +113,16 @@
             <button type="button" class="text-primary bg-dark btn btn-primary float-right" id="btnEnviarFormulario">Enviar formulario</button>
             <br><br>
             <div class="table-responsive">
-                <table id="tablaReporteDocente">
+                <table id="tablaReporteDocente" class="hover cell-border">
                     <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Grupo</th>
                             <th>Nombre Materia</th>
                             <th>Contenido de clase</th>
                             <th>Llenar Registro</th>
-                            <th>Enlaces, recursos, videos</th>
+                            <th>Enlaces, recursos</th>
                         </tr>
                     </thead>
                 </table>

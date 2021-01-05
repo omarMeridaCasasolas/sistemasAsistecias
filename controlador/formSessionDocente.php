@@ -10,6 +10,8 @@
             $_SESSION['nombreDocente'] = $respuesta['nombre_docente'];
             $_SESSION['idDocente'] = $respuesta['id_docente'];
             $_SESSION['passwordDocente'] = $respuesta['password_docente'];
+            $_SESSION['foto_user'] = $respuesta['foto_user'];
+
             header("Location:../vista/home_docente.php");
         }else{
             // var_dump($respuesta);
