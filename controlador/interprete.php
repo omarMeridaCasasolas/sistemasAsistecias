@@ -201,7 +201,26 @@
         $director = new Director();
         $metodo = $_REQUEST['metodo'];
         $res = "";
-        switch ($metodo) {
+        switch ($metodo) { 
+            case 'AddRector':
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $pass = $_REQUEST['pass'];
+                $res = $director->AddRector($nombre,$ci,$correo,$tel,$pass);    
+                break;
+            case 'actualizarDirectorRector':
+                $codigo = $_REQUEST['codigo'];
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $res = $director->actualizarDirectorRector($codigo,$nombre,$ci,$correo,$tel);    
+                break;
+            case 'listaRector':
+                $res = $director->listaRector();    
+                break;
             case 'buscarUsuarioNomCargo':
                 $nombre = $_REQUEST['nombre'];
                 $cargo = $_REQUEST['cargo'];
@@ -834,6 +853,52 @@
         $metodo = $_REQUEST['metodo'];
         $res = ""; 
         switch ($metodo) {
+            case 'AddPersonalDPA':
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $pass = $_REQUEST['pass'];
+                $res = $personalLaboral->AddPersonalDPA($nombre,$ci,$correo,$tel,$pass);
+                break;
+            case 'AddPersonalUTI':
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $pass = $_REQUEST['pass'];
+                $res = $personalLaboral->AddPersonalUTI($nombre,$ci,$correo,$tel,$pass);
+                break;
+            case 'editarPersonalDPA': 
+                $codigo = $_REQUEST['codigo'];
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $res = $personalLaboral->editarPersonalDPA($codigo,$nombre,$ci,$correo,$tel);
+                break;
+            case 'eliminarPersonalDPA':
+                $id = $_REQUEST['clavePrimaria']; 
+                $res = $personalLaboral->eliminarPersonalDPA($id);
+                break;
+            case 'eliminarPersonalUTI':
+                $id = $_REQUEST['clavePrimaria'];
+                $res = $personalLaboral->eliminarPersonalUTI($id);
+                break;
+            case 'editarPersonalUTI':
+                $codigo = $_REQUEST['codigo'];
+                $nombre = $_REQUEST['nombre'];
+                $ci = $_REQUEST['ci'];
+                $correo = $_REQUEST['correo']; 
+                $tel = $_REQUEST['tel'];
+                $res = $personalLaboral->editarPersonalUTI($codigo,$nombre,$ci,$correo,$tel);
+                break;
+            case 'listaDPA':
+                $res = $personalLaboral->listaDPA();
+                break;
+            case 'listaUTI':
+                $res = $personalLaboral->listaUTI();
+                break;
             case 'ingresarPersonalLaboral':
                 $nomTrabajador = $_REQUEST['nombreTrabajador'];
                 $ciTrabajador = $_REQUEST['ciTrabajador'];

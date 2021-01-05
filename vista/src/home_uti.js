@@ -15,17 +15,45 @@ $(document).ready(function () {
         }
     });
 
-    // let URLActual = location.href;
-    // //console.log(URLActual);
-    // let listaValores = URLActual.split("?");
-    // if(listaValores.length>=2){
-    //     let parametros = listaValores[listaValores.length-1].split("=");
-    //     if(parametros[1] == "success"){
-    //         Swal.fire('Exito',"Se ha actualizados sus datos personales",'success');
-    //     }else{
-    //         Swal.fire('Problema',"Problemas al actulizar sus datos",'info');
-    //     }
-    // }
+    $("#formEnviarCorreos").submit(function (e) { 
+        datos = {
+            clase: "Correo",
+            metodo: "enviarCorreoSimple",
+            to: $("#destinoCorreo").val(),
+            asunto: $("#fromMail").val() +" || "+ $("#idCorreoAsunto").val(), 
+            descripcion: $("#descCorreo").html()
+        };
+        console.log(datos);
+        $.ajax({
+            type: "POST",
+            url: "../controlador/interprete.php",
+            data: datos,
+            success: function (response) {
+                //console.log(response);
+                let res = response.trim();
+                if(res == "2021"){
+                    Swal.fire("Exito","Se a enviado el correo a: "+datos.to,"success");
+                }else{
+                    Swal.fire("Problema",res,"info");
+                }
+            }
+        });
+        $("#btnCerrarVtnMail").click();
+        e.preventDefault();
+        
+    });
+
+    let URLActual = location.href;
+    //console.log(URLActual);
+    let listaValores = URLActual.split("?");
+    if(listaValores.length>=2){
+        let parametros = listaValores[listaValores.length-1].split("=");
+        if(parametros[1] == "success"){
+            Swal.fire('Exito',"Se ha actualizados sus datos personales",'success');
+        }else{
+            Swal.fire('Problema',"Problemas al actulizar sus datos",'info');
+        }
+    }
 
     let d = new Date();
     let date = d.getDate();

@@ -72,6 +72,7 @@ function asignarMes($num){
         <a href="home_dpa.php" class="btn btn-primary"><i class="fas fa-home"></i></a>
         <button class="btn btn-primary" data-toggle='modal' data-target='#abrirVtnCorreo'><i class="fas fa-envelope"></i></button>
         <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+        <br><h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
         </div>
     <ul class="navbar-nav">
         <!-- Dropdown -->
@@ -82,7 +83,7 @@ function asignarMes($num){
         <div class="dropdown-menu">
             <a class="dropdown-item" href="reportes_dpa_docentes.php">Docentes</a>
             <a class="dropdown-item" href="reportes_dpa_pizarra.php">Aux. pizarra</a>
-            <a class="dropdown-item" href="reportes_uti_aux_lab.php">Aux. Laboratorio</a>
+            <a class="dropdown-item" href="reportes_dpa_laboratorio.php">Aux. Laboratorio</a>
         </div>
         </li>
 
@@ -91,16 +92,16 @@ function asignarMes($num){
             Historial:
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="historial_reportes_uti_docentes.php">Docentes</a>
-            <a class="dropdown-item" href="historial_reportes_uti_pizarra.php">Aux. pizarra</a>
-            <a class="dropdown-item" href="historial_labo_uti_dpa.php">Aux. Laboratorio</a>
+            <a class="dropdown-item" href="historial_dpa_docentes.php">Docentes</a>
+            <a class="dropdown-item" href="historial_dpa_pizarra.php">Aux. pizarra</a>
+            <a class="dropdown-item" href="historial_dpa_laboratorio.php">Aux. Laboratorio</a>
         </div>
         </li>
     </ul>
 </nav>
 <body class="bg-secondary">
     <main class="container bg-white p-3 min-vh-100">
-        <h2 class="text-center text-primary my-2">Mostrar Reportes de Auxiliares de pizarra</h2>
+        <h2 class="text-center text-primary my-2">Mostrar reporte docentes</h2>
         <form action="../controlador/obtenerReportesDocDepartamento.php" id="" method="POST">
             <div class="row">
                 <div class="form-group col-md-6">

@@ -9,7 +9,7 @@
         $tareasTrabajador = new TareasTrabajador();
         $respuesta = $personalLaboral->verificarPersonalLaboral($correoDocente,$passDocente);
         //var_dump($respuesta);
-        if($respuesta['unidad'] == "UTI" && $respuesta['cargo_nom_trab'] == "Jefe UTI"){
+        if($respuesta['unidad'] == "SuperUsuario"){
             $_SESSION['nombreTrabajador'] = $respuesta['nombre_trabador'];
             $_SESSION['idTrabajador'] = $respuesta['id_personal_laboral'];
             $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
@@ -17,10 +17,9 @@
             $_SESSION['foto_trabajador'] = $respuesta['foto_trabajador'];
             $_SESSION['correoTrabajador'] = $respuesta['correo_trabajador'];
             $_SESSION['telefonoTrabajador'] = $respuesta['tel_trabajador'];
-
-            header("Location:../vista/home_uti.php");
+            header("Location:../vista/superUser.php");
         }else{
-            if($respuesta['unidad'] == "DPA" && $respuesta['cargo_nom_trab'] == "Jefe DPA"){
+            if($respuesta['unidad'] == "UTI" && $respuesta['cargo_nom_trab'] == "Jefe UTI"){
                 $_SESSION['nombreTrabajador'] = $respuesta['nombre_trabador'];
                 $_SESSION['idTrabajador'] = $respuesta['id_personal_laboral'];
                 $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
@@ -28,21 +27,32 @@
                 $_SESSION['foto_trabajador'] = $respuesta['foto_trabajador'];
                 $_SESSION['correoTrabajador'] = $respuesta['correo_trabajador'];
                 $_SESSION['telefonoTrabajador'] = $respuesta['tel_trabajador'];
-
-                header("Location:../vista/home_dpa.php");
+                header("Location:../vista/home_uti.php");
             }else{
-                if(isset($respuesta['nombre_trabador']) && isset($respuesta['cargo_nom_trab'])){
+                if($respuesta['unidad'] == "DPA" && $respuesta['cargo_nom_trab'] == "Jefe DPA"){
                     $_SESSION['nombreTrabajador'] = $respuesta['nombre_trabador'];
                     $_SESSION['idTrabajador'] = $respuesta['id_personal_laboral'];
                     $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
                     $_SESSION['cargoTrabajador'] = $respuesta['cargo_nom_trab'];
-                    $nombresDeFunciones = $tareasTrabajador->obtenerNombresFunciones($respuesta['id_personal_laboral']);
-                    var_dump($nombresDeFunciones);
-                    $_SESSION['listaFunciones'] = $nombresDeFunciones;
-                    header("Location:../vista/home_trabajador_rector.php");
+                    $_SESSION['foto_trabajador'] = $respuesta['foto_trabajador'];
+                    $_SESSION['correoTrabajador'] = $respuesta['correo_trabajador'];
+                    $_SESSION['telefonoTrabajador'] = $respuesta['tel_trabajador'];
+    
+                    header("Location:../vista/home_dpa.php");
                 }else{
-                    var_dump($respuesta);
-                    header("Location:../index.php?error=auntentificacion&tipo=docente");
+                    if(isset($respuesta['nombre_trabador']) && isset($respuesta['cargo_nom_trab'])){
+                        $_SESSION['nombreTrabajador'] = $respuesta['nombre_trabador'];
+                        $_SESSION['idTrabajador'] = $respuesta['id_personal_laboral'];
+                        $_SESSION['passTrabajador'] = $respuesta['password_trabajador'];
+                        $_SESSION['cargoTrabajador'] = $respuesta['cargo_nom_trab'];
+                        $nombresDeFunciones = $tareasTrabajador->obtenerNombresFunciones($respuesta['id_personal_laboral']);
+                        var_dump($nombresDeFunciones);
+                        $_SESSION['listaFunciones'] = $nombresDeFunciones;
+                        header("Location:../vista/home_trabajador_rector.php");
+                    }else{
+                        var_dump($respuesta);
+                        header("Location:../index.php?error=auntentificacion&tipo=docente");
+                    }
                 }
             }
         }

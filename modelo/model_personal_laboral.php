@@ -9,6 +9,69 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+        public function AddPersonalDPA($nombre,$ci,$correo,$tel,$pass){
+            $sql = "INSERT INTO personal_laboral(nombre_trabador, ci_trabajador, correo_trabajador, tel_trabajador, unidad,cargo_nom_trab,foto_trabajador) VALUES(:nombre,:ci,:correo,:tel,'DPA','Jefe DPA','https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png')";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+        public function AddPersonalUTI($nombre,$ci,$correo,$tel,$pass){
+            $sql = "INSERT INTO personal_laboral(nombre_trabador, ci_trabajador, correo_trabajador, tel_trabajador, unidad,cargo_nom_trab,foto_trabajador) VALUES(:nombre,:ci,:correo,:tel,'UTI','Jefe UTI','https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png')";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function editarPersonalDPA($codigo,$nombre,$ci,$correo,$tel){
+            $sql = "UPDATE personal_laboral SET nombre_trabador =:nombre, ci_trabajador = :ci, correo_trabajador = :correo, tel_trabajador = :tel WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel,":id"=>$codigo));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+        
+        public function eliminarPersonalDPA($id){
+            $sql = "DELETE FROM personal_laboral WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+        public function eliminarPersonalUTI($id){
+            $sql = "DELETE FROM personal_laboral WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function editarPersonalUTI($codigo,$nombre,$ci,$correo,$tel){
+            $sql = "UPDATE personal_laboral SET nombre_trabador =:nombre, ci_trabajador = :ci, correo_trabajador = :correo, tel_trabajador = :tel WHERE id_personal_laboral = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel,":id"=>$codigo));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function listaDPA(){
+            $sql = "SELECT * FROM personal_laboral WHERE unidad = 'DPA' AND cargo_nom_trab = 'Jefe DPA'";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        } 
+
+        public function listaUTI(){
+            $sql = "SELECT * FROM personal_laboral WHERE unidad = 'UTI' AND cargo_nom_trab = 'Jefe UTI'";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
 
         public function ingresarPersonalLaboral($nomTrabajador,$ciTrabajador,$telTrabajador,$correoTrabajador,$cargo,$fecha,$pass){
             $sql = "INSERT INTO personal_laboral(nombre_trabador,ci_trabajador,tel_trabajador,correo_trabajador,cargo_nom_trab,fecha_cracion_cargo,password_trabajador) VALUES(:nom,:ci,:tel,:correo,:cargo,:fecha,:pass)";

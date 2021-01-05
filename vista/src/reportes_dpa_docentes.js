@@ -7,13 +7,17 @@ $(document).ready(function () {
         tmpFecha.setMonth(tmpFecha.getMonth() - 1);
     }
 
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth()+1;
+    let yearActual = d.getFullYear();
     if (month < 10) {
         month = '0' + month;
     }
     if (date < 10) {
         date = '0' + date;
     }
-    $("#div_date_time").html(year + "-" + month + "-" + date);
+    $("#div_date_time").html(yearActual + "-" + month + "-" + date);
 
     let mes = tmpFecha.getMonth()+1;
     let year = tmpFecha.getFullYear();

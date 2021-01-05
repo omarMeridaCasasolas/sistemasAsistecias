@@ -7,6 +7,32 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+
+        public function AddRector($nombre,$ci,$correo,$tel,$pass){
+            $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,password_director,cargo_director,user_tmp,codigo_sis_director) VALUES(:nombre, :ci, :correo, :tel,:pass,'Rector','https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png','12345')";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel,":pass"=>$pass));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function actualizarDirectorRector($codigo,$nombre,$ci,$correo,$tel){
+            $sql = "UPDATE director_unidad SET nombre_director =:nombre, carnet_director = :ci, correo_electronico_director =:correo, telefono_director =:tel  WHERE id_ditector = :claveP";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nombre,":ci"=>$ci,":correo"=>$correo,":tel"=>$tel,":claveP"=>$codigo));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function listaRector(){
+            $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Rector'";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
         public function obtenerDirectorActual($codigo_sis_director){
             $sql = "SELECT director_actual FROM director_unidad WHERE codigo_sis_director=:cod_dir";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

@@ -93,9 +93,9 @@ function asignarMes($num){
             Historial:
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="historial_reportes_uti_docentes.php">Docentes</a>
-            <a class="dropdown-item" href="historial_reportes_uti_pizarra.php">Aux. pizarra</a>
-            <a class="dropdown-item" href="historial_reportes_uti_laboratorio.php">Aux. Laboratorio</a>
+            <a class="dropdown-item" href="historial_dpa_docentes.php">Docentes</a>
+            <a class="dropdown-item" href="historial_dpa_pizarra.php">Aux. pizarra</a>
+            <a class="dropdown-item" href="historial_dpa_laboratorio.php">Aux. Laboratorio</a>
         </div>
         </li>
     </ul>
