@@ -231,18 +231,13 @@
                     <input type="text" name="codClaseReporte" id="codClaseReporte" class="d-none">
                     <div class="form-group">
                         <h5>Recursos: </h5>
-                        <div id="contenedorRecursos">
-                            
+                        <div id="contenedorRecursos">                            
                         </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <textarea placeholder="Descripcion del recurso/video" class="form-control" id="textareaDescripcionRecurso" name="textareaDescripcionRecurso" required ></textarea>
-                            </div>
-                            <div class="custom-file form-group col-md-6">
-                                <input type="file" class="custom-file-input" id="inputFileRecurso" name="inputFileRecurso" lang="es">
-                                <label class="custom-file-label" for="inputFileRecurso">Buscar...</label>
-                            </div> 
-                        </div>
+                        <textarea placeholder="Descripcion del recurso/video" class="form-control" id="textareaDescripcionRecurso" name="textareaDescripcionRecurso" required ></textarea>
+                        <div class="form-group">
+                            <label for="inputFileRecurso">Documentos e imagenes</label>
+                            <input type="file" class="form-control" id="inputFileRecurso" name="inputFileRecurso" lang="es">
+                        </div> 
                     </div> 
                     <div class="text-center">
                         <input type="submit" class="btn btn-secondary" value="Subir archivo">

@@ -17,7 +17,7 @@ $(document).ready(function () {
         date = '0' + date;
     }
     $("#div_date_time").html(year + "-" + month + "-" + date);
-    
+
     let URLActual = location.href;
     //console.log(URLActual);
     let listaValores = URLActual.split("?");
@@ -335,45 +335,45 @@ $(document).ready(function () {
     });
 
     //Agregar nuevo recurso a la clase 
-    $(document).on("change", "#inputFileRecurso", function(e){
-        //evitamos que recargue la pagina
-        e.preventDefault();
+    // $(document).on("change", "#inputFileRecurso", function(e){
+    //     //evitamos que recargue la pagina
+    //     e.preventDefault();
 
-        let enlaceCapturado = "sdsdsd";
-        //enlaceCapturado = subirArchivo(e);
-        if(enlaceCapturado != null){
-            //obtenemos la descripcion del recurso
-            let descripcion_enlace_recurso = $.trim($("#textareaDescripcionRecurso").val());
-            //obtenemos la direccion del enlace
-            let direccion_enlace_recurso = enlaceCapturado;
-            let es_enlace = 'f';
-            //Definimos los datos necesarios para la consulta
-            let codigo_clase = $("#codigo_clase").val();
-            console.log(codigo_clase);
-            let arrayEnlacesRecursos = map_enlaces_recursos_clase.get(codigo_clase);
-            let clase = 'EnlaceRecursoClase';
-            let metodo = 'obtenerIdEnlaceRecursoInsertado';
-            $.ajax({
-                url: "../controlador/interprete.php",
-                type: "POST",
-                datatype:"json",    
-                data:  {clase:clase,metodo:metodo,codigo_clase:codigo_clase,arrayEnlacesRecursos:arrayEnlacesRecursos,descripcion_enlace_recurso:descripcion_enlace_recurso,direccion_enlace_recurso:direccion_enlace_recurso,es_enlace:es_enlace},    
-                success: function (response) {
-                    let obj= JSON.parse(response);
-                    obj.forEach(element => {
-                        let array = map_enlaces_recursos_clase.get(codigo_clase);
-                        array.push(element.id_enlace_recurso_clase);
-                        cargarContenidoEnlacesRecursos(element.id_enlace_recurso_clase, descripcion_enlace_recurso, direccion_enlace_recurso, false);
-                        $("#textareaDescripcionRecurso").val("");
-                    });
-                },
-                error : function(jqXHR, status, error) {
-                    console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
-                }
-            });
-        }
+    //     let enlaceCapturado = "sdsdsd";
+    //     //enlaceCapturado = subirArchivo(e);
+    //     if(enlaceCapturado != null){
+    //         //obtenemos la descripcion del recurso
+    //         let descripcion_enlace_recurso = $.trim($("#textareaDescripcionRecurso").val());
+    //         //obtenemos la direccion del enlace
+    //         let direccion_enlace_recurso = enlaceCapturado;
+    //         let es_enlace = 'f';
+    //         //Definimos los datos necesarios para la consulta
+    //         let codigo_clase = $("#codigo_clase").val();
+    //         console.log(codigo_clase);
+    //         let arrayEnlacesRecursos = map_enlaces_recursos_clase.get(codigo_clase);
+    //         let clase = 'EnlaceRecursoClase';
+    //         let metodo = 'obtenerIdEnlaceRecursoInsertado';
+    //         $.ajax({
+    //             url: "../controlador/interprete.php",
+    //             type: "POST",
+    //             datatype:"json",    
+    //             data:  {clase:clase,metodo:metodo,codigo_clase:codigo_clase,arrayEnlacesRecursos:arrayEnlacesRecursos,descripcion_enlace_recurso:descripcion_enlace_recurso,direccion_enlace_recurso:direccion_enlace_recurso,es_enlace:es_enlace},    
+    //             success: function (response) {
+    //                 let obj= JSON.parse(response);
+    //                 obj.forEach(element => {
+    //                     let array = map_enlaces_recursos_clase.get(codigo_clase);
+    //                     array.push(element.id_enlace_recurso_clase);
+    //                     cargarContenidoEnlacesRecursos(element.id_enlace_recurso_clase, descripcion_enlace_recurso, direccion_enlace_recurso, false);
+    //                     $("#textareaDescripcionRecurso").val("");
+    //                 });
+    //             },
+    //             error : function(jqXHR, status, error) {
+    //                 console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
+    //             }
+    //         });
+    //     }
 
-    }); 
+    // }); 
 
     //Enviar formulario de control de avance
     $(document).on("click", "#btnEnviarFormulario", function(e){
