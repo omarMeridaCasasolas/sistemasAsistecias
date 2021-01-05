@@ -42,8 +42,8 @@
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="reportes_docentes.php">Docentes</a>
-                <a class="dropdown-item" href="reportes_auxiliar_uti_dpa.php">Aux. pizarra</a>
-                <a class="dropdown-item" href="reportes_uti_aux_lab.php">Aux. Laboratorio</a>
+                <a class="dropdown-item" href="reportes_uti_pizarra.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="reportes_uti_laboratorio.php">Aux. Laboratorio</a>
             </div>
             </li>
 
