@@ -28,9 +28,10 @@
         <img src="<?php echo $_SESSION['foto_user'];?>" class="rounded" width="75" height="75">
         <h4 class="text-white d-inline-block">Docente: <?php echo $_SESSION['nombreDocente'];?></h4>
         <div class="float-right py-3">
-            <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos"><i class="fas fa-user-edit"></i></button>
-            <a href="historial_reportes_docente.php" class="btn btn-primary"><i class="far fa-clipboard"></i></a>
-            <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <a href="licencias_docentes.php" class="btn btn-primary" title="historial de licencias"><i class="far fa-id-badge"></i></a>
+            <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos" title="Editar datos"><i class="fas fa-user-edit"></i></button>
+            <a href="historial_reportes_docente.php" class="btn btn-primary" title="historial de asistencia"><i class="far fa-clipboard"></i></a>
+            <a href="../controlador/formCerrarSession.php" class="btn btn-primary" title="Cerrar Session"><i class="fas fa-sign-out-alt"></i></a>
             <br>
             <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
         </div>
@@ -198,7 +199,7 @@
 </div>
 
 <div class="modal fade" id="modalEnlacesRecursos">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <h2 id="modalTituloEnlacesRecursos">SisMateria NomMateria NumGrupo</h2>
@@ -214,10 +215,10 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <textarea placeholder="Descripcion del enlace" id="textareaDescripcionEnlace"></textarea>
+                                <textarea placeholder="Descripcion del enlace" id="textareaDescripcionEnlace" class="form-control"></textarea>
                             </div>
-                            <div class="input-group mb-3 form-group col-md-5">
-                                <textarea placeholder="Direccion url" id="textareaDireccionEnlace"></textarea>
+                            <div class="input-group mb-3 form-group col-md-6">
+                                <textarea placeholder="Direccion url" id="textareaDireccionEnlace" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="text-center">

@@ -24,9 +24,9 @@ $(document).ready(function () {
     if(listaValores.length>=2){
         let parametros = listaValores[listaValores.length-1].split("=");
         if(parametros[1] == "success"){
-            Swal.fire('Exito',"Se ha actualizados sus datos personales",'success');
+            Swal.fire('Exito',"Se ha realizado la tarea",'success');
         }else{
-            Swal.fire('Problema',"Problemas al actulizar sus datos",'info');
+            Swal.fire('Problema',"Problemas al ejecutar",'info');
         }
     }
     
