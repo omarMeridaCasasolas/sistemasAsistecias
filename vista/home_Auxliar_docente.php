@@ -233,7 +233,7 @@
                     </div>
                 </form>
                 <hr style="height:2px;border-width:0;color:gray;background-color:gray"> 
-                <form action="../controlador/formInsertarRecursoClase.php" id="" method="POST" enctype="multipart/form-data">
+                <form action="../controlador/formInsertarRecursoClaseAuxiliar.php" id="" method="POST" enctype="multipart/form-data">
                     <div name="codigo_clase" id="codigo_clase" style="display: none;"></div>
                     <input type="text" name="codClaseReporte" id="codClaseReporte" class="d-none">
                         <div class="form-group">
