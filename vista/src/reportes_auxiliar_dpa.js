@@ -1,23 +1,10 @@
 $(document).ready(function () {
-
     let tmpFecha = new Date();
     if(tmpFecha.getMonth == '01'){
         tmpFecha.setMonth(tmpFecha.getMonth() - 2);
     }else{
         tmpFecha.setMonth(tmpFecha.getMonth() - 1);
     }
-
-    let d = new Date();
-    let date = d.getDate();
-    let month = d.getMonth()+1;
-    let yearActual = d.getFullYear();
-    if (month < 10) {
-        month = '0' + month;
-    }
-    if (date < 10) {
-        date = '0' + date;
-    }
-    $("#div_date_time").html(yearActual + "-" + month + "-" + date);
 
 
     let mes = tmpFecha.getMonth()+1;
@@ -33,11 +20,16 @@ $(document).ready(function () {
     $("#fechaFinal").val(fechaFinal);
 
     listaDeFacultades();   
-    $("#enlaceVistaPrevia").hide();
-    $("#enlaceVistaPrevia").click(function (e) { 
-        //e.preventDefault();
-        $("#enlaceVistaPrevia").attr("href", "vista_previa_reporte_laboratorio.php?fecha="+$("#gestionPlanilla").val()+"&fac="+$("#nomFacultad").val()+"&dep="+$("#nomDepartamento").val());
-    });
+
+    // var date = new Date('2011','01','02');
+    // console.log('the original date is '+date);
+    // var newdate = new Date(date);
+    // newdate.setMonth(newdate.getMonth() - 7);
+    // var nd = new Date(newdate);
+    // console.log('the new date is '+nd);
+    // $("#gestionPlanilla").val(nd);
+
+    
 
 });
 
@@ -46,7 +38,6 @@ $("#idFacultadaes").change(function (e) {
     let nombreFacultad = $("#idFacultadaes option:selected").text();
     $("#nomFacultad").val(nombreFacultad);
     console.log(nombreFacultad);
-    listaDepartamentos();  // Posible Error
     e.preventDefault();
 });
 
@@ -106,31 +97,6 @@ function listaDepartamentos(){
             $("#nomDepartamento").val(nombreDepartamento);
             console.log(nombreDepartamento);
             $("#btnSubmit").prop( "disabled", false );
-            let url = location.href;
-            //console.log(url);
-            let listaUno = url.split('?');
-            //console.log(listaUno.length);
-            if(listaUno.length > 1){
-                let listaDos = listaUno[listaUno.length -1];
-                let listaTres = listaDos.split("&");
-                //console.log(listaTres);
-                if(listaTres.length>1){
-                    let tmpUno = listaTres[0].split('=');
-                    let tmpDos = listaTres[1].split('=');
-                    //console.log(tmpUno[1]);
-                    //console.log(tmpDos[1]);
-                    $("#idFacultadaes").val(tmpUno[1]);
-                    $("#idDepartamentos").val(tmpDos[1]);
-                    actualizarInfromacion();
-                }
-            } 
         }
     });
-}
-
-function actualizarInfromacion(){
-    $("#nomFacultad").val($("#idFacultadaes option:selected").text());
-    $("#nomDepartamento").val($("#idDepartamentos option:selected").text());
-    $("#enlaceVistaPrevia").show();
-    $("#btnSubForm").prop( "disabled", false );
 }

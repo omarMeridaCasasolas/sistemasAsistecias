@@ -60,7 +60,7 @@
         </ul>
     </nav>
     <main class="container bg-white p-3 min-vh-100">
-    <h2 class="text-center text-primary my-2">Reportes auxiliares de laboratorio</h2>
+    <h2 class="text-center text-primary my-2">Reportes Docentes</h2>
         <form action="" id="formObtenerReporte" method="POST">
             <div class="row">
                 <div class="form-group col-md-6">
@@ -74,8 +74,8 @@
                     </select>
                 </div>
             </div>
-            <input type="text" name="fechaInicio" id="fechaInicio" class="d-none">
-            <input type="text" name="fechaFinal" id="fechaFinal" class="d-none">
+            <!-- <input type="text" name="fechaInicio" id="fechaInicio" class="d-none">
+            <input type="text" name="fechaFinal" id="fechaFinal" class="d-none"> -->
             <div class="text-center">
                 <h6 id="descResultado"></h6>
                 <input type="submit" class="btn btn-primary" value="Obtener" disabled="disabled" id="btnSubmit">

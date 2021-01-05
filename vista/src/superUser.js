@@ -1,5 +1,7 @@
 var tablaRector,tablaDPA,tablaUti;
 $(document).ready(function () {
+    
+
     actualizarTablaRector();
     actualizarTablaUTI();
     actualizarTablaDPA();
