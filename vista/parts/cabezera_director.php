@@ -48,6 +48,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="ambiente_docente.php">Docentes</a>
                 <a class="dropdown-item" href="ambiente_pizarra.php">Aux. pizarra</a>
+                <a class="dropdown-item" href="ambiente_asignaciones.php">Asignar materia-grupo</a>
                 <a class="dropdown-item" href="personal_laboratorio.php">Aux. Laboratorio</a>
             </div>
             </li>

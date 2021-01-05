@@ -32,6 +32,15 @@
             $sentenceSQL->closeCursor();
             return $respuesta;
         }
+
+        //Ruben Creo
+        public function asignarTareaTrabajador($idTrabajador,$funcion){
+            $sql = "INSERT INTO trabajador_tareas(id_tarea,id_personal_laboral) VALUES(:funcion,:idEmpleado)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":funcion"=>$funcion,":idEmpleado"=>$idTrabajador));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
         
 
         // public function ingresarPersonalLaboral($nomTrabajador,$ciTrabajador,$telTrabajador,$correoTrabajador,$cargo,$fecha){

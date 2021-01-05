@@ -15,10 +15,20 @@
     require_once("../modelo/model_clase.php");
     require_once("../modelo/model_materia.php");
     require_once("../modelo/model_enlaces.php");
-
+    require_once("../modelo/model_enlace_recurso_clase.php");
+    require_once("../modelo/model_departamento_docente.php");
+    require_once("../modelo/model_departamento_auxiliar_docente.php");
+    require_once("../modelo/model_grupo.php");
+    require_once("../modelo/model_materia_docente.php");
+    require_once("../modelo/model_materia_auxiliar_docente.php");
+    require_once("../modelo/model_materia_carrera.php");
+    require_once("../modelo/model_auxiliar_docente_grupo.php");
+    require_once("../modelo/model_grupo_carrera.php");
+    require_once("../modelo/model_grupo_horario.php");
     $clase ="";
     $metodo = "";
     $tmp = "";
+
     if(isset($_REQUEST["clase"]) && isset($_REQUEST["metodo"])){
         $clase = $_REQUEST['clase'];
         $metodo = $_REQUEST['metodo'];
@@ -70,6 +80,36 @@
                 break;
             case "Materia":
                 $tmp = ejecutarConsultasMateria();
+                break;
+            case 'EnlaceRecursoClase':
+                $tmp = ejecutarConsultasEnlaceRecursoClase();
+                break;
+            case 'DepartamentoDocente':
+                $tmp = ejecutarConsultasDepartamentoDocente();
+                break;
+            case 'DepartamentoAuxiliarDocente':
+                $tmp = ejecutarConsultasDepartamentoAuxiliarDocente();
+                break;
+            case 'Grupo':
+                $tmp = ejecutarConsultasGrupo();
+                break;
+            case 'MateriaDocente':
+                $tmp = ejecutarConsultasMateriaDocente();
+                break;
+            case 'MateriaAuxiliarDocente':
+                $tmp = ejecutarConsultasMateriaAuxiliarDocente();
+                break;
+            case 'MateriaCarrera':
+                $tmp = ejecutarConsultasMateriaCarrera();
+                break;
+            case 'AuxiliarDocenteGrupo':
+                $tmp = ejecutarConsultasAuxiliarDocenteGrupo();
+                break;
+            case 'GrupoCarrera':
+                $tmp = ejecutarConsultasGrupoCarrera();
+                break;
+            case 'GrupoHorario':
+                $tmp = ejecutarConsultasGrupoHorario();
                 break;
             default:
                 break;
@@ -140,7 +180,39 @@
                 $fechaFinal = $_REQUEST['fechaFinal'];
                 $res = $materia->obtenerMateriaPorDepartamento($idDepartamento,$fechaInicio,$fechaFinal);
                 break;
-        
+            //Ruben
+            case 'listarTableMateria':
+                $res = $materia->listarTableMateria($_REQUEST['id_carrera']);
+                break;
+            //EN USO
+            case 'listarMateriasDepartamento':
+                $res = $materia->listarMateriasDepartamento($_REQUEST['id_departamento']);
+                break;
+            //EN USO
+            case 'importarMaterias':
+                //Si el csvData esta vacio, entonces asignamos null a la variable
+                $csvData = (isset($_REQUEST['csvData']) ? $_REQUEST['csvData'] : null);
+                $materia->insertarMateriasCSVData($_REQUEST['id_departamento'], $csvData);
+                break;
+            //EN USO
+            case 'insertarMateria':
+                $res = $materia->insertarMateria($_REQUEST['nomMateria'],$_REQUEST['sisMateria'], $_REQUEST['id_departamento']);
+                break;
+            //EN USO
+            case 'editarMateria':
+                $arrayDocentes = (isset($_REQUEST['array_docentes']) ? $_REQUEST['array_docentes'] : null);
+                $arrayAuxiliares = (isset($_REQUEST['array_auxiliares']) ? $_REQUEST['array_auxiliares'] : null);
+                $arrayCarreras = (isset($_REQUEST['array_carreras']) ? $_REQUEST['array_carreras'] : null);
+                $res = $materia->editarMateria($_REQUEST['nomMateria'],$_REQUEST['codigo'],$_REQUEST['nuevo_codigo'],$arrayDocentes, $arrayAuxiliares, $arrayCarreras);
+                break;
+            //EN USO
+            case 'eliminarMateria':
+                $materia->eliminarMateria($_REQUEST['sis_materia'], $_REQUEST['id_departamento']);
+                break;
+            //EN USO
+            case 'obtenerMateriasDepartamento':
+                $res = $materia->obtenerMateriasDepartamento($_REQUEST['id_departamento']);
+                break;
             default:
                 # code...
                 break;   
@@ -155,6 +227,30 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) {
+            //Codigo Omar
+            case 'obtenerLicenciaDiaAux':
+                $fecha = $_REQUEST['fechaInicio'];
+                $id = $_REQUEST['id'];
+                $res = $clase->obtenerLicenciaDiaAux($fecha,$id);
+                break;
+            case 'obtenerLicenciaSemanaAux':
+                $fechaInicio = $_REQUEST['fechaInicio'];
+                $fechaFinal = $_REQUEST['fechaFinal'];
+                $id = $_REQUEST['id'];
+                $res = $clase->obtenerLicenciaSemanaAux($fechaInicio,$fechaFinal,$id);
+                break;    
+            case 'obtenerLicenciaDia':
+                $fecha = $_REQUEST['fechaInicio'];
+                $id = $_REQUEST['id'];
+                $res = $clase->obtenerLicenciaDia($fecha,$id);
+                break;
+            case 'obtenerLicenciaSemana':
+                $fechaInicio = $_REQUEST['fechaInicio'];
+                $fechaFinal = $_REQUEST['fechaFinal'];
+                $id = $_REQUEST['id'];
+                $res = $clase->obtenerLicenciaSemana($fechaInicio,$fechaFinal,$id);
+                break;    
+            //fin codigo
             case 'listarClasesDocentesID':
                 $idMateria = $_REQUEST['idMateria'];
                 $res = $clase->listarClasesDocentesID($idMateria);
@@ -187,14 +283,95 @@
                 //$idDepartamento = $_REQUEST['idDepartamento'];
                 $res = $clase->obtenerAuxliaresPizarra();
                 break;
-        
+            //Ruben codigo
+            //EN USO
+            case 'obtenerClaseDocente':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerClaseDocente($_REQUEST['id_departamento'], $_REQUEST['id_docente'],$fechasInicioFin[0], $fechasInicioFin[1]);
+                break;
+            //EN USO
+            case 'obtenerCodigoClase':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerCodigoClase($_REQUEST['id_departamento'], $_REQUEST['id_docente'],$fechasInicioFin[0], $fechasInicioFin[1]);
+                break;
+            //EN USO
+            case 'actualizarClase':
+                $res = $clase->actualizarClase($_REQUEST['codigo_clase'],$_REQUEST['contenido_clase'],$_REQUEST['plataforma_clase'],$_REQUEST['observaciones_clase'],$_REQUEST['asunto_reposicion'],$_REQUEST['fecha_reposicion'],$_REQUEST['hora_reposicion'],$_REQUEST['plataforma_reposicion'],$_REQUEST['avance_reposicion']); 
+                break;
+            case 'obtenerReportesPendientesDocente':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerReportesPendientesDocente($_REQUEST['id_departamento'],$fechasInicioFin[0]);
+                break;
+            case 'obtenerReportesJefeDepartamento':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerReportesJefeDepartamento($_REQUEST['id_departamento'],$fechasInicioFin[0]);
+                break;
+            case 'obtenerFormularioControlAvanceDocente':
+                $res = $clase->obtenerFormularioControlAvanceDocente($_REQUEST['id_departamento'],$_REQUEST['sis_docente'],$_REQUEST['array_periodo_reporte']);
+                break;
+            case 'obtenerFormularioControlAvanceDocenteJefeDepartamento':
+                $res = $clase->obtenerFormularioControlAvanceDocenteJefeDepartamento($_REQUEST['id_departamento'],$_REQUEST['sis_docente'],$_REQUEST['array_periodo_reporte']);
+                break;
+            case 'obtenerCamposRestantesFormularioControlAvanceDocente':
+                $res = $clase->obtenerCamposRestantesFormularioControlAvanceDocente($_REQUEST['id_departamento'],$_REQUEST['sis_docente'],$_REQUEST['array_periodo_reporte']);
+                break;
+            case 'obtenerEnlacesRecursosFormularioControlAvanceDocente':
+                $res = $clase->obtenerEnlacesRecursosFormularioControlAvanceDocente($_REQUEST['id_departamento'],$_REQUEST['sis_docente'],$_REQUEST['array_periodo_reporte']);
+                break;
+            case 'actualizarAsistenciaClase':
+                $res = $clase->actualizarAsistenciaClase($_REQUEST['codigo_clase'],$_REQUEST['asistencia']); 
+                break;
+            case 'actualizarRevisionJefeDepartamento':
+                $array_codigo_clase = (isset($_REQUEST['array_codigo_clase']) ? $_REQUEST['array_codigo_clase'] : null);
+                $res = $clase->actualizarRevisionJefeDepartamento($array_codigo_clase); 
+                break;
+            case 'obtenerGestionesClasesRegistradasDepartamento':
+                $res = $clase->obtenerGestionesClasesRegistradasDepartamento($_REQUEST['id_departamento']); 
+                break;
+            case 'obtenerMesClasesRegistradasDepartamento':
+                $res = $clase->obtenerMesClasesRegistradasDepartamento($_REQUEST['gestion'], $_REQUEST['id_departamento']); 
+                break;
+            case 'obtenerReportesRevisadosDocente':
+                $res = $clase->obtenerReportesRevisadosDocente($_REQUEST['id_departamento'],$_REQUEST['gestion'],$_REQUEST['mes']);
+                break;
+            case 'obtenerFormularioControlAvanceDocenteRevisado':
+                $res = $clase->obtenerFormularioControlAvanceDocenteRevisado($_REQUEST['id_departamento'],$_REQUEST['sis_docente'],$_REQUEST['array_periodo_reporte']);
+                break;
+            case 'obtenerClaseAuxiliarDocente':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerClaseAuxiliarDocente($_REQUEST['id_departamento'], $_REQUEST['id_aux_docente'],$fechasInicioFin[0], $fechasInicioFin[1]);
+                break;
+            case 'obtenerCodigoClaseAuxiliar':
+                $fechasInicioFin = obtenerArrayFechaInicioFechaFinSemana();
+                $res = $clase->obtenerCodigoClaseAuxiliar($_REQUEST['id_departamento'], $_REQUEST['id_aux_docente'],$fechasInicioFin[0], $fechasInicioFin[1]);
+                break;
+            case 'actualizarRevisionUTI':
+                $array_codigo_clase = (isset($_REQUEST['array_codigo_clase']) ? $_REQUEST['array_codigo_clase'] : null);
+                $res = $clase->actualizarRevisionUTI($array_codigo_clase); 
+                break;
+            case 'obtenerInformacionPlataformaObservaciones':
+                $res = $clase->obtenerInformacionPlataformaObservaciones($_REQUEST['codigo_clase']);
+                break;        
             default:
                 # code...
                 break;   
-                         
         }
         $clase->cerrarConexion();
         return $res;
+    }
+
+    function obtenerArrayFechaInicioFechaFinSemana(){
+        date_default_timezone_set("America/La_Paz");
+        $dia_actual = date("N");
+        $restarDias = "- ";
+        $restarDias .= $dia_actual - 1;
+        $restarDias .=" days";
+        $sumarDias = "+ ";
+        $sumarDias .= 6 - $dia_actual;
+        $sumarDias .=" days";
+        $fecha_inicio = date("Y-m-d",strtotime($restarDias));
+        $fecha_fin = date("Y-m-d",strtotime($sumarDias));
+        return $array = array($fecha_inicio,$fecha_fin);
     }
 
     function ejecutarConsultasAutoridades(){
@@ -307,12 +484,6 @@
             case 'directoresAcademicosDisponibles':
                 $res = $director->directoresAcademicosDisponibles();
                 break;
-                // case 'eliminarDirectorAcademico':
-                //     $res = $director->obtenerDirectorActual($_REQUEST['codigo_sis_director']);
-                //     $facultad = new Facultad();
-                //     $facultad->retirarAsignacionDirectorAcademico($res['director_actual']);
-                //     $res = $director->eliminarDirectorAcademico($_REQUEST['codigo_sis_director']);
-                //     break;
             case 'eliminarDirector':
                 $clavePrimaria = $_REQUEST['clavePrimaria'];
                 $res = $director->eliminarDirector($clavePrimaria);
@@ -450,7 +621,12 @@
             case 'facultadesDisponibles':
                 $res = $facultad->facultadesDisponibles();
                 break;
-
+            case 'obtenerFacultadDocente':
+                $res = $facultad->obtenerFacultadDocente($_REQUEST['id_docente']);
+                break;
+            case 'obtenerFacultadAuxiliarDocente':
+                $res = $facultad->obtenerFacultadAuxiliarDocente($_REQUEST['id_aux_docente']);
+                break;    
             default:
                 # code...
                 break;
@@ -485,29 +661,6 @@
                 }
                 $res = $departamento->editarDepartamento($codigo_dep_noModificado, $codigo_dep, $nombre_dep, $fecha_creacion_departamento);
                 break;
-            // case 'eliminarDepartamento':
-            //     $codigo_dep = $_REQUEST['codigo_dep'];
-            //     $res = $departamento->obtenerIdDepartamento($codigo_dep);
-            //     $id_departamento = $res['id_departamento'];
-            //     $director = new Director();
-            //     $director->quitarAsignacionDirectorDepartamento($id_departamento);
-            //     $res = $departamento->eliminarDepartamento($id_departamento);
-            //     break;
-            // case 'editarDepartamento':
-            //     $codigo_dep = $_REQUEST['codigo_dep'];
-            //     $codigo_dep_noModificado = $_REQUEST['codigo_dep_noModificado'];
-            //     $nombre_dep = $_REQUEST['nombre_dep'];    
-            //     $fecha_creacion_departamento = $_REQUEST['fecha_creacion_departamento'];
-            //     $jefe_dep = $_REQUEST['jefe_dep'];
-            //     if($jefe_dep == 'Ninguno'){
-            //         $departamento->quitarAsignacionDirectorDepartamento($codigo_dep_noModificado);
-            //         $res = $departamento->obtenerIdDepartamento($codigo_dep_noModificado);
-            //         $id_departamento = $res['id_departamento'];
-            //         $director = new Director();
-            //         $director->quitarAsignacionDirectorDepartamento($id_departamento);
-            //     }
-            //     $res = $departamento->editarDepartamento($codigo_dep_noModificado, $codigo_dep, $nombre_dep, $fecha_creacion_departamento);
-            //     break;
             case 'insertarNuevoDepartamento':
                 $ambiente = $_REQUEST['categoria'];
                 $nomDep = $_REQUEST['nomDep'];
@@ -521,6 +674,21 @@
             case 'departamentosDisponibles':
                 $ambiente = $_REQUEST['categoria'];
                 $res = $departamento->departamentosDisponibles($ambiente);
+                break;
+            //Ruben
+            //EN USO
+            case 'obtenerDepartamentoDocente':
+                $res = $departamento->obtenerDepartamentoDocente($_REQUEST['id_facultad'],$_REQUEST['id_docente']);
+                break;
+            //EN USO
+            case 'obtenerDepartamentoAuxiliarDocente':
+                $res = $departamento->obtenerDepartamentoAuxiliarDocente($_REQUEST['id_facultad'],$_REQUEST['id_aux_docente']);
+                break;
+            case 'obtenerDocentesDepartamento':
+                $res = $departamento->obtenerDocentesDepartamento($_REQUEST['id_departamento']);
+                break;
+            case 'obtenerAuxiliaresDepartamento':
+                $res = $departamento->obtenerAuxiliaresDepartamento($_REQUEST['id_departamento']);
                 break;
             default:
                 # code...
@@ -569,6 +737,10 @@
                 $ambiente = $_REQUEST['categoria'];
                 $res = $carrera->carrerasDisponibles($ambiente);
                 break;
+            //Ruben
+            case 'obtenerCarreras':
+                $res = $carrera->obtenerCarreras();
+                break;
             default:
                 break;
         }
@@ -609,6 +781,21 @@
                 break;
             case 'listarTableDocente':
                 $res = $docente->listarTableDocente();
+                break;
+            //Ruben
+            case 'importarDocentes':
+                //Si el csvData esta vacio, entonces asignamos null a la variable
+                $csvData = (isset($_REQUEST['csvData']) ? $_REQUEST['csvData'] : null);
+                $docente->insertarDocentesCSVData($_REQUEST['id_departamento'], $csvData);
+                break;
+            case 'insertarDocente_acoplado':
+                $res = $docente->insertarDocente_acoplado($_REQUEST['nomDocente'],$_REQUEST['ciDocente'],$_REQUEST['correoDocente'],$_REQUEST['telDocente'],$_REQUEST['sisDocente'],$_REQUEST['passDocente'], $_REQUEST['id_departamento']);
+                break;
+            case 'editarDocente':
+                $res = $docente->editarDocente($_REQUEST['sisDocente'],$_REQUEST['nomDocente'],$_REQUEST['correoDocente'],$_REQUEST['telDocente']);
+                break;
+            case 'eliminarDocente':
+                $docente->eliminarDocente($_REQUEST['sis_docente'], $_REQUEST['id_departamento']);
                 break;
             default:
                 # code...
@@ -652,6 +839,21 @@
                 break;
             case 'listarTableAuxiliarDocente':
                 $res = $auxiliarDocente->listarTableAuxiliarDocente();
+                break;
+            //Ruben
+            case 'importarAuxiliarDocente':
+                //Si el csvData esta vacio, entonces asignamos null a la variable
+                $csvData = (isset($_REQUEST['csvData']) ? $_REQUEST['csvData'] : null);
+                $auxiliarDocente->insertarAuxiliarDocenteCSVData($_REQUEST['id_departamento'], $csvData);
+            break;
+            case 'insertarAuxiliarDocente_acoplado':
+                $res = $auxiliarDocente->insertarAuxiliarDocente_acoplado($_REQUEST['nomAuxiliarDocente'],$_REQUEST['ciAuxiliarDocente'],$_REQUEST['correoAuxiliarDocente'],$_REQUEST['telAuxiliarDocente'],$_REQUEST['sisAuxiliarDocente'],$_REQUEST['passAuxiliarDocente'],$_REQUEST['id_departamento']);
+                break;
+            case 'editarAuxiliarDocente':
+                $res = $auxiliarDocente->editarAuxiliarDocente($_REQUEST['sisAuxiliarDocente'],$_REQUEST['nomAuxiliarDocente'],$_REQUEST['correoAuxiliarDocente'],$_REQUEST['telAuxiliarDocente']);
+                break;
+            case 'eliminarAuxiliarDocente':
+                $auxiliarDocente->eliminarAuxiliarDocente($_REQUEST['sis_auxiliar_docente'], $_REQUEST['id_departamento']);
                 break;
             default:
                 # code...
@@ -710,18 +912,6 @@
                 $clavePrimaria = $_REQUEST['idAuxLaboratorio'];
                 $res = $auxiliarLaboratorio->actualizarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$dirAuxLaboratorio,$clavePrimaria);
                 break;
-            // case 'insertarAuxiliarLaboratorioFechaInicio':
-            //     $nomAuxLaboratorio = $_REQUEST['nomAuxLaboratorio'];
-            //     $codAuxLaboratorio = $_REQUEST['codAuxLaboratorio'];
-            //     $corAuxLaboratorio = $_REQUEST['corAuxLaboratorio'];
-            //     $telAuxLaboratorio = $_REQUEST['telAuxLaboratorio'];
-            //     $pasAuxLaboratorio = $_REQUEST['pasAuxLaboratorio'];
-            //     $dirAuxLaboratorio = $_REQUEST['dirAuxLaboratorio'];
-            //     $idDepartamento = $_REQUEST['idDepartamento'];
-            //     $aux = getdate();
-            //     $fecha = $aux['year']."-".$aux['mon']."-".$aux['mday'];
-            //     $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$pasAuxLaboratorio,$dirAuxLaboratorio,$idDepartamento);
-            //     break;
             case 'insertarAuxiliarLaboratorio':
                 $nomAuxLaboratorio = $_REQUEST['nomAuxLaboratorio'];
                 $codAuxLaboratorio = $_REQUEST['codAuxLaboratorio'];
@@ -731,7 +921,6 @@
                 $dirAuxLaboratorio = $_REQUEST['dirAuxLaboratorio'];
                 $idDepartamento = $_REQUEST['idDepartamento'];
                 $res = $auxiliarLaboratorio->insertarAuxiliarLaboratorio($nomAuxLaboratorio,$codAuxLaboratorio,$corAuxLaboratorio,$telAuxLaboratorio,$pasAuxLaboratorio,$dirAuxLaboratorio,$idDepartamento);
-                
                 break;
             case 'listarTableAuxiliarLaboratorio':
                 $idDepartamento = $_REQUEST['idDepartamento'];
@@ -1004,5 +1193,235 @@
                 break;
         }
         return $nombreDIa;
+    }
+
+    //Consultas Ruben
+    function ejecutarConsultasEnlaceRecursoClase(){
+        $enlace_recurso_clase = new EnlaceRecursoClase();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerEnlaceRecursoClase':
+                $res = $enlace_recurso_clase->obtenerEnlaceRecursoClase($_REQUEST['codigo_clase']);
+                break;
+            //EN USO
+            case 'quitarEnlaceRecurso':
+                $res = $enlace_recurso_clase->quitarEnlaceRecurso($_REQUEST['id_enlace_recurso_clase']); 
+                break;
+            //EN USO
+            case 'obtenerIdEnlaceRecursoInsertado':
+                $arrayEnlacesRecursos = (isset($_REQUEST['arrayEnlacesRecursos']) ? $_REQUEST['arrayEnlacesRecursos'] : null);
+                $res = $enlace_recurso_clase->obtenerIdEnlaceRecursoInsertado($_REQUEST['codigo_clase'],$arrayEnlacesRecursos,$_REQUEST['descripcion_enlace_recurso'],$_REQUEST['direccion_enlace_recurso'],$_REQUEST['es_enlace']);
+                break;
+            case 'verificarEnlaceRecursoSubido':
+                $res = $enlace_recurso_clase->verificarEnlaceRecursoSubido($_REQUEST['codigo_clase']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $enlace_recurso_clase->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasDepartamentoDocente(){
+        $departamento_docente = new DepartamentoDocente();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'listarDocentesDepartamento': 
+                $res = $departamento_docente->listarDocentesDepartamento($_REQUEST['id_departamento']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $departamento_docente->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasDepartamentoAuxiliarDocente(){
+        $departamento_auxiliar_docente = new DepartamentoAuxiliarDocente();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            case 'listarAuxiliaresDocenciaDepartamento':
+                $res = $departamento_auxiliar_docente->listarAuxiliaresDocenciaDepartamento($_REQUEST['id_departamento']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $departamento_auxiliar_docente->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasGrupo(){
+        $grupo = new Grupo();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'listarGruposDepartamento':
+                $res = $grupo->listarGruposDepartamento($_REQUEST['id_departamento']);
+                break;
+            //EN USO
+            case 'importarGrupos':
+                $res = $grupo->cargarGruposCSVData_acoplado($_REQUEST['csvData']);
+                break;
+            //EN USO
+            case 'obtenerGruposMateria':
+                $res = $grupo->obtenerGruposMateria($_REQUEST['codigo_materia']);
+                break;
+            //EN USO
+            case 'insertarGrupo':
+                $sis_materia = $_REQUEST['sis_mat'];
+                $nombre_grupo = $_REQUEST['nom_grupo'];
+                $arrayHorariosGrupo = $_REQUEST['horarios'];
+                $arrayCarrerasAsignadasGrupo = (isset($_REQUEST['carrerasAsignadas']) ? $_REQUEST['carrerasAsignadas'] : null);
+                $sis_docente_asignado = $_REQUEST['sis_docente_asignado'];
+                $sis_auxiliar_asignado = $_REQUEST['sis_auxiliar_asignado'];
+
+                $res = $grupo->insertarGrupo_acoplado($sis_materia,$nombre_grupo,$arrayHorariosGrupo,$arrayCarrerasAsignadasGrupo, $sis_docente_asignado, $sis_auxiliar_asignado);
+
+                break;
+            //EN USO
+            case 'insertarCambiosGrupo':
+                $sis_materia = $_REQUEST['sis_mat'];
+                $nombre_grupo = $_REQUEST['nom_grupo'];
+                $arrayHorariosGrupo = $_REQUEST['horarios'];
+                $arrayCarrerasAsignadasGrupo = (isset($_REQUEST['carrerasAsignadas']) ? $_REQUEST['carrerasAsignadas'] : null);
+                $sis_docente = $_REQUEST['sis_docente'];
+                $sis_auxiliar = $_REQUEST['sis_auxiliar'];
+                $res = $grupo->insertarCambiosGrupo_acoplado($sis_materia,$nombre_grupo,$arrayHorariosGrupo,$arrayCarrerasAsignadasGrupo,$sis_docente,$sis_auxiliar);
+                break;
+            //EN USO
+            case 'eliminarGrupo':
+                $sis_materia = $_REQUEST['sis_mat'];
+                $nombre_grupo = $_REQUEST['nom_grupo'];
+                $res = $grupo->eliminarGrupo_acoplado($sis_materia,$nombre_grupo);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $grupo->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasMateriaDocente(){
+        $materia_docente = new MateriaDocente();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerDocentesAsignados':
+                $res = $materia_docente->obtenerDocentesAsignados_acoplado($_REQUEST['sis_materia']);
+                break;
+            //EN USO
+            case 'obtenerDocentesAsignadosMateriaDocenteAsignadoGrupo':
+                $res = $materia_docente->obtenerDocentesAsignadosMateriaDocenteAsignadoGrupo_acoplado($_REQUEST['sis_materia'],$_REQUEST['nom_grupo']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $materia_docente->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasMateriaAuxiliarDocente(){
+        $materia_auxiliar_docente = new MateriaAuxDocente();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerAuxiliaresAsignados':
+                $res = $materia_auxiliar_docente->obtenerAuxiliaresAsignados_acoplado($_REQUEST['sis_materia']);
+                break;
+            //EN USO
+            case 'obtenerAuxiliaresAsignadosMateriaAuxiliarAsignadoGrupo':
+                $res = $materia_auxiliar_docente->obtenerAuxiliaresAsignadosMateriaAuxiliarAsignadoGrupo_acoplado($_REQUEST['sis_materia'],$_REQUEST['nom_grupo']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $materia_auxiliar_docente->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasMateriaCarrera(){
+        $materia_carrera = new MateriaCarrera();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerCarrerasMateria':
+                $res = $materia_carrera->obtenerCarrerasMateria_acoplado($_REQUEST['codigo_materia']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $materia_carrera->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasAuxiliarDocenteGrupo(){
+        $auxiliar_docente_grupo = new AuxiliarDocenteGrupo();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerAuxiliarAsignado':
+                $res = $auxiliar_docente_grupo->obtenerAuxiliarAsignado_acoplado($_REQUEST['codigo_materia'], $_REQUEST['nom_grupo']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $auxiliar_docente_grupo->cerrarConexion();
+        return $res;
+    }
+
+    function ejecutarConsultasGrupoCarrera(){
+        $grupo_carrera = new GrupoCarrera();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerNombresCarrerasGrupo':
+                $res = $grupo_carrera->obtenerNombresCarrerasGrupo_acoplado($_REQUEST['codigo_materia'], $_REQUEST['nom_grupo']);
+                break;
+            //EN USO
+            case 'obtenerCarrerasGrupoMateria':
+                $res = $grupo_carrera->obtenerCarrerasGrupoMateria_acoplado($_REQUEST['codigo_materia'], $_REQUEST['nom_grupo']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $grupo_carrera->cerrarConexion();
+        return $res;
+    }
+
+
+    function ejecutarConsultasGrupoHorario(){
+        $grupo_horario = new GrupoHorario();
+        $metodo = $_REQUEST['metodo'];
+        $res = "";
+        switch ($metodo) {
+            //EN USO
+            case 'obtenerHorariosGrupo':
+                $res = $grupo_horario->obtenerHorariosGrupo_acoplado($_REQUEST['codigo_materia'],$_REQUEST['nom_grupo']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        $grupo_horario->cerrarConexion();
+        return $res;
     }
 ?>

@@ -119,5 +119,47 @@
             return json_encode($respuesta);
         }
 
+        //Ruben
+        //EN USO
+        public function obtenerDepartamentoDocente($id_facultad, $id_docente){
+            $sql = "SELECT departamento.id_departamento, departamento.nombre_departamento from facultades, departamento, departamento_docente where facultades.id_facultad = departamento.id_facultad and facultades.id_facultad =:id_fac and departamento.id_departamento = departamento_docente.id_departamento and departamento_docente.id_docente =:id_doc";
+            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+            $this->sentenceSQL->execute(array(":id_fac"=>$id_facultad, ":id_doc"=>$id_docente));
+            $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $this->sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
+        }
+
+        //EN USO
+        public function obtenerDepartamentoAuxiliarDocente($id_facultad, $id_aux_docente){
+            $sql = "SELECT departamento.id_departamento, departamento.nombre_departamento  from facultades, departamento, departamento_auxiliar_docente where facultades.id_facultad = departamento.id_facultad and facultades.id_facultad =:id_fac and departamento.id_departamento = departamento_auxiliar_docente.id_departamento and departamento_auxiliar_docente.id_auxiliar_docente =:id_aux_doc";
+            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+            $this->sentenceSQL->execute(array(":id_fac"=>$id_facultad, ":id_aux_doc"=>$id_aux_docente));
+            $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $this->sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
+        }
+
+        public function obtenerDocentesDepartamento($id_departamento){
+            $sql = "SELECT docente.id_docente, docente.sis_docente, docente.nombre_docente from docente, departamento_docente where docente.id_docente = departamento_docente.id_docente and departamento_docente.id_departamento =:id_dep";
+            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+            $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento));
+            $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $this->sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
+        }
+
+        public function obtenerAuxiliaresDepartamento($id_departamento){
+            $sql = "SELECT auxiliar_docente.id_aux_docente, auxiliar_docente.sis_auxiliar, auxiliar_docente.nombre_aux_docente from auxiliar_docente, departamento_auxiliar_docente where auxiliar_docente.id_aux_docente = departamento_auxiliar_docente.id_auxiliar_docente and departamento_auxiliar_docente.id_departamento =:id_dep";
+            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+            $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento));
+            $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $this->sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
+        }
 
     }

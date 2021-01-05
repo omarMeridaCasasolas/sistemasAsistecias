@@ -137,6 +137,8 @@ $(document).ready(function () {
         $("#pills-plataforma").attr("class",'tab-pane fade');
         $("#pills-observaciones-tab").attr("class",'nav-link');
         $("#pills-observaciones").attr("class",'tab-pane fade');
+        $("#pills-reposicion-tab").attr("class",'nav-link');
+        $("#pills-reposicion").attr("class",'tab-pane fade');
         //Recuperamos los datos de la fila
         let fila = $(this).closest("tr");
         let fecha_clase = fila.find('td:eq(0)').text();   
@@ -168,13 +170,24 @@ $(document).ready(function () {
         let contenido_clase = $.trim($("#textareaContenido").val());
         let plataforma_clase = $.trim($("#textareaPlataforma").val());
         let observaciones_clase = $.trim($("#textareaObservaciones").val());
+
+        let asunto_reposicion = $.trim($("#textareaAsuntoReposicion").val());
+        let fecha_reposicion = $.trim($("#fechaReposicion").val());
+        let hora_reposicion = $.trim($("#horaReposicion").val());
+        let plataforma_reposicion = $.trim($("#plataformaReposicion").val());
+        let avance_reposicion = $.trim($("#avanceReposicion").val());
+
         let clase = 'Clase';
         let metodo = 'actualizarClase';                       
             $.ajax({
             url: "../controlador/interprete.php",
             type: "POST",
             datatype:"json",    
-            data:  {clase:clase, metodo:metodo, codigo_clase:codigo_clase, contenido_clase:contenido_clase,plataforma_clase:plataforma_clase,observaciones_clase:observaciones_clase},    
+            data:  {clase:clase, metodo:metodo, codigo_clase:codigo_clase, 
+                contenido_clase:contenido_clase,plataforma_clase:plataforma_clase,
+                observaciones_clase:observaciones_clase, asunto_reposicion:asunto_reposicion,
+                fecha_reposicion:fecha_reposicion, hora_reposicion:hora_reposicion,
+                plataforma_reposicion:plataforma_reposicion, avance_reposicion:avance_reposicion},    
             success: function(data) {
              tablaReporteAuxiliarDocente.ajax.reload(null, false);
             }
@@ -596,6 +609,12 @@ function cargamosInformacionPlataformaObservaciones(key_codigo_clase){
             obj.forEach(element => {
                 $("#textareaPlataforma").val(element.plataforma_clase);
                 $("#textareaObservaciones").val(element.observaciones_clase);
+
+                $("#textareaAsuntoReposicion").val(element.asunto_reposicion);
+                $("#fechaReposicion").val(element.fecha_reposicion);
+                $("#horaReposicion").val(element.hora_reposicion);
+                $("#plataformaReposicion").val(element.plataforma_reposicion);
+                $("#avanceReposicion").val(element.avanze_posicion);
             });
         },
         error : function(jqXHR, status, error) {

@@ -30,12 +30,16 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <body class="bg-secondary">
-    <header class="bg-dark text-white p-2">
-        <h1 class=>Bienvenido Auxiliar de laboratorio: <?php echo $_SESSION['nombreAuxLab']; ?></h1>
-        <a class="float-right" href="../controlador/formCerrarSession.php">Cerrar session</a> 
-        <a href="historial_reportes_Laboratorio.php">Historial de reportes</a>
-    </header>
-    <main class="bg-white mt-4 mx-auto rounded col-lg-8 col-md-12"> 
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
+        <img src="https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png" class="rounded" width="75" height="75">
+        <h3 class="text-white d-inline-block">Auxiliar de laboratorio: <?php echo $_SESSION['nombreAuxLab']; ?></h3>
+        <div class="float-right py-2">
+            <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos"><i class="fas fa-user-edit"></i></button>
+            <a href="historial_reportes_Laboratorio.php" class="btn btn-primary"><i class="far fa-clipboard"></i></a>
+            <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+    <main class="bg-white p-4 mx-auto rounded col-lg-8 col-md-12"> 
 
         <button type="button" class="d-none" data-toggle="modal" data-target="#myModal" id="btnCerrarModal">
             Open modal
@@ -46,7 +50,7 @@
                 <div class="form-group col-5">
                     <label for="nomLaboratorioAux">Seleciones Laboratorio</label>
                     <select name="nomLaboratorioAux" id="nomLaboratorioAux" class="form-control">
-                        <option value="">Laboratorio de mantenimiento</option>
+                        <option value="">Laboratorio de Analisis</option>
                         <option value="">Ninguno</option>
                     </select>
                 </div>

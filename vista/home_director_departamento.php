@@ -1,12 +1,14 @@
 <?php
-    session_start();
-    if(isset($_SESSION["codigo_autoridad"])){
+    // session_start();
+    // if(isset($_SESSION["codigo_autoridad"])){
 
-    }else{
-        header("Location:../../index.php?error=auntentificacion&tipo=autoridad");
-    }
+    // }else{
+    //     header("Location:../../index.php?error=auntentificacion&tipo=autoridad");
+    // }
+    
 ?>
-<!DOCTYPE html>
+<?php include_once("parts/cabezera_director.php");?>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,9 +26,9 @@
 </head>
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
-        <!-- Brand -->
-        <img src="<?php echo $_SESSION['myFoto'];?>" class="rounded" width="75" height="75">
-        <h4 class="text-white d-inline-block"><?php echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h4>
+
+        <img src="<?php //echo $_SESSION['myFoto'];?>" class="rounded" width="75" height="75">
+        <h4 class="text-white d-inline-block"><?php //echo $_SESSION['cargo'].": ".$_SESSION['nombre_autoridad'];?></h4>
         <div class="float-right py-3 ">
             <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos"><i class="fas fa-user-edit"></i></button>
             <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-envelope"></i></button>
@@ -35,7 +37,7 @@
             <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
         </div>
         <ul class="navbar-nav">
-            <!-- Dropdown -->
+
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                 Ambientes:
@@ -69,7 +71,8 @@
             </div>
             </li>
         </ul>
-    </nav>
+    </nav> -->
+    <body class="bg-secondary">
     <main class="container bg-white p-2">
         <input type="text" class="d-none" name="idDepartamento" id="idDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
         <!-- Modal -->

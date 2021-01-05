@@ -1,10 +1,12 @@
 <?php
     require_once("conexion.php");
     class Carrera extends Conexion{
+        private $sentenceSQL;
         public function Carrera(){
             parent::__construct();
         }
         public function cerrarConexion(){
+            $this->sentenceSQL=null;
             $this->connexion_bd=null;
         }
 
@@ -86,6 +88,16 @@
             //$res = json_encode($respuesta);
             echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
             //return $res;
+        }
+
+        public function obtenerCarreras(){
+            $sql = "SELECT id_carrera, nombre_carrera from carrera where id_carrera not in(666);";
+            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+            $this->sentenceSQL->execute();
+            $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $this->sentenceSQL->closeCursor();
+            $res = json_encode($respuesta);
+            return $res;
         }
 
     }
