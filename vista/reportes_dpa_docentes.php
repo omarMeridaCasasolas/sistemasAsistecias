@@ -67,7 +67,7 @@ function asignarMes($num){
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-inline-block w-100">
     <!-- Brand -->
     <img src="<?php echo $_SESSION['foto_trabajador']; ?>" class="rounded" width="75" height="75">
-    <h2 class="text-white d-inline-block"><?php echo $_SESSION['nombreTrabajador'];?></h2>
+    <h4 class="text-white d-inline-block"><?php echo $_SESSION['cargoTrabajador'].": ".$_SESSION['nombreTrabajador'];?></h4>
     <div class="float-right py-3">
         <a href="home_dpa.php" class="btn btn-primary"><i class="fas fa-home"></i></a>
         <button class="btn btn-primary" data-toggle='modal' data-target='#abrirVtnCorreo'><i class="fas fa-envelope"></i></button>
@@ -125,10 +125,10 @@ function asignarMes($num){
         <br>
         <h5>Reporte del mes de : <strong><?php $fecha = date("m"); $tmp = intval($fecha) -1; echo asignarMes($tmp);?> - 2020</strong></span></h5>
             <div id="cajaTabla">
-            <table id="tablaMateriaAuxiliares" class="table table-hover" style="width:100%">
+            <table id="tablaMateriaAuxiliares" class="table table-hover table-bordered" style="width:100%">
                 <thead class="bg-info">
                     <tr>
-                        <th>Nombre del Auxiliar</th>
+                        <th>Docente</th>
                         <th>Materia</th>
                         <th>Total hrs</th>
                         <th>Cant. faltas</th>
@@ -157,16 +157,16 @@ function asignarMes($num){
                                 foreach ($listaDeAuxiliares as $x) {
                                     $llave = key($x);
                                     echo "<tr>
-                                        <td>$llave</td>
-                                        <td>".$x[$llave]['materia']."</td>
-                                        <td>".$x[$llave]['horasTotal']." Hrs</td>
-                                        <td>".$x[$llave]['faltas']."</td>
-                                        <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
-                                        <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
-                                        <td>".$x[$llave]['horasPagables']." Hrs</td>
+                                        <td>".$x['nombreDocente']."</td>
+                                        <td>".$x['nombreMateria']."</td>
+                                        <td>".$x['horasTotal']." Hrs</td>
+                                        <td>".$x['faltas']."</td>
+                                        <td>".$x['horasDeLicencia']." Hrs</td>
+                                        <td>".$x['licenciaPedidas']." Hrs</td>
+                                        <td>".$x['horasPagables']." Hrs</td>
                                       </tr>";
-                                      $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
-                                      $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
+                                      $horasPagablesDeparamento = $horasPagablesDeparamento + $x['horasPagables'];
+                                      $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x['licenciaPedidas'];
                                 }
                             }
                             

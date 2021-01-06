@@ -44,6 +44,7 @@ if(isset($_POST['nomDepartamento'])){
                 <thead class="bg-info">
                     <tr>
                         <th>Nombre del Auxiliar</th>
+                        <th>Materia</th>
                         <th>Total hrs</th>
                         <th>Cant. faltas</th>
                         <th>Hrs. Licencia </th>
@@ -57,21 +58,36 @@ if(isset($_POST['nomDepartamento'])){
                         $horasNoPagablesDeparamento = 0;
                         if(isset($_SESSION['datosReporte'])){
                             $listaDeAuxiliares = $_SESSION['datosReporte'];
-                            foreach ($listaDeAuxiliares as $x) {
-                                $llave = key($x);
+                            if(sizeof($listaDeAuxiliares)==0){
                                 echo "<tr>
-                                    <td>$llave</td>
-                                    <td>".$x[$llave]['horasTotal']." Hrs</td>
-                                    <td>".$x[$llave]['faltas']."</td>
-                                    <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
-                                    <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
-                                    <td>".$x[$llave]['horasPagables']." Hrs</td>
-                                  </tr>";
-                                  $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
-                                  $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                                    <td>No tiene datos</td>
+                              </tr>";
+                            }else{
+                                foreach ($listaDeAuxiliares as $x) {
+                                    $llave = key($x);
+                                    echo "<tr>
+                                        <td>".$x['nombreAuxiliar']."</td>
+                                        <td>".$x['nombreMateria']."</td>
+                                        <td>".$x['horasTotal']." Hrs</td>
+                                        <td>".$x['faltas']."</td>
+                                        <td>".$x['horasDeLicencia']." Hrs</td>
+                                        <td>".$x['licenciaPedidas']." Hrs</td>
+                                        <td>".$x['horasPagables']." Hrs</td>
+                                      </tr>";
+                                      $horasPagablesDeparamento = $horasPagablesDeparamento + $x['horasPagables'];
+                                      $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x['licenciaPedidas'];
+                                }
                             }
+                            
                         }else{
                             echo "<tr>
+                                    <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>
                                     <td>Selecione departamento</td>

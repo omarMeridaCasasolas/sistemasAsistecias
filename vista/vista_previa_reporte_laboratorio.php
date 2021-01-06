@@ -81,7 +81,7 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" href="reportes_dpa_docentes.php">Docentes</a>
             <a class="dropdown-item" href="reportes_dpa_pizarra.php">Aux. pizarra</a>
-            <a class="dropdown-item" href="reportes_uti_aux_lab.php">Aux. Laboratorio</a>
+            <a class="dropdown-item" href="reportes_dpa_laboratorio.php">Aux. Laboratorio</a>
         </div>
         </li>
 
@@ -92,7 +92,7 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" href="historial_reportes_uti_docentes.php">Docentes</a>
             <a class="dropdown-item" href="historial_reportes_uti_pizarra.php">Aux. pizarra</a>
-            <a class="dropdown-item" href="historial_labo_uti_dpa.php">Aux. Laboratorio</a>
+            <a class="dropdown-item" href="historial_reportes_uti_laboratorio.php">Aux. Laboratorio</a>
         </div>
         </li>
     </ul>
@@ -119,8 +119,8 @@
                     <?php 
                         $horasPagablesDeparamento = 0;
                         $horasNoPagablesDeparamento = 0;
-                        if(isset($_SESSION['datosReporte'])){
-                            $listaDeReportes = $_SESSION['datosReporte'];
+                        if(isset($_SESSION['datosReporteLaboratorio'])){
+                            $listaDeReportes = $_SESSION['datosReporteLaboratorio'];
                             //var_dump($_SESSION['datosReporte']);
                             if(sizeof($listaDeReportes)==0){
                                 echo "<tr>
@@ -165,7 +165,7 @@
         </div> 
         <hr>
         <?php 
-            if(isset($_SESSION['datosReporte'])){
+            if(isset($_SESSION['datosReporteLaboratorio'])){
                 echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
                 echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento,"Hrs/mes</h6> ";
             }

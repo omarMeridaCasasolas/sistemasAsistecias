@@ -19,7 +19,7 @@
     //print_r($arrayName);
     session_start();
     //$_SESSION['datosReporteDocente'] ="";
-    unset($_SESSION['datosReporte']);
+    unset($_SESSION['datosReporteLaboratorio']);
     if(isset($_POST['idFacultadaes']) && isset($_POST['idDepartamentos'])){
         $idFacultad = $_POST['idFacultadaes'];
         $idDepartamentos = $_POST['idDepartamentos'];
@@ -69,7 +69,7 @@
             $horasPagables = 0;
         }
         print_r($arrayReportes);
-        $_SESSION['datosReporte'] = $arrayReportes;
+        $_SESSION['datosReporteLaboratorio'] = $arrayReportes;
         header("Location:../vista/reportes_dpa_laboratorio.php?facultad=".$_POST['idFacultadaes']."&departamento=".$_POST['idDepartamentos']);
     }else{
         echo "No se pudo obtener los datos";

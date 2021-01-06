@@ -56,8 +56,8 @@ if(isset($_POST['nomDepartamento'])){
                 <?php 
                         $horasPagablesDeparamento = 0;
                         $horasNoPagablesDeparamento = 0;
-                        if(isset($_SESSION['datosReporte'])){
-                            $listaDeReportes = $_SESSION['datosReporte'];
+                        if(isset($_SESSION['datosReporteLaboratorio'])){
+                            $listaDeReportes = $_SESSION['datosReporteLaboratorio'];
                             //var_dump($_SESSION['datosReporte']);
                             if(sizeof($listaDeReportes)==0){
                                 echo "<tr>
@@ -100,7 +100,7 @@ if(isset($_POST['nomDepartamento'])){
                 </tbody>
             </table>
             <?php 
-            if(isset($_SESSION['datosReporte'])){
+            if(isset($_SESSION['datosReporteLaboratorio'])){
                 echo "<h6><strong>Total de horas pagables por departamento/mes : </strong>". $horasPagablesDeparamento ." Hrs/mes</h6> ";
                 echo "<h6><strong>Total de horas no pagables por departamento/mes : </strong>".$horasNoPagablesDeparamento," Hrs/mes</h6> ";
             }

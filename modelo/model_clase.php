@@ -208,7 +208,8 @@
         }
 
         public function obtenerAuxliaresPizarraArrayMateria($idMateria,$idAuxiliar,$fechaInicio,$fechaFinal){
-            $sql = "SELECT * FROM clase Cl JOIN auxiliar_docente Ad ON Cl.id_aux_docente = Ad.id_aux_docente  WHERE id_materia = :idMateria AND Cl.id_aux_docente = :idAuxiliar AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal";
+            $sql = "SELECT * FROM clase Cl JOIN auxiliar_docente Ad ON Cl.id_aux_docente = Ad.id_aux_docente 
+            INNER JOIN materia ma ON ma.id_materia = Cl.id_materia  WHERE Cl.id_materia = :idMateria AND Cl.id_aux_docente = :idAuxiliar AND fecha_clase BETWEEN :fechaInicio AND :fechaFinal";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute(array(":idMateria"=>$idMateria,":idAuxiliar"=>$idAuxiliar,":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

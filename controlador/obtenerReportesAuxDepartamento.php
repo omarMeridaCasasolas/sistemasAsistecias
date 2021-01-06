@@ -15,6 +15,7 @@
 
     //print_r($arrayName);
     session_start();
+    unset($_SESSION['datosReporte']);
     if(isset($_POST['idFacultadaes']) && isset($_POST['idDepartamentos'])){
         $idFacultad = $_POST['idFacultadaes'];
         $idDepartamentos = $_POST['idDepartamentos'];
@@ -61,15 +62,16 @@
 
             }
             $horasPagables = $horasPagables + $horasDeLicencia;
-            if(array_key_exists($x['nombre_aux_docente'],$arrayAuxiliaresDeDocencia)){
-                $arrayAuxiliaresDeDocencia['nombre_aux_docente']['horasTotal'] = $arrayAuxiliaresDeDocencia['id_aux_docente']['horasTotal'] + ($horasTotal/60);
-                $arrayAuxiliaresDeDocencia['nombre_aux_docente']['faltas'] = $arrayAuxiliaresDeDocencia['id_aux_docente']['faltas'] + $faltas;
-                $arrayAuxiliaresDeDocencia['nombre_aux_docente']['horasDeLicencia'] = $arrayAuxiliaresDeDocencia['id_aux_docente']['horasDeLicencia'] + ($horasTotal/60);
-                $arrayAuxiliaresDeDocencia['nombre_aux_docente']['licenciaPedidas'] = $arrayAuxiliaresDeDocencia['id_aux_docente']['licenciaPedidas'] + ($licenciaPedidas/60);
-                $arrayAuxiliaresDeDocencia['nombre_aux_docente']['horasPagables'] = $arrayAuxiliaresDeDocencia['id_aux_docente']['horasPagables'] + ($horasPagables/60);
+            $tmp = $x['id_materia'];
+            if(array_key_exists($tmp,$arrayAuxiliaresDeDocencia)){
+                $arrayAuxiliaresDeDocencia[$tmp]['horasTotal'] +=  ($horasTotal/60);
+                $arrayAuxiliaresDeDocencia[$tmp]['faltas'] +=  $faltas;
+                $arrayAuxiliaresDeDocencia[$tmp]['horasDeLicencia'] +=  ($horasTotal/60);
+                $arrayAuxiliaresDeDocencia[$tmp]['licenciaPedidas'] +=  ($licenciaPedidas/60);
+                $arrayAuxiliaresDeDocencia[$tmp]['horasPagables'] +=  ($horasPagables/60);
             }else{
-                $aux = array($x['nombre_aux_docente'] => ['horasTotal' => $horasTotal/60 , 'faltas' => $faltas , 'horasDeLicencia' => $horasDeLicencia/60, 'licenciaPedidas' =>$licenciaPedidas/60,'horasPagables' => $horasPagables/60 ,'id_auxiliar' => $x['id_aux_docente']]);
-                array_push($arrayAuxiliaresDeDocencia,$aux);
+                $arrayAuxiliaresDeDocencia[$tmp] = ['horasTotal' => $horasTotal/60 , 'faltas' => $faltas , 'horasDeLicencia' => $horasDeLicencia/60, 
+                'licenciaPedidas' =>$licenciaPedidas/60,'horasPagables' => $horasPagables/60 ,'nombreAuxiliar'=>$x['nombre_aux_docente'] ,'nombreMateria' => $x['nombre_materia']];
             } 
         }
         $_SESSION['datosReporte'] = $arrayAuxiliaresDeDocencia;

@@ -53,7 +53,7 @@ if(isset($_POST['nomDepartamento'])){
                     </tr>
                 </thead>
                 <tbody>
-                <?php 
+                    <?php 
                         $horasPagablesDeparamento = 0;
                         $horasNoPagablesDeparamento = 0;
                         if(isset($_SESSION['datosReporteDocente'])){
@@ -72,16 +72,16 @@ if(isset($_POST['nomDepartamento'])){
                                 foreach ($listaDeAuxiliares as $x) {
                                     $llave = key($x);
                                     echo "<tr>
-                                        <td>$llave</td>
-                                        <td>".$x[$llave]['materia']."</td>
-                                        <td>".$x[$llave]['horasTotal']." Hrs</td>
-                                        <td>".$x[$llave]['faltas']."</td>
-                                        <td>".$x[$llave]['horasDeLicencia']." Hrs</td>
-                                        <td>".$x[$llave]['licenciaPedidas']." Hrs</td>
-                                        <td>".$x[$llave]['horasPagables']." Hrs</td>
+                                        <td>".$x['nombreDocente']."</td>
+                                        <td>".$x['nombreMateria']."</td>
+                                        <td>".$x['horasTotal']." Hrs</td>
+                                        <td>".$x['faltas']."</td>
+                                        <td>".$x['horasDeLicencia']." Hrs</td>
+                                        <td>".$x['licenciaPedidas']." Hrs</td>
+                                        <td>".$x['horasPagables']." Hrs</td>
                                       </tr>";
-                                      $horasPagablesDeparamento = $horasPagablesDeparamento + $x[$llave]['horasPagables'];
-                                      $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x[$llave]['licenciaPedidas'];
+                                      $horasPagablesDeparamento = $horasPagablesDeparamento + $x['horasPagables'];
+                                      $horasNoPagablesDeparamento = $horasNoPagablesDeparamento + $x['licenciaPedidas'];
                                 }
                             }
                             

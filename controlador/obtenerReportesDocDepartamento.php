@@ -28,7 +28,7 @@
         $materiaAuxDocente = new MateriaAuxDocente();
         $res = $materiaAuxDocente->listaDeMateriasPorDocente($idDepartamentos);
         //var_dump($res);
-        $arrayAuxiliaresDeDocencia = array();
+        $arrayDocencia = array();
         foreach ($res as $elemento) {
             $listaClases = $clase->obtenerDocentesArrayMateria($elemento['id_materia'],$elemento['id_docente'],$fechaInicio,$fechaFinal); 
             $horasTotal = 0;
@@ -37,6 +37,39 @@
             $horasDeLicencia = 0;
             $horasPagables = 0;
             $x;
+            // foreach ($listaClases as $x){
+            //     $horasTotal = $horasTotal + 90 ;
+            //     if($x['existe_falta_clase'] == true){
+            //         $faltas = $faltas +1;
+            //     }
+            //     if($x['existe_falta_clase'] == false){
+            //         $horasPagables =  $horasPagables + 90;
+            //     }
+
+            //     if($x['existe_falta_clase'] != null){
+            //         if($x['clase_con_licencia'] == false){
+            //             $horasDeLicencia = $horasDeLicencia + 90;
+            //         }
+            //         if($x['clase_con_licencia'] == true){
+            //             $licenciaPedidas =  $licenciaPedidas +90;
+            //         }
+            //     }else{
+            //         //$licenciaPedidas =  $licenciaPedidas +90;
+            //     }
+
+            // }
+            // $horasPagables = $horasPagables + $horasDeLicencia;
+            // if(array_key_exists($x['nombre_docente'],$arrayAuxiliaresDeDocencia)){
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['materia'] = $x['nombre_materia'];
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['horasTotal'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasTotal'] + ($horasTotal/60);
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['faltas'] = $arrayAuxiliaresDeDocencia['nombre_docente']['faltas'] + $faltas;
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['horasDeLicencia'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasDeLicencia'] + ($horasTotal/60);
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['licenciaPedidas'] = $arrayAuxiliaresDeDocencia['nombre_docente']['licenciaPedidas'] + ($licenciaPedidas/60);
+            //     $arrayAuxiliaresDeDocencia['nombre_docente']['horasPagables'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasPagables'] + ($horasPagables/60);
+            // }else{
+            //     $aux = array($x['nombre_docente'] => ['materia' => $x['nombre_materia'],'horasTotal' => $horasTotal/60 , 'faltas' => $faltas , 'horasDeLicencia' => $horasDeLicencia/60, 'licenciaPedidas' =>$licenciaPedidas/60,'horasPagables' => $horasPagables/60 ,'id_docente' => $x['id_docente']]);
+            //     array_push($arrayAuxiliaresDeDocencia,$aux);
+            // }
             foreach ($listaClases as $x){
                 $horasTotal = $horasTotal + 90 ;
                 if($x['existe_falta_clase'] == true){
@@ -59,21 +92,21 @@
 
             }
             $horasPagables = $horasPagables + $horasDeLicencia;
-            if(array_key_exists($x['nombre_docente'],$arrayAuxiliaresDeDocencia)){
-                $arrayAuxiliaresDeDocencia['nombre_docente']['materia'] = $x['nombre_materia'];
-                $arrayAuxiliaresDeDocencia['nombre_docente']['horasTotal'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasTotal'] + ($horasTotal/60);
-                $arrayAuxiliaresDeDocencia['nombre_docente']['faltas'] = $arrayAuxiliaresDeDocencia['nombre_docente']['faltas'] + $faltas;
-                $arrayAuxiliaresDeDocencia['nombre_docente']['horasDeLicencia'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasDeLicencia'] + ($horasTotal/60);
-                $arrayAuxiliaresDeDocencia['nombre_docente']['licenciaPedidas'] = $arrayAuxiliaresDeDocencia['nombre_docente']['licenciaPedidas'] + ($licenciaPedidas/60);
-                $arrayAuxiliaresDeDocencia['nombre_docente']['horasPagables'] = $arrayAuxiliaresDeDocencia['nombre_docente']['horasPagables'] + ($horasPagables/60);
+            $tmp = $x['id_materia'];
+            if(array_key_exists($tmp,$arrayDocencia)){
+                $arrayDocencia[$tmp]['horasTotal'] +=  ($horasTotal/60);
+                $arrayDocencia[$tmp]['faltas'] +=  $faltas;
+                $arrayDocencia[$tmp]['horasDeLicencia'] +=  ($horasTotal/60);
+                $arrayDocencia[$tmp]['licenciaPedidas'] +=  ($licenciaPedidas/60);
+                $arrayDocencia[$tmp]['horasPagables'] +=  ($horasPagables/60);
             }else{
-                $aux = array($x['nombre_docente'] => ['materia' => $x['nombre_materia'],'horasTotal' => $horasTotal/60 , 'faltas' => $faltas , 'horasDeLicencia' => $horasDeLicencia/60, 'licenciaPedidas' =>$licenciaPedidas/60,'horasPagables' => $horasPagables/60 ,'id_docente' => $x['id_docente']]);
-                array_push($arrayAuxiliaresDeDocencia,$aux);
+                $arrayDocencia[$tmp] = ['horasTotal' => $horasTotal/60 , 'faltas' => $faltas , 'horasDeLicencia' => $horasDeLicencia/60, 
+                'licenciaPedidas' =>$licenciaPedidas/60,'horasPagables' => $horasPagables/60 ,'nombreDocente'=>$x['nombre_docente'] ,'nombreMateria' => $x['nombre_materia']];
             } 
         }
-        $_SESSION['datosReporteDocente'] = $arrayAuxiliaresDeDocencia;
+        $_SESSION['datosReporteDocente'] = $arrayDocencia;
         header("Location:../vista/reportes_dpa_docentes.php?facultad=".$_POST['idFacultadaes']."&departamento=".$_POST['idDepartamentos']);
-        var_dump($arrayAuxiliaresDeDocencia);
+        var_dump($arrayDocencia);
     }else{
         echo "No se pudo obtener los datos";
     }
