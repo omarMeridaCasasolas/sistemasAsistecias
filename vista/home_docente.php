@@ -28,7 +28,7 @@
         <img src="<?php echo $_SESSION['foto_user'];?>" class="rounded" width="75" height="75">
         <h4 class="text-white d-inline-block">Docente: <?php echo $_SESSION['nombreDocente'];?></h4>
         <div class="float-right py-3">
-            <a href="licencias_docentes.php" class="btn btn-primary" title="historial de licencias"><i class="far fa-id-badge"></i></a>
+            <a href="licencias_presentadas_docentes.php" class="btn btn-primary" title="historial de licencias"><i class="far fa-id-badge"></i></a>
             <button class="btn btn-primary" data-toggle="modal" id="btnEditSelf" data-target="#myModalEditarDatos" title="Editar datos"><i class="fas fa-user-edit"></i></button>
             <a href="historial_reportes_docente.php" class="btn btn-primary" title="historial de asistencia"><i class="far fa-clipboard"></i></a>
             <a href="../controlador/formCerrarSession.php" class="btn btn-primary" title="Cerrar Session"><i class="fas fa-sign-out-alt"></i></a>

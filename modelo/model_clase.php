@@ -12,6 +12,15 @@
             $this->connexion_bd=null;
         }
         
+        public function listarLicenciasDocente($id){
+            $sql = "SELECT * FROM clase INNER JOIN materia ON clase.id_materia = materia.id_materia WHERE clase_con_licencia = true AND id_docente = :id";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $sentenceSQL->execute(array(":id"=>$id));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
+
         public function adjuntarArchivoClase($id,$descripcion){
             $sql = "INSERT INTO enlace_recurso_clase(codigo_clase, descripcion_enlace_recurso, es_enlace) VALUES(:id,:descripcion,true)";
             $sentenceSQL = $this->connexion_bd->prepare($sql);

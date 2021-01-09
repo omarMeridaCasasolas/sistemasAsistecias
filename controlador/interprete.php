@@ -226,8 +226,12 @@
         $clase = new Clase();
         $metodo = $_REQUEST['metodo'];
         $res = "";
-        switch ($metodo) {
+        switch ($metodo) { 
             //Codigo Omar
+            case 'listarLicenciasDocente':
+                $id = $_REQUEST['idUsuario'];
+                $res = $clase->listarLicenciasDocente($id);
+                break;
             case 'obtenerLicenciaDiaAux':
                 $fecha = $_REQUEST['fechaInicio'];
                 $id = $_REQUEST['id'];
