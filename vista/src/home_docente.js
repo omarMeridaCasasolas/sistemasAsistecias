@@ -65,6 +65,7 @@ $(document).ready(function () {
                             $("#contFechas").append('<input type="checkbox" name="clases[]" value="'+element.codigo_clase+'"><span>  '+element.periodo_hora_clase+' '+element.nombre_materia+'</span><br>');
                         });
                     }else{
+                        $("#formFechas").hide();
                         $("#checkHTML").html("*No tiene Clases parar hoy");
                     }
                 }

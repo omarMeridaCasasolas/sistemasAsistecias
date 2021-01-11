@@ -1,6 +1,19 @@
 var tablaCarrera;
 var tablaDirector;
 $(document).ready(function() {
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (date < 10) {
+        date = '0' + date;
+    }
+    $("#div_date_time").html(year + "-" + month + "-" + date);
+    $('#fecAgregarCarrera').attr('max', year + "-" + month + "-" + date);
+
     $("#idCampo").change(function (e) {
         let tipoUnidad = $("#idCampo").val();
         console.log(tipoUnidad);
@@ -495,7 +508,9 @@ function carrerasDisponibles(){
         url: "../controlador/interprete.php",
         data: datosAmbiente,
         success: function (response) {
-            $('#asigDirector').children('option:not(:first)').remove();
+            //$('#asigDirector').children('option:not(:first)').remove();
+            $('#asigDirector').empty();
+            $('#asigDirector').append('<option value="">Selecione una opcion</option>');
             let obj= JSON.parse(response);
             obj.forEach(element => {
                 $('#asigDirector').append("<option value="+element.id_carrera+">"+element.nombre_carrera+"</option>");

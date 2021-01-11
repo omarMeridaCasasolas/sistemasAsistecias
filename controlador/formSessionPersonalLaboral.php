@@ -51,7 +51,7 @@
                         header("Location:../vista/home_trabajador_rector.php");
                     }else{
                         var_dump($respuesta);
-                        header("Location:../index.php?error=auntentificacion&tipo=docente");
+                        header("Location:../index.php?error=auntentificacion&tipo=laboral");
                     }
                 }
             }

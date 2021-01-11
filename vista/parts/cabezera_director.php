@@ -38,6 +38,8 @@
             <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#abrirVtnCorreo" id="btnAbrirCorreo"><i class="fas fa-envelope"></i></button>
             <button type="button" class="btn btn-primary d-inline-block"><i class="fas fa-user-edit"></i></button>
             <a href="../controlador/formCerrarSession.php" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i></a>
+            <br>
+            <h6 class="text-white my-1">Bolivia <span id="div_date_time"></span></h6>
         </div>
         <ul class="navbar-nav">
             <!-- Dropdown -->

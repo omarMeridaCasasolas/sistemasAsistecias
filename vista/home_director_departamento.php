@@ -131,7 +131,7 @@
         </div>
         <!-- <a href="Crear_director_carrera.php">Crear director de carrera/unidad</a> -->
         <div>
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal2">
+            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#myModal2">
                 Crear carrera
             </button>
         </div>
@@ -219,7 +219,7 @@
 
         <!-- Tabla de directores de carrera -->
         <br>
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#myModal">
                 Crear director de carrera
             </button>
         <br>
@@ -252,45 +252,43 @@
                     <form action="" id="formInsertarDirector" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="nomDirector">Nombre director de carrera: </label>
-                                <input type="text" name="nomDirector" id="nomDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="text" name="nomDirector" id="nomDirector" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
+                                <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="ciDirector">Carnet de identidad: </label>
-                                <input type="text" name="ciDirector" id="ciDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="text" name="ciDirector" id="ciDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="correoDirector">Correo electronico: </label>
                                 <input type="email" name="correoDirector" id="correoDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="telDirector">Telefono: </label>
-                                <input type="text" name="telDirector" id="telDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="text" name="telDirector" id="telDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="asigDirector">Seleccione carrera: </label>
-                                <select class="form-control" id="asigDirector" name="asigDirector">
-                                    <option value="666">Ninguno</option>
+                                <select class="form-control" id="asigDirector" name="asigDirector" required>
                                 </select>
-                                <div class="invalid-feedback">Seleccione departamento</div>
+                                <div class="invalid-feedback">Debe asignarle un departamento</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="sisDirector">Codigo SIS: </label>
-                                <input type="password" name="sisDirector" id="sisDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="password" name="sisDirector" id="sisDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passDirector">Ingrese password: </label>
-                                <input type="password" name="passDirector" id="passDirector" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="password" name="passDirector" id="passDirector" class="form-control" required pattern="[A-Za-z0-9_-]{4,15}">
+                                <div class="invalid-feedback">Solo letras y números entre 4 y 15 caracteres</div>
                             </div>
                         </div>
                         <div class="text-center my-2">
@@ -318,14 +316,14 @@
                     <input type="text" class="d-none" name="idAgregarDepartamento" id="idAgregarDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
                         <div class="form-group">
                                 <label for="nomAgregarCarrera">Nombre de la Carrera: </label>
-                                <input type="text" name="nomAgregarCarrera" id="nomAgregarCarrera" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="text" name="nomAgregarCarrera" id="nomAgregarCarrera" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
+                                <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="codAgregarCarrera">Codigo carrera: </label>
-                                <input type="text" name="codAgregarCarrera" id="codAgregarCarrera" class="form-control" required>
-                                <div class="invalid-feedback">llene el campo</div>
+                                <input type="text" name="codAgregarCarrera" id="codAgregarCarrera" class="form-control" required pattern="[a-zA-Z]{3,6}">
+                                <div class="invalid-feedback">Solo siglas entre 3 a 6 letras</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="fecAgregarCarrera">Seleccione fecha: </label>
@@ -333,7 +331,7 @@
                                 <div class="invalid-feedback">Escoje fecha:</div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                                 <label for="dirAgregarCarrera">Escoja Director de carrera: </label>
                                 <select class="form-control" id="dirAgregarCarrera" name="dirAgregarCarrera">
                                     <option value="Ninguno">Ninguno</option>

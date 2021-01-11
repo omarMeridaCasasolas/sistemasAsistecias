@@ -1,5 +1,18 @@
 var tablaFacultad, tablaDirector,passwordActual;
 $(document).ready(function() {
+
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (date < 10) {
+        date = '0' + date;
+    }
+    $("#div_date_time").html(year + "-" + month + "-" + date);
+
     let URLActual = location.href;
     //console.log(URLActual);
     let listaValores = URLActual.split("?");
@@ -11,6 +24,33 @@ $(document).ready(function() {
             Swal.fire('Problema',"Problemas al actulizar sus datos",'info');
         }
     }
+
+    $("#formEnviarCorreos").submit(function (e) { 
+        datos = {
+            clase: "Correo",
+            metodo: "enviarCorreoSimple",
+            to: $("#destinoCorreo").val(),
+            asunto: $("#fromMail").val() +" || "+ $("#idCorreoAsunto").val(), 
+            descripcion: $("#descCorreo").html()
+        };
+        console.log(datos);
+        $.ajax({
+            type: "POST",
+            url: "../controlador/interprete.php",
+            data: datos,
+            success: function (response) {
+                //console.log(response);
+                let res = response.trim();
+                if(res == "2021"){
+                    Swal.fire("Exito","Se a enviado el correo a: "+datos.to,"success");
+                }else{
+                    Swal.fire("Problema",res,"info");
+                }
+            }
+        });
+        $("#btnCerrarVtnMail").click();
+        e.preventDefault();
+    });
 
     facultadesDisponibles();
     mostarFacultades();
@@ -119,7 +159,9 @@ $(document).ready(function() {
             success: function (response) {
                 let obj= JSON.parse(response);
                 //$('#formEditarFacAsiDirAca').append("<option value='"+666+"'>Ninguno</option>");
-                $('#formEditarFacAsiDirAca').append("<option value='"+dataEditDirector.id_facultad+"'>"+dataEditDirector.director_actual+"</option>");
+                //$('#formEditarFacAsiDirAca').append("<option value='"+dataEditDirector.id_facultad+"'>"+dataEditDirector.director_actual+"</option>");
+                $('#facDirAcad').append('<option value="">Selecione una opcion</option>');
+
                 obj.forEach(element => {
                     $('#formEditarFacAsiDirAca').append("<option value='"+element.id_facultad+"'>"+element.nombre_facultad+"</option>");
                 });
@@ -591,6 +633,8 @@ function facultadesDisponibles(){
         data: datosFacultad,
         success: function (response) {
             let obj= JSON.parse(response);
+            $('#facDirAcad').empty();
+            $('#facDirAcad').append('<option value="">Selecione una opcion</option>');
             obj.forEach(element => {
                 $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
             });
@@ -612,6 +656,8 @@ function listarDirectoresDisponibles(){
         data: datosDirector,
         success: function (response) {
             let obj= JSON.parse(response);
+            $('#facDirAcad').empty();
+            $('#facDirAcad').append('<option value="">Selecione una opcion</option>');
             obj.forEach(element => {
                 $('#facDirAcad').append("<option>"+element.nombre_facultad+"</option>");
             });
@@ -661,6 +707,8 @@ function cargarFacultadesDisponibles($idElemSelect){
         success: function (response) {
             let obj= JSON.parse(response);
             //$('#formCrearFacAsiDirAca').append("<option value='"+666+"'>Ninguno</option>");
+            $('#formCrearFacAsiDirAca').empty();
+            $('#formCrearFacAsiDirAca').append('<option value="">Selecione una opcion</option>');
             obj.forEach(element => {
                 $('#formCrearFacAsiDirAca').append("<option value='"+element.id_facultad+"'>"+element.nombre_facultad+"</option>");
             });
@@ -714,3 +762,4 @@ function obtnerDatosPropios(){
         }
     });
 }
+

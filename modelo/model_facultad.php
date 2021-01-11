@@ -35,7 +35,7 @@
         }
 
         public function facultadesDisponibles(){
-            $sql = "SELECT * FROM facultades WHERE director_academico IS NULL or director_academico = 'Ninguno'";
+            $sql = "SELECT * FROM facultades WHERE (director_academico IS NULL or director_academico = 'Ninguno') AND id_facultad <> 666";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

@@ -86,9 +86,10 @@
                             <form action="" id="formGetFecha">
                                 <div class="row">
                                     <div class="form-group col-8">
+                                        <label for="tipoLicencia">Pedir permiso por </label>
                                         <select name="tipoLicencia" id="tipoLicencia" class="form-control">
-                                            <option value="dia">Clase</option>
-                                            <option value="clase">Dia</option>
+                                            <option value="dia">Dia</option>
+                                            <option value="clase">Semana</option>
                                         </select>
                                     </div>
                                     <div class="col-4">
