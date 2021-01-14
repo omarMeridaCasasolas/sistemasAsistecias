@@ -383,6 +383,10 @@
         $metodo = $_REQUEST['metodo'];
         $res = "";
         switch ($metodo) { 
+            case 'quitarCargo':
+                $idDirector = $_REQUEST['idDirector'];
+                $res = $director->quitarCargo($idDirector);    
+                break;
             case 'AddRector':
                 $nombre = $_REQUEST['nombre'];
                 $ci = $_REQUEST['ci'];
@@ -491,6 +495,15 @@
             case 'eliminarDirector':
                 $clavePrimaria = $_REQUEST['clavePrimaria'];
                 $res = $director->eliminarDirector($clavePrimaria);
+                break;
+            case 'actualizarDirectorCarrera':
+                $clavePrimaria = $_REQUEST['clavePrimaria'];
+                $nomDirector = $_REQUEST['nomDirector'];
+                $ciDirector = $_REQUEST['ciDirector'];
+                $correoDirector = $_REQUEST['correoDirector'];
+                $telDirector = $_REQUEST['telDirector'];
+                $carrera = $_REQUEST['carrera'];
+                $res = $director->actualizarDirectorCarrera($clavePrimaria,$nomDirector,$ciDirector,$correoDirector,$telDirector,$carrera);
                 break;
             case 'actualizarDirector':
                 $clavePrimaria = $_REQUEST['clavePrimaria'];
@@ -714,6 +727,13 @@
                 $nomDirector = $_REQUEST['nomDirector'];
                 $res = $carrera->actualizarDirectorCarrera($nomDirector);
                 break;
+            case 'editarCarreraDepartamento':
+                $idCarrera = $_REQUEST['idCarrera'];
+                $nomCarrera = $_REQUEST['nomCarrera']; 
+                $codCarrera = $_REQUEST['codCarrera']; 
+                $fecCarrera = $_REQUEST['fecCarrera']; 
+                $res = $carrera->editarCarreraDepartamento($idCarrera,$nomCarrera,$codCarrera,$fecCarrera);
+                break;
             case 'editarCarrera':
                 $idCarrera = $_REQUEST['idCarrera'];
                 $nomCarrera = $_REQUEST['nomCarrera']; 
@@ -727,8 +747,7 @@
                 $nomAgregarCarrera = $_REQUEST['nomAgregarCarrera']; 
                 $codAgregarCarrera = $_REQUEST['codAgregarCarrera']; 
                 $fecAgregarCarrera = $_REQUEST['fecAgregarCarrera']; 
-                $dirAgregarCarrera = $_REQUEST['dirAgregarCarrera']; 
-                $res = $carrera->agregarCarrera($depAgregarCarrera,$nomAgregarCarrera,$codAgregarCarrera,$fecAgregarCarrera,$dirAgregarCarrera);
+                $res = $carrera->agregarCarrera($depAgregarCarrera,$nomAgregarCarrera,$codAgregarCarrera,$fecAgregarCarrera);
                 break;
             case 'eliminarCarrera':
                 $idCarrera = $_REQUEST['idCarrera']; 

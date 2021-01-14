@@ -46,16 +46,18 @@
             return $respuesta;
         }
 
-        public function agregarCarrera($depAgregarCarrera,$nomAgregarCarrera,$codAgregarCarrera,$fecAgregarCarrera,$dirAgregarCarrera){
-            $sql = "INSERT INTO  carrera(id_departamento,nombre_carrera,codigo_Carrera,fecha_creacion_carrera,director_carrera) VALUES(:departamento,:nombre,:codigo,:fecha,:director)";
+        public function editarCarreraDepartamento($idCarrera,$nomCarrera,$codCarrera,$fecCarrera){
+            $sql = "UPDATE carrera SET nombre_carrera = :nombre, codigo_carrera = :codigo, fecha_creacion_carrera = :fecha WHERE id_carrera = :id";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $sentenceSQL->execute(array(":departamento"=>$depAgregarCarrera,":nombre"=>$nomAgregarCarrera,":codigo"=>$codAgregarCarrera,":fecha"=>$fecAgregarCarrera,":director"=>$dirAgregarCarrera));
-            if($respuesta == 1 || $respuesta == true){
-                $res = $this->connexion_bd->lastInsertId();
-                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
-                $sentenceSQL->closeCursor();
-                return $string;
-            }
+            $respuesta = $sentenceSQL->execute(array(":nombre"=>$nomCarrera,":codigo"=>$codCarrera,":fecha"=>$fecCarrera,":id"=>$idCarrera));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+
+        public function agregarCarrera($depAgregarCarrera,$nomAgregarCarrera,$codAgregarCarrera,$fecAgregarCarrera){
+            $sql = "INSERT INTO  carrera(id_departamento,nombre_carrera,codigo_Carrera,fecha_creacion_carrera,director_carrera) VALUES(:departamento,:nombre,:codigo,:fecha,'Ninguno')";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":departamento"=>$depAgregarCarrera,":nombre"=>$nomAgregarCarrera,":codigo"=>$codAgregarCarrera,":fecha"=>$fecAgregarCarrera));
             $sentenceSQL->closeCursor();
             //$res = json_encode($respuesta);
             return $respuesta;
@@ -80,13 +82,15 @@
         }
 
         public function listarCarrera(){
-            $sql = "SELECT * FROM carrera  WHERE id_carrera <> 666";
+            $sql = "SELECT c.id_carrera, c.nombre_carrera, codigo_carrera, director_carrera, fecha_creacion_carrera,id_ditector   FROM carrera as c 
+            FULL OUTER JOIN director_unidad ON c.id_carrera = director_unidad.id_carrera WHERE c.id_carrera <> 666";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             //$res = json_encode($respuesta);
             echo json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+
             //return $res;
         }
 

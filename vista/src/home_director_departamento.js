@@ -13,6 +13,7 @@ $(document).ready(function() {
     }
     $("#div_date_time").html(year + "-" + month + "-" + date);
     $('#fecAgregarCarrera').attr('max', year + "-" + month + "-" + date);
+    $('#fecEditarCarrera').attr('max', year + "-" + month + "-" + date);
 
     $("#idCampo").change(function (e) {
         let tipoUnidad = $("#idCampo").val();
@@ -75,46 +76,90 @@ $(document).ready(function() {
     });
 
     $("#formEliminarCarrera").submit(function (e) { 
-        let datosCarrera = {
-        clase: "Carrera",
-        metodo: "eliminarCarrera",
-        idCarrera: $("#idDeletCarrera").val()
-        };
-        $.post("../controlador/interprete.php",datosCarrera,function(resp){
-            $("#btnCerrarVtnCarrera").click();
-            if(resp == 1){
-                // $("#exito").removeClass("d-none");
-                $('#tablaCarrera').dataTable().fnDestroy();
-                swal("Se ha Eliminado la carrera", $("#nomDeletCarrera").html(), "success");
-                $("#formEliminarCarrera")[0].reset();
-                listarCarreras();
-            }else{
-                swal("No se pudo realizar la operacion", resp, "warning");
-                //$("#error").removeClass("d-none");
-            }
-        });
+        // if($("#idDeletCarreraDirector").val() !== null){
+        //     console.log($("#idDeletCarreraDirector").val());
+        // }
+        $("#myModalEliminarCarrera").hide();
+        $("#btnCerrarVtnCarrera").click();
+        if($("#idDeletCarreraDirector").val() !== ""){
+            let datosDirector = {
+                clase:"Director",
+                metodo: "quitarCargo",
+                idDirector: $("#idDeletCarreraDirector").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "../controlador/interprete.php",
+                data: datosDirector,
+                success: function (response) {
+                    if(response == 1){
+                        listarTableDirectorCarrera();
+                        let datosCarrera = {
+                            clase: "Carrera",
+                            metodo: "eliminarCarrera",
+                            idCarrera: $("#idDeletCarrera").val()
+                        };
+                        $.post("../controlador/interprete.php",datosCarrera,function(resp){
+                            $("#btnCerrarVtnCarrera").click();
+                            if(resp == 1){
+                                // $("#exito").removeClass("d-none");
+                                $('#tablaCarrera').dataTable().fnDestroy();
+                                swal("Se ha Eliminado la carrera", $("#nomDeletCarrera").html(), "success");
+                                $("#formEliminarCarrera")[0].reset();
+                                listarCarreras();
+                            }else{
+                                swal("No se pudo realizar la operacion", resp, "warning");
+                                //$("#error").removeClass("d-none");
+                            }
+                        });
+                    }else{
+                        swal("No se pudo realizar la operacion", response, "warning");
+                    }
+                }
+            });
+
+        }else{
+            let datosCarrera = {
+                clase: "Carrera",
+                metodo: "eliminarCarrera",
+                idCarrera: $("#idDeletCarrera").val()
+            };
+            $.post("../controlador/interprete.php",datosCarrera,function(resp){
+                $("#btnCerrarVtnCarrera").click();
+                if(resp == 1){
+                    // $("#exito").removeClass("d-none");
+                    $('#tablaCarrera').dataTable().fnDestroy();
+                    swal("Se ha Eliminado la carrera", $("#nomDeletCarrera").html(), "success");
+                    $("#formEliminarCarrera")[0].reset();
+                    listarCarreras();
+                }else{
+                    swal("No se pudo realizar la operacion", resp, "warning");
+                    //$("#error").removeClass("d-none");
+                }
+            });
+        }
         e.preventDefault();
     });
 
-    $("#formEditarCarrera").submit(function (e) { 
+    $("#formEditarCarrera").submit(function (e) {
+        $("#myModalEditarCarrera").hide();
+        $("#btnCerrarVtnEditarCarrera").click();
         let datosCarrera = {
-        clase: "Carrera",
-        metodo: "editarCarrera",
-        idCarrera: $("#idEditarCarrera").val(),
-        nomCarrera: $("#nomEditarCarrera").val(),
-        codCarrera: $("#codEditarCarrera").val(),
-        fecCarrera: $("#fecEditarCarrera").val(),
-        dirCarrera: $("#dirEditarCarrera option:selected").text()
+            clase: "Carrera",
+            metodo: "editarCarreraDepartamento",
+            idCarrera: $("#idEditarCarrera").val(),
+            nomCarrera: $("#nomEditarCarrera").val(),
+            codCarrera: $("#codEditarCarrera").val(),
+            fecCarrera: $("#fecEditarCarrera").val(),
         };
         $.post("../controlador/interprete.php",datosCarrera,function(resp){
             $("#btnCerrarVtnEditarCarrera").click();
             if(resp == 1){
-                // $("#exito").removeClass("d-none");
-                if($("#dirAntiguoEditarCarrera").html() != $("#dirEditarCarrera ").val()){
+                if( "Ninguno" != $("#dirEditarCarrera").val()){
                     let datosDirector = {
                         clase: "Director",
                         metodo: "actualizarAsignacionDirector",
-                        idDirector: $("#dirEditarCarrera ").val(),
+                        idDirector: $("#idEditDirectorCarrera").val(),
                         carDirector: datosCarrera.nomCarrera
                     };
                     $.ajax({
@@ -144,9 +189,14 @@ $(document).ready(function() {
                     $("#formEliminarCarrera")[0].reset();
                     listarCarreras();
                 }
-            
+
+                // $('#tablaCarrera').dataTable().fnDestroy();
+                // swal("Se ha Editado la carrera", $("#nomEditarCarrera").html(), "success");
+                // $("#formEliminarCarrera")[0].reset();
+                // listarCarreras();
             }else{
                 swal("No se pudo realizar la operacion", resp, "warning");
+                $("#formEliminarCarrera")[0].reset();
                 //$("#error").removeClass("d-none");
             }
         });
@@ -154,6 +204,7 @@ $(document).ready(function() {
     });
 
     $("#formInsertarDocente").submit(function (e) { 
+        $("#myModal").hide();
         let datosDocente = {
         clase: "Docente",
         metodo: "insertarDocente",
@@ -166,13 +217,13 @@ $(document).ready(function() {
         //Aqui se coloca el id que identifica a a la autoridad-Ambiente
         };
         $.post("../controlador/interprete.php",datosDocente,function(resp){
+            $("#btnVentanaDocente").click();
             if(resp == 1){
-                $("#btnVentanaDocente").click();
                 $("#formInsertarDocente")[0].reset();
                 $("#exitoDocente").removeClass("d-none");
                 $('#tablaDocente').dataTable().fnDestroy();
                 listarTableDocente();
-                //carrerasDisponibles();
+                carrerasDisponibles();
             }else{
                 $("#errorDocente").removeClass("d-none");
             }
@@ -198,7 +249,7 @@ $(document).ready(function() {
                 $("#exitoAuxiliarDocente").removeClass("d-none");
                 $('#tablaAuxiliar').dataTable().fnDestroy();
                 listarTableAuxiliarDocente();
-                //carrerasDisponibles();
+                carrerasDisponibles();
             }else{
                 $("#errorAuxiliarDocente").removeClass("d-none");
             }
@@ -207,55 +258,24 @@ $(document).ready(function() {
     });
 
     $("#formCrearCarrera").submit(function (e) { 
+        $("#myModal2").hide();
         let datosCarrera = {
-        clase: "Carrera",
-        metodo: "agregarCarrera",
-        depAgregarCarrera: $("#idAgregarDepartamento").val(),
-        nomAgregarCarrera: $("#nomAgregarCarrera").val(),
-        codAgregarCarrera: $("#codAgregarCarrera").val(),
-        fecAgregarCarrera: $("#fecAgregarCarrera").val(),
-        dirAgregarCarrera: $("#dirAgregarCarrera option:selected").text()
-        //Aqui se coloca el id que identifica a a la autoridad-Ambiente
-        };
+            clase: "Carrera",
+            metodo: "agregarCarrera",
+            depAgregarCarrera: $("#idAgregarDepartamento").val(),
+            nomAgregarCarrera: $("#nomAgregarCarrera").val(),
+            codAgregarCarrera: $("#codAgregarCarrera").val(),
+            fecAgregarCarrera: $("#fecAgregarCarrera").val()
+        }
         console.log(datosCarrera);
         $.post("../controlador/interprete.php",datosCarrera,function(resp){
-            valor = parseInt(resp);
-            console.log(valor);
-            if(valor != 0  && Number.isInteger(valor)){
-                // $("#btnCerrarAutoridad").click();
-                // swal("Exito!!","Se creo la carrera "+$("#nomAgregarCarrera").val(),"success");
-                // En caso se haya asignado director desde carrera 
-                if( datosCarrera.dirAgregarCarrera != "Ninguno"){
-                    let datosDirector = {
-                        clase: "Director",
-                        metodo: "actualizarCarreraDeDirector",
-                        idDirector: $("#dirAgregarCarrera").val(),
-                        nomActualizarDirectorCargo: $("#nomAgregarCarrera").val(),
-                        idCarrera: valor
-                        };
-                        console.log(datosDirector);
-                        $.post("../controlador/interprete.php",datosDirector,function(respuesta){
-                            if(respuesta == 1){
-                                $("#btnCerrarVtnCrearCarrera").click();
-                                swal("Exito!!","Se creo la carrera "+$("#nomAgregarCarrera").val(),"success");
-                                $("#formCrearCarrera")[0].reset();
-                                $('#tablaCarrera').dataTable().fnDestroy();
-                                $('#tablaDirector').dataTable().fnDestroy();
-                                listarTableDirectorCarrera();
-                                listarCarreras();
-                                carrerasDisponibles();
-                            }else{
-                                swal("Error al crear la carrera",respuesta,"info");
-                            }
-                        });
-                }else{
-                    $("#btnCerrarVtnCrearCarrera").click();
-                    swal("Exito!!","Se creo la carrera "+$("#nomAgregarCarrera").val(),"success");
-                    $("#formCrearCarrera")[0].reset();
-                    $('#tablaCarrera').dataTable().fnDestroy();
-                    listarCarreras();
-                    carrerasDisponibles()
-                }
+            if(resp == 1){
+                $("#btnCerrarVtnCrearCarrera").click();
+                swal("Exito!!","Se creo la carrera "+$("#nomAgregarCarrera").val(),"success");
+                $("#formCrearCarrera")[0].reset();
+                $('#tablaCarrera').dataTable().fnDestroy();
+                listarCarreras();
+                carrerasDisponibles()
             }else{
                 //$("#btnCerrarAutoridad").click();
                 swal("Error al crear la carrera",resp,"info");
@@ -266,16 +286,16 @@ $(document).ready(function() {
 
     $("#formInsertarDirector").submit(function (e) { 
         let datosDirector = {
-        clase: "Director",
-        metodo: "insertarDirectorCarrera",
-        nomDirector: $("#nomDirector").val(),
-        ciDirector: $("#ciDirector").val(),
-        correoDirector: $("#correoDirector").val(),
-        telDirector: $("#telDirector").val(),
-        asigDirector: $("#asigDirector").val(),
-        textDirector: $("#asigDirector option:selected").text(),
-        sisDirector: $("#sisDirector").val(),
-        passDirector: $("#passDirector").val()
+            clase: "Director",
+            metodo: "insertarDirectorCarrera",
+            nomDirector: $("#nomDirector").val(),
+            ciDirector: $("#ciDirector").val(),
+            correoDirector: $("#correoDirector").val(),
+            telDirector: $("#telDirector").val(),
+            asigDirector: $("#asigDirector").val(),
+            textDirector: $("#asigDirector option:selected").text(),
+            sisDirector: $("#sisDirector").val(),
+            passDirector: $("#passDirector").val()
         //Aqui se coloca el id que identifica a a la autoridad-Ambiente
         };
         $.post("../controlador/interprete.php",datosDirector,function(resp){
@@ -297,6 +317,8 @@ $(document).ready(function() {
         });
         e.preventDefault();
     });
+
+
 
     $("#formEliminarDirectorCarrera").submit(function (e) { 
         let datosDirector = {
@@ -323,7 +345,7 @@ $(document).ready(function() {
                             $('#tablaCarrera').dataTable().fnDestroy();
                             listarCarreras();
                             // listarTableDirectorCarrera();
-                            // carrerasDisponibles();
+                            carrerasDisponibles();
                         }else{
                             swal("Problema!!",data,"info");
                         }
@@ -345,19 +367,23 @@ $(document).ready(function() {
     });
 
     $("#formEditarDirectorCarrera").submit(function (e) { 
+        $("#myModalEditarDirector").hide();
         let datosDirector = {
-        clase: "Director",
-        metodo: "actualizarDirector",
-        nomDirector: $("#nomEditDirector").val(),
-        ciDirector: $("#ciEditDirector").val(),
-        correoDirector: $("#correoEditDirector").val(),
-        telDirector: $("#telEditDirector").val(),
-        clavePrimaria: $("#idEditarDirector").val()
+            clase: "Director",
+            metodo: "actualizarDirectorCarrera",
+            nomDirector: $("#nomEditDirector").val(),
+            ciDirector: $("#ciEditDirector").val(),
+            correoDirector: $("#correoEditDirector").val(),
+            telDirector: $("#telEditDirector").val(),
+            clavePrimaria: $("#idEditarDirector").val(),
+            carrera: $("#matEditDirector option:selected").text()
         };
         // console.log(datosDirector);
         $.post("../controlador/interprete.php",datosDirector,function(resp){
             $("#btnVentanaEditDirector").click();
             if(resp == 1){
+                console.log(datosDirector.nomDirector);
+                console.log($("#nomEditAntiguoDirector").val());
                 if(datosDirector.nomDirector != $("#nomEditAntiguoDirector").val()){
                     let datosCarrera = {
                         clase: "Carrera",
@@ -369,11 +395,9 @@ $(document).ready(function() {
                             console.log(data);
                             let valor = parseInt(data);
                             if(valor == 1){
-                                $('#tablaCarrera').dataTable().fnDestroy();
                                 listarCarreras();
                                 $("#formEditarDirectorCarrera")[0].reset();
                                 swal("Exito!!","Se ha actualizado los daros de :"+datosDirector.nomDirector,"success");
-                                $('#tablaDirector').dataTable().fnDestroy();
                                 listarTableDirectorCarrera();
                             }else{
                                 swal("Problemas!!",data,"warning");
@@ -425,10 +449,12 @@ $(document).ready(function() {
         $("#nomDeletCarrera").html(dataDeleteCarrera.nombre_carrera);
         $("#codDeletCarrera").html(dataDeleteCarrera.codigo_carrera);
         $("#idDeletCarrera").val(dataDeleteCarrera.id_carrera);
+        console.log(dataDeleteCarrera.id_ditector);
+        $("#idDeletCarreraDirector").val(dataDeleteCarrera.id_ditector);
     });
 
     $("#tablaCarrera tbody").on('click','button.editarCarrera',function () {
-        let dataEditarCarrera = tablaCarrera.row( $(this).parents('tr') ).data();
+        let dataEditarCarrera = tablaCarrera.row($(this).parents('tr')).data();
         console.log(dataEditarCarrera);
         $("#dirAntiguoEditarCarrera").html(dataEditarCarrera.director_carrera);
         $("#idEditarCarrera").val(dataEditarCarrera.id_carrera);
@@ -436,6 +462,7 @@ $(document).ready(function() {
         $("#codEditarCarrera").val(dataEditarCarrera.codigo_carrera);
         $("#fecEditarCarrera").val(dataEditarCarrera.fecha_creacion_carrera);
         $("#dirEditarCarrera").val(dataEditarCarrera.director_carrera);
+        $("#idEditDirectorCarrera").val(dataEditarCarrera.id_ditector);
     });
 
     $("#tablaDirector tbody").on('click','button.eliminarDirector',function () {
@@ -455,12 +482,37 @@ $(document).ready(function() {
         $("#nomEditDirector").val(dataEditarDirector.nombre_director);
         $("#ciEditDirector").val(dataEditarDirector.carnet_director);
         $("#telEditDirector").val(dataEditarDirector.telefono_director);
-        $("#correoEditDirector").val(dataEditarDirector.correo_electronico_director);
+        $("#correoEditDirector").val(dataEditarDirector.correo_electronico_director); 
+        $('#matEditDirector').empty();
+        $("#matEditDirector").append("<option value="+dataEditarDirector.id_carrera+">"+dataEditarDirector.director_actual+"</option>"); 
+        console.log(dataEditarDirector.id_carrera);
+        $("#matEditDirector").val(dataEditarDirector.id_carrera); 
+        let datosAmbiente = {
+            clase: "Carrera",
+            metodo: "carreraDisponibles",
+            categoria: $("#idCategoria").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "../controlador/interprete.php",
+            data: datosAmbiente,
+            success: function (response) {
+                //$('#asigDirector').children('option:not(:first)').remove();
+                let obj= JSON.parse(response);
+                obj.forEach(element => {
+                    $('#matEditDirector').append("<option value="+element.id_carrera+">"+element.nombre_carrera+"</option>");
+                });
+            },
+            error : function(jqXHR, status, error) {
+                console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);
+            }
+        });      
     });
     
 });
 
 function listarCarreras(){
+    $('#tablaCarrera').dataTable().fnDestroy();
     tablaCarrera = $("#tablaCarrera").DataTable({
         "ajax":{
             "method":"POST",
@@ -479,7 +531,8 @@ function listarCarreras(){
 }
 
 function listarTableDirectorCarrera(){
-     tablaDirector = $("#tablaDirector").DataTable({
+    $('#tablaDirector').dataTable().fnDestroy();
+    tablaDirector = $("#tablaDirector").DataTable({
         "ajax":{
             "method":"POST",
             "data" : {'clase': 'Director' , 'metodo':'listarTableDirectorCarrera'},
@@ -523,6 +576,7 @@ function carrerasDisponibles(){
 }
 
 function listarPersonalLaboratorio(){
+    $('#tablaPersonalLaboratorio').dataTable().fnDestroy();
     var personalLaboratorio = $("#tablaPersonalLaboratorio").DataTable({
         "destroy":true,
         "ajax":{
@@ -613,6 +667,7 @@ var eliminarPersonalLab = function(tbody,table){
 
 
 function listarTableDocente(){
+    $('#tablaDocente').dataTable().fnDestroy();
     $("#tablaDocente").DataTable({
         "ajax":{
             "method":"POST",
@@ -630,6 +685,7 @@ function listarTableDocente(){
 
 
 function listarTableAuxiliarDocente(){
+    $('#tablaAuxiliar').dataTable().fnDestroy();
     $("#tablaAuxiliar").DataTable({
         "ajax":{
             "method":"POST",

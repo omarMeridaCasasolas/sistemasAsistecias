@@ -136,8 +136,8 @@
             </button>
         </div>
         <h2 class="text-primary text-center">Carreras del departamento</h2>
-        <table id="tablaCarrera" class="hover" style="width:100%">
-            <thead>
+        <table id="tablaCarrera" class="hover cell-border" style="width:100%">
+            <thead class="bg-info">
                 <tr>
                     <th>Codigo carrera</th>
                     <th>Nombre de carrera</th>
@@ -160,6 +160,7 @@
                     <div class="modal-body">
                     <form action="" id="formEliminarCarrera" method="post" class="was-validated">
                         <input type="text" name="idDeletCarrera" id="idDeletCarrera" class="d-none">
+                        <input type="text" name="idDeletCarreraDirector" id="idDeletCarreraDirector" class="d-none">
                         <h5>Desea eliminar la carrera <strong id="nomDeletCarrera"></strong> con codigo <strong id="codDeletCarrera"></strong></h5>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Eliminar carrera">
@@ -182,7 +183,8 @@
                     <div class="modal-body">
                         <form action="" id="formEditarCarrera" method="post" class="was-validated" >
                             <input type="text" name="idEditarCarrera" id="idEditarCarrera" class="d-none">
-                            <span class="d-none" is="#dirAntiguoEditarCarrera"></span>
+                            <input type="text" name="idEditDirectorCarrera" id="idEditDirectorCarrera" class="d-none">
+                            <span class="d-none" id="dirAntiguoEditarCarrera"></span>
                             <div class="form-group">
                                     <label for="nomEditarCarrera">Nombre de la carrea: </label>
                                     <input type="text" name="nomEditarCarrera" id="nomEditarCarrera" class="form-control" required>
@@ -200,7 +202,7 @@
                                     <div class="invalid-feedback">Escoje fecha:</div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group d-none" >
                                     <label for="dirEditarCarrera">Cambiar director de carrera: </label>
                                     <select class="form-control" id="dirEditarCarrera">
                                     <option value="Ninguno">Ninguno</option>
@@ -224,8 +226,8 @@
             </button>
         <br>
         <h2 class="text-primary text-center">Directores de carrera</h2>
-        <table id="tablaDirector" class="hover" style="width:100%">
-            <thead>
+        <table id="tablaDirector" class="hover cell-border" style="width:100%">
+            <thead class="bg-info">
                 <tr>
                     <th>Nombre del director</th>
                     <th>Asignacion </th>
@@ -252,29 +254,29 @@
                     <form action="" id="formInsertarDirector" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="nomDirector">Nombre director de carrera: </label>
-                                <input type="text" name="nomDirector" id="nomDirector" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
+                                <input type="text" name="nomDirector" id="nomDirector" class="form-control"   autocomplete="off" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
                                 <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="ciDirector">Carnet de identidad: </label>
-                                <input type="text" name="ciDirector" id="ciDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <input type="text" name="ciDirector" id="ciDirector" class="form-control"   autocomplete="off" required pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="correoDirector">Correo electronico: </label>
-                                <input type="email" name="correoDirector" id="correoDirector" class="form-control" required>
+                                <input type="email" name="correoDirector" id="correoDirector" class="form-control" required  autocomplete="off" >
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="telDirector">Telefono: </label>
-                                <input type="text" name="telDirector" id="telDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <input type="text" name="telDirector" id="telDirector" class="form-control" autocomplete="off" required pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="asigDirector">Seleccione carrera: </label>
-                                <select class="form-control" id="asigDirector" name="asigDirector" required>
+                                <select class="form-control" id="asigDirector" name="asigDirector" required  >
                                 </select>
                                 <div class="invalid-feedback">Debe asignarle un departamento</div>
                             </div>
@@ -282,12 +284,12 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="sisDirector">Codigo SIS: </label>
-                                <input type="password" name="sisDirector" id="sisDirector" class="form-control" required pattern="[0-9]{6,8}">
+                                <input type="password" name="sisDirector" id="sisDirector" class="form-control"  autocomplete="off" required pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passDirector">Ingrese password: </label>
-                                <input type="password" name="passDirector" id="passDirector" class="form-control" required pattern="[A-Za-z0-9_-]{4,15}">
+                                <input type="password" name="passDirector" id="passDirector" class="form-control" autocomplete="off" required pattern="[A-Za-z0-9_-]{4,15}">
                                 <div class="invalid-feedback">Solo letras y números entre 4 y 15 caracteres</div>
                             </div>
                         </div>
@@ -316,13 +318,13 @@
                     <input type="text" class="d-none" name="idAgregarDepartamento" id="idAgregarDepartamento" value="<?php echo $_SESSION['categoria_social'];?>">
                         <div class="form-group">
                                 <label for="nomAgregarCarrera">Nombre de la Carrera: </label>
-                                <input type="text" name="nomAgregarCarrera" id="nomAgregarCarrera" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
+                                <input type="text" name="nomAgregarCarrera" id="nomAgregarCarrera" class="form-control"  autocomplete="off" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
                                 <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="codAgregarCarrera">Codigo carrera: </label>
-                                <input type="text" name="codAgregarCarrera" id="codAgregarCarrera" class="form-control" required pattern="[a-zA-Z]{3,6}">
+                                <input type="text" name="codAgregarCarrera" id="codAgregarCarrera" class="form-control"  autocomplete="off" required pattern="[a-zA-Z]{3,6}">
                                 <div class="invalid-feedback">Solo siglas entre 3 a 6 letras</div>
                             </div>
                             <div class="form-group col-md-7">
@@ -339,7 +341,7 @@
                                 <div class="invalid-feedback">Seleccione director</div>
                             </div>
                         <div class="text-center my-2">
-                            <input type="submit" class="btn  btn-primary" value="Crear Director de carrera">
+                            <input type="submit" class="btn  btn-primary" value="Crear carrera">
                             <button class="btn btn-danger" class="close" data-dismiss="modal">Cancelar</button>
                         </div>
                     </form>
@@ -365,26 +367,34 @@
                         <div class="row">
                             <div class="form-group col-md-7">
                                 <label for="nomEditDirector">Editar nombre: </label>
-                                <input type="text" name="nomEditDirector" id="nomEditDirector" class="form-control" required>
+                                <input type="text" name="nomEditDirector" id="nomEditDirector"  autocomplete="off" class="form-control" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-5">
                                 <label for="ciEditDirector">Editar codigo SIS: </label>
-                                <input type="text" name="ciEditDirector" id="ciEditDirector" class="form-control" required>
+                                <input type="text" name="ciEditDirector" id="ciEditDirector"  autocomplete="off" class="form-control" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="telEditDirector">Telefono: </label>
-                                <input type="text" name="telEditDirector" id="telEditDirector" class="form-control" required>
+                                <input type="text" name="telEditDirector" id="telEditDirector" autocomplete="off" class="form-control" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="correoEditDirector">Correo electronico: </label>
-                                <input type="email" name="correoEditDirector" id="correoEditDirector" class="form-control" required>
+                                <input type="email" name="correoEditDirector" id="correoEditDirector"  autocomplete="off" class="form-control" required>
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                                <label for="matEditDirector">Telefono: </label>
+                                <select name="matEditDirector" id="matEditDirector"  autocomplete="off" class="form-control">
+                                
+                                </select>
+                                <div class="invalid-feedback">llene el campo</div>
                         </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Actualizar datos">

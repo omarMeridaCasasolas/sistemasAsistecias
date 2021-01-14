@@ -7,6 +7,15 @@
         public function cerrarConexion(){
             $this->connexion_bd=null;
         }
+        // nuevo codigo Omar
+        public function quitarCargo($idDirector){
+            $sql = "UPDATE director_unidad SET id_carrera = null, director_actual = 'Ninguno' WHERE id_ditector = :id ";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $respuesta = $sentenceSQL->execute(array(":id"=>$idDirector));
+            $sentenceSQL->closeCursor();
+            return $respuesta;
+        }
+        //
 
         public function AddRector($nombre,$ci,$correo,$tel,$pass){
             $sql = "INSERT INTO director_unidad(nombre_director,carnet_director,correo_electronico_director,telefono_director,password_director,cargo_director,user_tmp,codigo_sis_director) VALUES(:nombre, :ci, :correo, :tel,:pass,'Rector','https://convocatoriaumss.s3.us-east-2.amazonaws.com/user.png','12345')";
@@ -212,6 +221,13 @@
         return $respuesta;
     }
 
+    public function actualizarDirectorCarrera($clavePrimaria,$nomDirector,$ciDirector,$correoDirector,$telDirector,$carrera){
+        $sql = "UPDATE director_unidad SET nombre_director = :nom, carnet_director = :ci, correo_electronico_director = :correo ,telefono_director = :telef , director_actual = :carrera  WHERE id_ditector = :claveP";
+        $sentenceSQL = $this->connexion_bd->prepare($sql);
+        $respuesta = $sentenceSQL->execute(array(":nom"=>$nomDirector,":ci"=>$ciDirector,":correo"=>$correoDirector,":telef"=>$telDirector,":claveP"=>$clavePrimaria,":carrera"=>$carrera));
+        $sentenceSQL->closeCursor();
+        return $respuesta;
+    }
     // public function directoresAcademicosDisponibles(){
     //     $sql = "SELECT * FROM director_unidad WHERE cargo_director = 'Director academico' WHERE ";
     //     $sentenceSQL = $this->connexion_bd->prepare($sql);

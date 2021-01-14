@@ -74,6 +74,7 @@
                         <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                             <label for="correoAutoridad">Ingrese su correo electronico: </label>
                             <input type="email" name="correoAutoridad" id="correoAutoridad" class="form-control" required>
+                            <div class="invalid-feedback">Verifique que no tenga espacio o caracteres especiales</div>
                             <div class="valid-feedback">Formato aceptado</div>
                         </div>
                     </div>
@@ -98,6 +99,7 @@
                         <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                             <label for="correoDocente">Ingrese su correo electronico: </label>
                             <input type="email" name="correoDocente" id="correoDocente" class="form-control" required>
+                            <div class="invalid-feedback">Verifique que no tenga espacio o caracteres especiales</div>
                             <div class="valid-feedback">Formato aceptado</div>
                         </div>
                     </div>
@@ -148,6 +150,7 @@
                         <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                             <label for="correoAuxLab">Ingrese su correo electronico: </label>
                             <input type="email" name="correoAuxLab" id="correoAuxLab" class="form-control" required>
+                            <div class="invalid-feedback">Verifique que no tenga espacio o caracteres especiales</div>
                             <div class="valid-feedback">Formato aceptado</div>
                         </div>
                     </div>
@@ -199,6 +202,7 @@
                         <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                             <label for="correoAuxDoc">Ingrese su correo electronico: </label>
                             <input type="email" name="correoAuxDoc" id="correoAuxDoc" class="form-control" required>
+                            <div class="invalid-feedback">Verifique que no tenga espacio o caracteres especiales</div>
                             <div class="valid-feedback">Formato aceptado</div>
                         </div>
                     </div>
@@ -252,6 +256,7 @@
                         <div class="form-group mx-auto mt-2 col-lg-8 col-md-10 col-sm-12">
                             <label for="correo">Ingrese su correo electronico: </label>
                             <input type="email" name="correo" id="correo" class="form-control" required>
+                            <div class="invalid-feedback">Verifique que no tenga espacio o caracteres especiales</div>
                             <div class="valid-feedback">Formato aceptado</div>
                         </div>
                     </div>
@@ -277,14 +282,14 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header bg-info">
-                                <h2 class="modal-title" class="text-center">Contraseña-Auxiliares Docencia</h2>
-                                <button type="button" id="btnCerrarVtnPassAuxDoc" class="close" data-dismiss="modal" >&times;</button>
+                                <h2 class="modal-title" class="text-center">Recuperar contraseña</h2>
+                                <button type="button" id="btnCerrarVtnPassLab" class="close" data-dismiss="modal" >&times;</button>
                             </div>
                             <div class="modal-body">
                                 <form id="formRecuperarPasswordAuxDoc" class="was-validated">
                                 <div class="form-group">
                                     <h5><label for="correoParaRecupararAuxDoc">Escribe tu correo para recibir un mensaje: </label></h5>
-                                    <input type="email" name="correoParaRecupararAuxDoc" id="correoParaRecupararAuxDoc" class="form-control" required>
+                                    <input type="email" name="formRecuperarPasswordAuxDoc" id="formRecuperarPasswordAuxDoc" class="form-control" required>
                                     <div class="valid-feedback">Formato aceptado</div>
                                 </div>
                                 <h5 id="msmRespuestaAuxDoc" class="text-danger"></h5>
