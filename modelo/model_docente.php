@@ -122,22 +122,31 @@
         }
 
         public function insertarDocente_acoplado($nombreDocente,$ciDocente,$correoDocente,$telDocente,$sisDocente,$passDocente, $id_departamento){
-            $sql = "INSERT INTO docente(nombre_docente,carnet_docente,correo_docente,telefono_docente,sis_docente,password_docente,activo_docente) VALUES(:nombre,:carnet,:correo,:tel,:sis,:pass,false)";
+            $sql = "SELECT id_docente from docente where sis_docente =:cod_sis";
             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $this->sentenceSQL->execute(array(":nombre"=>$nombreDocente,":carnet"=>$ciDocente,":correo"=>$correoDocente,":tel"=>$telDocente,":sis"=>$sisDocente,":pass"=>$passDocente));
-
-            //obtenemos id_docente insertado
-            $sql = "SELECT id_docente FROM docente WHERE sis_docente=:sis_doc";
-            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
-            $this->sentenceSQL->execute(array(":sis_doc"=>$sisDocente));
+            $this->sentenceSQL->execute(array(":cod_sis"=>$sisDocente));
             $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-                    
-            $id_docente = ($respuesta[0])['id_docente'];
+            
+            if(count($respuesta) == 0){
+                $sql = "INSERT INTO docente(nombre_docente,carnet_docente,correo_docente,telefono_docente,sis_docente,password_docente,activo_docente) VALUES(:nombre,:carnet,:correo,:tel,:sis,:pass,false)";
+                $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+                $respuesta = $this->sentenceSQL->execute(array(":nombre"=>$nombreDocente,":carnet"=>$ciDocente,":correo"=>$correoDocente,":tel"=>$telDocente,":sis"=>$sisDocente,":pass"=>$passDocente));
 
-            //insertar departamento_docente
-            $sql = "INSERT INTO departamento_docente(id_departamento, id_docente) VALUES(:id_dep, :id_doc)";
-            $this->sentenceSQL = $this->connexion_bd->prepare($sql);
-            $respuesta = $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento,":id_doc"=>$id_docente));
+                //obtenemos id_docente insertado
+                $sql = "SELECT id_docente FROM docente WHERE sis_docente=:sis_doc";
+                $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+                $this->sentenceSQL->execute(array(":sis_doc"=>$sisDocente));
+                $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+                    
+                $id_docente = ($respuesta[0])['id_docente'];
+
+                //insertar departamento_docente
+                $sql = "INSERT INTO departamento_docente(id_departamento, id_docente) VALUES(:id_dep, :id_doc)";
+                $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+                $respuesta = $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento,":id_doc"=>$id_docente));
+            }else{
+                $respuesta = 0;
+            }
 
             $this->sentenceSQL->closeCursor();
             return $respuesta;

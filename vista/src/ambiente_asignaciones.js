@@ -47,6 +47,12 @@ $(document).ready(function() {
                 listarTablaMateriasDepartamento.ajax.reload(null, false);
             }else{
                 $("#errorMateria").removeClass("d-none");
+                $("#btnVentanaMateria").click();
+                $("#formInsertarMateria")[0].reset();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El CODIGO SIS ya se encuentra registrado'
+                })
             }
         });
         e.preventDefault();
@@ -65,12 +71,12 @@ $(document).ready(function() {
         $("#codigoEdit").val(codigo_materia);
         //$("#departamentoEdit").val(id_departamento);
         //$("#telDocenteEdit").val(telDocente);
-        cargarContenedoresDivMateria(codigo_materia, "MateriaDocente", "obtenerDocentesAsignados", "contenedorDocentesAsignados");
-        cargarElemSelectAsignacionesMateria("selectDocentes", $("#idCategoria").val(), "Departamento", "obtenerDocentesDepartamento");
-        cargarContenedoresDivMateria(codigo_materia, "MateriaAuxiliarDocente", "obtenerAuxiliaresAsignados", "contenedorAuxiliaresAsignados");
-        cargarElemSelectAsignacionesMateria("selectAuxiliares", $("#idCategoria").val(), "Departamento", "obtenerAuxiliaresDepartamento");
-        cargarContenedoresDivMateria(codigo_materia, "MateriaCarrera", "obtenerCarrerasMateria", "contenedorCarrerasAsignadas");
-        cargarElemSelectAsignacionesMateria("selectCarreras", $("#idCategoria").val(), "Carrera", "obtenerCarreras");
+        //cargarContenedoresDivMateria(codigo_materia, "MateriaDocente", "obtenerDocentesAsignados", "contenedorDocentesAsignados");
+        //cargarElemSelectAsignacionesMateria("selectDocentes", $("#idCategoria").val(), "Departamento", "obtenerDocentesDepartamento");
+        //cargarContenedoresDivMateria(codigo_materia, "MateriaAuxiliarDocente", "obtenerAuxiliaresAsignados", "contenedorAuxiliaresAsignados");
+        //cargarElemSelectAsignacionesMateria("selectAuxiliares", $("#idCategoria").val(), "Departamento", "obtenerAuxiliaresDepartamento");
+        //cargarContenedoresDivMateria(codigo_materia, "MateriaCarrera", "obtenerCarrerasMateria", "contenedorCarrerasAsignadas");
+        //cargarElemSelectAsignacionesMateria("selectCarreras", $("#idCategoria").val(), "Carrera", "obtenerCarreras");
         $(".modal-header").css("background-color", "#007bff");
         $(".modal-header").css("color", "white" );     
         $('#modalEditarMateria').modal('show');         
@@ -421,9 +427,9 @@ $(document).ready(function() {
         docente_asignado = fila.find('td:eq(4)').text();
         remplazarContenidoInput('infoSisNomMatEdit',sis_materia+"  "+nom_materia);
         remplazarContenidoInput('infoNumeroGrupoEdit', num_grupo);
-        cargarElemSelectInstructoresAsignados('selectDocenteAsignadoEdit', sis_materia, num_grupo, 'MateriaDocente', 'obtenerDocentesAsignadosMateriaDocenteAsignadoGrupo','sis_docente','nombre_docente');
-        cargarElemSelectInstructoresAsignados('selectAuxiliarAsignadoEdit', sis_materia, num_grupo, 'MateriaAuxiliarDocente', 'obtenerAuxiliaresAsignadosMateriaAuxiliarAsignadoGrupo','sis_auxiliar','nombre_aux_docente');
-        cargarCarrerasGrupoMateria('divInfoCarrerasAsignadasEdit', sis_materia, num_grupo);
+        cargarElemSelectInstructoresAsignados('selectDocenteAsignadoEdit', sis_materia, num_grupo, 'Departamento', 'obtenerDocentesDepartamento','sis_docente','nombre_docente',true);
+        cargarElemSelectInstructoresAsignados('selectAuxiliarAsignadoEdit', sis_materia, num_grupo, 'Departamento', 'obtenerAuxiliaresDepartamento','sis_auxiliar','nombre_aux_docente',false);
+        //cargarCarrerasGrupoMateria('divInfoCarrerasAsignadasEdit', sis_materia, num_grupo);
         cargarHorariosGrupoEdit('divInfoHorariosGrupoEdit', sis_materia, num_grupo);
         $(".modal-header").css("background-color", "#007bff");
         $(".modal-header").css("color", "white" );
@@ -486,7 +492,7 @@ $(document).ready(function() {
         nom_materia = $(this).closest('tr').find('td:eq(1)').text();    
         nom_grupo = $(this).closest('tr').find('td:eq(2)').text(); 
         Swal.fire({
-            title: '¿Desea eliminar el grupo perteneciente a la materia: '+nom_materia+', con numero de grupo: '+nom_grupo+'?',
+            title: '¿Desea eliminar el grupo '+nom_grupo+' de la materia '+nom_materia+'?',
             text: "¡Se borraran definitivamente los datos que lo relacionen!",
             icon: 'warning',
             showCancelButton: true,
@@ -733,6 +739,7 @@ function agregarFilaHorarioGrp(idElemDiv, idSelectDias, idInputHorario, idSelect
     inputCampo2.className = "form-control horarioGrp";
     inputCampo2.placeholder = "Ej: 815-945";
     inputCampo2.required = true;
+    inputCampo2.pattern = "[1-9]{1}[0-9]{2,3}[-][1-9]{1}[0-9]{2,3}";
     divCamp2.appendChild(inputCampo2);
     let divInvalid = document.createElement("div");
     divInvalid.className = "invalid-feedback";
@@ -1197,11 +1204,13 @@ function limpiarcheckboxModals(){
 
 function cargarDocentesAsignadosMateria(sis_materia, idElemSelect){
     let elemSelect = document.getElementById(idElemSelect);
+    let id_departamento = $("#idCategoria").val();
     borrarContenidoPrevio(elemSelect);
     let datos = {
-        clase: "MateriaDocente",
-        metodo: "obtenerDocentesAsignados",
-        sis_materia: sis_materia
+        clase: "Departamento",
+        metodo: "obtenerDocentesDepartamento",
+        sis_materia: sis_materia,
+        id_departamento: id_departamento
     }
     $.ajax({
         type: "POST",
@@ -1228,11 +1237,13 @@ function cargarDocentesAsignadosMateria(sis_materia, idElemSelect){
 
 function cargarAuxiliaresAsignadosMateria(sis_materia, idElemSelect){
     let elemSelect = document.getElementById(idElemSelect);
+    let id_departamento = $("#idCategoria").val();
     borrarContenidoPrevio(elemSelect);
     let datos = {
-        clase: "MateriaAuxiliarDocente",
-        metodo: "obtenerAuxiliaresAsignados",
-        sis_materia: sis_materia
+        clase: "Departamento",
+        metodo: "obtenerAuxiliaresDepartamento",
+        sis_materia: sis_materia,
+        id_departamento: id_departamento
     }
     $.ajax({
         type: "POST",
@@ -1288,14 +1299,16 @@ function limpiarSelectDocenteAuxiliarAsignado(){
     borrarContenidoPrevio(elemSelect);
 }
 
-function cargarElemSelectInstructoresAsignados(idElemSelect, sis_materia, nom_grupo, nom_clase, nom_metodo, nom_campo_sis, nom_campo_inst){
+function cargarElemSelectInstructoresAsignados(idElemSelect, sis_materia, nom_grupo, nom_clase, nom_metodo, nom_campo_sis, nom_campo_inst, es_docente){
     let elemSelect = document.getElementById(idElemSelect);
+    let id_departamento = $("#idCategoria").val();
     borrarContenidoPrevio(elemSelect);
     let datos = {
         clase: nom_clase,
         metodo: nom_metodo,
         sis_materia: sis_materia,
-        nom_grupo: nom_grupo
+        nom_grupo: nom_grupo,
+        id_departamento: id_departamento
     }
     $.ajax({
         type: "POST",
@@ -1303,7 +1316,22 @@ function cargarElemSelectInstructoresAsignados(idElemSelect, sis_materia, nom_gr
         data: datos,
         success: function (response) {
             let obj= JSON.parse(response);
-            let existeInstructorAsignado = false;
+            let option = document.createElement("option");
+            option.value = 'Ninguno';
+            option.innerHTML = 'Sin Asignar';
+            elemSelect.appendChild(option);
+            obj.forEach(element => {
+                    option = document.createElement("option");
+                    if(es_docente){
+                        option.value = element.sis_docente;
+                        option.innerHTML = element.sis_docente+" "+element.nombre_docente;
+                    }else{
+                        option.value = element.sis_auxiliar;
+                        option.innerHTML = element.sis_auxiliar+" "+element.nombre_aux_docente;
+                    }
+                    elemSelect.appendChild(option);
+            });
+            /*let existeInstructorAsignado = false;
             let option;
             obj.forEach(element => {
                 option = document.createElement("option");
@@ -1321,7 +1349,7 @@ function cargarElemSelectInstructoresAsignados(idElemSelect, sis_materia, nom_gr
             if(!existeInstructorAsignado){
                 option.selected = true;
             }
-            elemSelect.appendChild(option);
+            elemSelect.appendChild(option);*/
         },
         error : function(jqXHR, status, error) {
             console.log("status: "+status+" JqXHR "+jqXHR +" Error "+error);

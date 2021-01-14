@@ -54,7 +54,13 @@ $(document).ready(function() {
                 $("#exitoDocente").removeClass("d-none");
                 listarTablaAuxiliarDocenteDepartamento.ajax.reload(null, false);
             }else{
+                $("#btnVentanaAuxiliarDocente").click();
+                $("#formInsertarAuxiliarDocente")[0].reset();
                 $("#errorDocente").removeClass("d-none");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El CODIGO SIS ya se encuentra registrado'
+                })
             }
         });
         e.preventDefault();

@@ -168,12 +168,22 @@
  
          //EN USO
          public function insertarMateria($nombreMateria,$sis_materia,$id_departamento){
-             $sql = "INSERT INTO materia(nombre_materia,codigo_materia,id_departamento) VALUES(:nombre,:sis,:depa)";
-             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
-             $respuesta = $this->sentenceSQL->execute(array(":nombre"=>$nombreMateria,":sis"=>$sis_materia,":depa"=>$id_departamento));
-             $this->sentenceSQL->closeCursor();
-             return $respuesta;
-         }    
+            $sql = "SELECT id_materia from materia where codigo_materia =:cod_mat";
+           $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+           $this->sentenceSQL->execute(array(":cod_mat"=>$sis_materia));
+           $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+
+           if(count($respuesta) == 0){
+               $sql = "INSERT INTO materia(nombre_materia,codigo_materia,id_departamento) VALUES(:nombre,:sis,:depa)";
+               $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+               $respuesta = $this->sentenceSQL->execute(array(":nombre"=>$nombreMateria,":sis"=>$sis_materia,":depa"=>$id_departamento));
+           }else{
+               $respuesta = 0;
+           }
+            
+            $this->sentenceSQL->closeCursor();
+            return $respuesta;
+        }      
  
          //EN USO
          public function editarMateria($nombre_materia, $sisMateria, $nuevo_sisMateria, $arrayDocentes, $arrayAuxiliares, $arrayCarreras){

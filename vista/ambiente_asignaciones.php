@@ -38,12 +38,12 @@
                         <form action="" id="formInsertarMateria" method="post" class="was-validated">
                             <div class="form-group">
                                 <label for="nomMateria">Nombre de la Materia: </label>
-                                <input type="text" name="nomMateria" id="nomMateria" class="form-control" required>
+                                <input type="text" name="nomMateria" id="nomMateria" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group">
                                     <label for="sisMateria">codigo SIS </label>
-                                    <input type="text" name="sisMateria" id="sisMateria" class="form-control" required>
+                                    <input type="text" name="sisMateria" id="sisMateria" class="form-control" required pattern="[0-9]{7,9}">
                                     <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="text-center my-2">
@@ -79,6 +79,7 @@
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
+                        <div style="display: none;">
                         <hr style="height:2px;border-width:0;color:gray;background-color:gray"> 
                         <div class="form-group">
                             <label>Docentes asignados:</label>
@@ -117,6 +118,7 @@
                                 <div class="col-md-2">
                                     <button class="btn btn-primary" id="btnAsignarCarrera"><i class="fas fa-plus"></i></button>
                                 </div>
+                        </div>
                         </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn  btn-primary" value="Editar Materia">
@@ -160,7 +162,7 @@
                     </div>
                 <!--modal body-->
                     <div class="modal-body">
-                    <form action="" id="formInsertarGrupo" method="post" class="">
+                    <form action="" id="formInsertarGrupo" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="selectMateriasDep">Seleccione materia:</label>
                                 <select class="form-control" id="selectMateriasDep" name=""></select>
@@ -184,7 +186,7 @@
                                     <select class="form-control" id="selectAuxiliarAsignado" name=""></select>
                                 </div>
                         </div>
-                        <div class="form-group" id="divCarrerasAsignadasMateria">
+                        <div class="form-group" id="divCarrerasAsignadasMateria" style="display: none;">
                             <h5>No existen carreras asignadas</h5>
                         </div>
                         <div id="horariosGrupo">
@@ -202,7 +204,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="horarioGrupo">Ingrese horario:</label>
-                                    <input type="text" name="" id="horarioGrupo_1" class="form-control horarioGrp" placeholder="Ej: 815-945" required>
+                                    <input type="text" name="" id="horarioGrupo_1" class="form-control horarioGrp" placeholder="Ej: 815-945" required pattern="[1-9]{1}[0-9]{2,3}[-][1-9]{1}[0-9]{2,3}">
                                     <div class="invalid-feedback">llene el campo</div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -242,7 +244,7 @@
                     </div>
                 <!--modal body-->
                     <div class="modal-body">
-                    <form action="" id="formInformacionGrupo" method="post" class="">
+                    <form action="" id="formInformacionGrupo" method="post" class="was-validated">
                         <div class="form-group">
                                 <label>Codigo sis y nombre materia:</label>
                                 <input type="text" name="" id="infoSisNomMat" class="form-control" required="" disabled="">
@@ -259,7 +261,7 @@
                             <label>Auxiliar asignado:</label>
                             <input type="text" name="" id="infoAuxiliarAsignado" class="form-control" required="" disabled="">            
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                                 <h5>Asignado para la(s) carrera(s):</h5>
                                 <div id="divInfoCarrerasAsignadas"></div>
                         </div>
@@ -295,7 +297,7 @@
                     </div>
                 <!--modal body-->
                     <div class="modal-body">
-                    <form action="" id="formEditarGrupo" method="post" class="">
+                    <form action="" id="formEditarGrupo" method="post" class="was-validated">
                         <div class="form-group">
                                 <label>Codigo sis y nombre materia:</label>
                                 <input type="text" name="" id="infoSisNomMatEdit" class="form-control" required="" disabled="">
@@ -315,7 +317,7 @@
                             </div>   
                                 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                                 <div id="divInfoCarrerasAsignadasEdit"></div>
                         </div>
                         <div class="form-group">

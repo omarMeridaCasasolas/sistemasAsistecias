@@ -53,7 +53,13 @@ $(document).ready(function() {
                 $("#exitoDocente").removeClass("d-none");
                 listarTablaDocentesDepartamento.ajax.reload(null, false);
             }else{
+                $("#btnVentanaDocente").click();
+                $("#formInsertarDocente")[0].reset();
                 $("#errorDocente").removeClass("d-none");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El CODIGO SIS ya se encuentra registrado'
+                })
             }
         });
         e.preventDefault();

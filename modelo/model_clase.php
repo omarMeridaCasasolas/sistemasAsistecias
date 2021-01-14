@@ -284,7 +284,7 @@
             $fecha_fin_anterior = date("Y-m-d",strtotime($fecha_fin."- 7 days"));
             //Obtenemos las clases que dicta el docente
             //Junto con los datos de la plataforma utilizada de la semana anterior
-            $sql = "SELECT grupo_horario.dia, grupo_horario.hora, grupo.id_grupo, materia.id_materia, clase.plataforma_clase from materia, materia_docente, grupo, grupo_horario, clase where materia.id_materia = materia_docente.id_materia and materia_docente.id_docente =:id_doc and materia.id_departamento =:id_dep and materia.id_materia = grupo.id_materia and grupo.id_grupo = grupo_horario.id_grupo and grupo_horario.es_aux = 'f' and grupo_horario.dia = substring(clase.dia_clase,1,2)  and grupo_horario.hora = clase.periodo_hora_clase and grupo_horario.id_grupo = clase.id_grupo and clase.fecha_clase >=:f_ini_ant and clase.fecha_clase <=:f_fin_ant"; 
+            $sql = "SELECT grupo_horario.dia, grupo_horario.hora, grupo.id_grupo, materia.id_materia from materia, docente_grupo, grupo, grupo_horario where docente_grupo.id_grupo = grupo.id_grupo and docente_grupo.id_docente =:id_doc and materia.id_materia = grupo.id_materia and materia.id_departamento =:id_dep and grupo.id_grupo = grupo_horario.id_grupo and grupo_horario.es_aux = 'f'";  
             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
             $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento,":id_doc"=>$id_docente,":f_ini_ant"=>$fecha_inicio_anterior,":f_fin_ant"=>$fecha_fin_anterior));
             $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
@@ -571,7 +571,7 @@
             $fecha_fin_anterior = date("Y-m-d",strtotime($fecha_fin."- 7 days"));
             //Obtenemos las clases que dicta el auxiliar de docencia
             //Junto con los datos de la plataforma utilizada de la semana anterior
-            $sql = "SELECT grupo_horario.dia, grupo_horario.hora, grupo.id_grupo, materia.id_materia, clase.plataforma_clase from materia, materia_auxiliar_docente, grupo, grupo_horario, clase where materia.id_materia = materia_auxiliar_docente.id_materia and materia_auxiliar_docente.id_auxiliar_docente =:id_aux_doc and materia.id_departamento =:id_dep and materia.id_materia = grupo.id_materia and grupo.id_grupo = grupo_horario.id_grupo and grupo_horario.es_aux = 't' and grupo_horario.dia = substring(clase.dia_clase,1,2)  and grupo_horario.hora = clase.periodo_hora_clase and grupo_horario.id_grupo = clase.id_grupo and clase.fecha_clase >=:f_ini_ant and clase.fecha_clase <=:f_fin_ant"; 
+            $sql = "SELECT grupo_horario.dia, grupo_horario.hora, grupo.id_grupo, materia.id_materia from materia, auxiliar_docente_grupo, grupo, grupo_horario where auxiliar_docente_grupo.id_grupo = grupo.id_grupo and auxiliar_docente_grupo.id_auxiliar_docente =:id_aux_doc and materia.id_materia = grupo.id_materia and materia.id_departamento =:id_dep and grupo.id_grupo = grupo_horario.id_grupo and grupo_horario.es_aux = 't'";  
             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
             $this->sentenceSQL->execute(array(":id_dep"=>$id_departamento,":id_aux_doc"=>$id_aux_docente,":f_ini_ant"=>$fecha_inicio_anterior,":f_fin_ant"=>$fecha_fin_anterior));
             $respuesta = $this->sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

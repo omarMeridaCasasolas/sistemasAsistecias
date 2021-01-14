@@ -38,35 +38,35 @@
                     <form action="" id="formInsertarDocente" method="post" class="was-validated">
                         <div class="form-group">
                                 <label for="nomDocente">Nombre del docente: </label>
-                                <input type="text" name="nomDocente" id="nomDocente" class="form-control" required>
+                                <input type="text" name="nomDocente" id="nomDocente" class="form-control" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="ciDocente">Carnet de identidad: </label>
-                                <input type="text" name="ciDocente" id="ciDocente" class="form-control" required>
+                                <input type="text" name="ciDocente" id="ciDocente" class="form-control" required pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="telDocente">Telefono: </label>
-                                <input type="text" name="telDocente" id="telDocente" class="form-control" required>
+                                <input type="text" name="telDocente" id="telDocente" class="form-control" required pattern="[0-9]{6,8}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>
                         <div class="form-group">
                                 <label for="correoDocente">Correo electronico: </label>
-                                <input type="email" name="correoDocente" id="correoDocente" class="form-control" required>
+                                <input type="email" name="correoDocente" id="correoDocente" class="form-control" required pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="sisDocente">Codigo SIS: </label>
-                                <input type="password" name="sisDocente" id="sisDocente" class="form-control" required>
+                                <input type="password" name="sisDocente" id="sisDocente" class="form-control" required pattern="[0-9]{9}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passDocente">Ingrese password: </label>
-                                <input type="password" name="passDocente" id="passDocente" class="form-control" required>
+                                <input type="password" name="passDocente" id="passDocente" class="form-control" required pattern="[A-Za-z0-9_-]{4,15}">
                                 <div class="invalid-feedback">llene el campo</div>
                             </div>
                         </div>

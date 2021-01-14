@@ -90,6 +90,10 @@
             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
             $respuesta = $this->sentenceSQL->execute(array(":id_doc"=>$id_docente,":id_grp"=>$id_grupo));
 
+            /*$sql = "INSERT into materia_docente(id_materia, id_docente) values(:id_mat, :id_doc)";
+                 $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+                 $this->sentenceSQL->execute(array(":id_mat"=>$id_materia, ":id_doc"=>$id_docente));*/
+
             //ObtenerIdAuxiliar
             $id_auxiliar = 9;
             if($sis_auxiliar_asignado != "Ninguno"){
@@ -106,6 +110,11 @@
             VALUES(:id_aux, :id_grp)";
             $this->sentenceSQL = $this->connexion_bd->prepare($sql);
             $respuesta = $this->sentenceSQL->execute(array(":id_aux"=>$id_auxiliar,":id_grp"=>$id_grupo));
+
+            /*$sql = "INSERT into materia_auxiliar_docente(id_materia, id_auxiliar_docente) values(:id_mat, :id_aux)";
+                $this->sentenceSQL = $this->connexion_bd->prepare($sql);
+                $this->sentenceSQL->execute(array(":id_mat"=>$id_materia, ":id_aux"=>$id_auxiliar));*/
+
 
             //InsertarCarrerasAsignadasGrupo
             if(!is_null($arrayCarrerasAsignadasGrupo)){
