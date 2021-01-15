@@ -19,16 +19,18 @@
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnAgregarLab">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" id="formAgregarLaboratorio" method="post">
+                        <form action="" id="formAgregarLaboratorio" method="post" class="was-validated">
                             <div class="form-group">
                                     <label for="nomAgregarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomAgregarLaboratorio" id="nomAgregarLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="nomAgregarLaboratorio" id="nomAgregarLaboratorio" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                             <span id="idSpanNomLaboratorio" class="text-danger"></span>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codAgregarLaboratorio">Codigo laboratorio: </label>
-                                    <input type="text" name="codAgregarLaboratorio" id="codAgregarLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="codAgregarLaboratorio" id="codAgregarLaboratorio" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{3,6}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo siglas entre 3 a 6 letras</div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="fecAgregarLaboratorio">fecha de creacion: </label>
@@ -42,7 +44,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="mesAgregarLaboratorio">Duracion de laboratorio: </label>
-                                    <select class="form-control" id="mesAgregarLaboratorio" name="mesAgregarLaboratorio">
+                                    <select class="form-control" id="mesAgregarLaboratorio" name="mesAgregarLaboratorio" required>
+                                    <option value="">Selecion una opcion</option>
                                     <option value="1">1 mes</option>
                                     <option value="2">2 meses</option>
                                     <option value="3">3 meses</option>
@@ -60,7 +63,8 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="horAgregarLaboratorio">Cant.de dias Trabajo: </label>
-                                    <select  name="horAgregarLaboratorio" id="horAgregarLaboratorio" class="form-control">
+                                    <select  name="horAgregarLaboratorio" id="horAgregarLaboratorio" class="form-control" required>
+                                    <option value="">Selecion una opcion</option>
                                         <option value="5">5 dias</option>
                                         <option value="6">6 dias</option>
                                     </select>
@@ -85,16 +89,18 @@
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnEditarLab">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" id="formEditarLaboratorio" method="post">
+                        <form action="" id="formEditarLaboratorio" method="post" class="was-validated">
                             <input type="text" name="idEditarLaboratorio" id="idEditarLaboratorio" class="d-none">
                             <div class="form-group">
                                     <label for="nomEditarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codEditarLaboratorio">Codigo laboratorio: </label>
-                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="codEditarLaboratorio" id="codEditarLaboratorio" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{3,6}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo siglas entre 3 a 6 letras</div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="fecEditarLaboratorio">fecha de creacion: </label>
@@ -191,15 +197,16 @@
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnAgregarAuxLab">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" id="formAgregarAuxLaboratorio" method="post">
+                        <form action="" id="formAgregarAuxLaboratorio" method="post" class="was-validated">
                             <div class="form-group">
                                     <label for="nomAgregarAuxLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomAgregarAuxLaboratorio" id="nomAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="nomAgregarAuxLaboratorio" id="nomAgregarAuxLaboratorio" class="form-control" autocomplete="off" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codAgregarAuxLaboratorio">Carnet de identidad: </label>
                                     <input type="text" name="codAgregarAuxLaboratorio" id="codAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="corAgregarAuxLaboratorio">Correo del auxiliar: </label>
@@ -209,7 +216,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="telAgregarAuxLaboratorio">Telefono/celular: </label>
-                                    <input type="text" name="telAgregarAuxLaboratorio" id="telAgregarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="telAgregarAuxLaboratorio" id="telAgregarAuxLaboratorio" class="form-control"  pattern="[0-9]{6,8}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="pasAgregarAuxLaboratorio">Password: </label>
@@ -241,11 +249,12 @@
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnEditarLab">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" id="formEditarLaboratorio" method="post">
+                        <form action="" id="formEditarLaboratorio" method="post" class="was-validated">
                             <input type="text" name="idEditarLaboratorio" id="idEditarLaboratorio" class="d-none">
                             <div class="form-group">
                                     <label for="nomEditarLaboratorio">Nombre del laboratorio: </label>
-                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="nomEditarLaboratorio" id="nomEditarLaboratorio" class="form-control" autocomplete="off" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}">
+                                    <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
@@ -331,16 +340,18 @@
                         <button type="button" class="close" data-dismiss="modal" id="btnCerrarVtnEditarAuxLab">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" id="formEditarAuxLaboratorio" method="post">
+                        <form action="" id="formEditarAuxLaboratorio" method="post" class="was-validated">
                         <input type="text" name="idEditarAuxLaboratorio" id="idEditarAuxLaboratorio" class="d-none">
                         <div class="form-group">
                                     <label for="nomEditarAuxLaboratorio">Nombre del auxiliar de laboratorio: </label>
-                                    <input type="text" name="nomEditarAuxLaboratorio" id="nomEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="nomEditarAuxLaboratorio" id="nomEditarAuxLaboratorio" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁ ÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{6,80}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo nombres entre 6 a 60 letras</div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="codEditarAuxLaboratorio">Carnet de identidad: </label>
-                                    <input type="text" name="codEditarAuxLaboratorio" id="codEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="codEditarAuxLaboratorio" id="codEditarAuxLaboratorio" class="form-control" pattern="[0-9]{6,8}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="corEditarAuxLaboratorio">Correo del auxiliar: </label>
@@ -350,7 +361,8 @@
                             <div class="row">
                                 <div class="form-group col-md-5">
                                     <label for="telEditarAuxLaboratorio">Telefono/celular: </label>
-                                    <input type="text" name="telEditarAuxLaboratorio" id="telEditarAuxLaboratorio" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="telEditarAuxLaboratorio" id="telEditarAuxLaboratorio" class="form-control"  pattern="[0-9]{6,8}" autocomplete="off" required>
+                                    <div class="invalid-feedback">Solo números entre 6 a 8 dígitos</div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="dirEditarAuxLaboratorio">Nombre del laboratorio: </label>

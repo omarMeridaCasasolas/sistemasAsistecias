@@ -2,6 +2,20 @@ var nombresLaboratorioReservados = [];
 var codigosLaboratorioREservados = [];
 var tablaLaboratorio,tablaAuxiliarLaboratorio;
 $(document).ready(function () {
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (date < 10) {
+        date = '0' + date;
+    }
+    $("#div_date_time").html(year + "-" + month + "-" + date);
+    $('#fecAgregarLaboratorio').attr('max', year + "-" + month + "-" + date);
+    $('#fecEditarLaboratorio').attr('max', year + "-" + month + "-" + date);
+
     listasLaboratorios();
     listasAuxLaboratorios();
     obtnerNombreSiglasDepartamento();
